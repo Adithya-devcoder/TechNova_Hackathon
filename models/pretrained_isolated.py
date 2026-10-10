@@ -160,3 +160,61 @@ def predict_hybrid(landmarks, bundle, iso, vocab=None, min_sign_frames=8, min_co
             w['end'] += first + a
         words.append(w)
     return _result(words, t0, min_confidence)
+
+
+def predict_sliding(landmarks, iso, vocab=None, threshold=0.6, min_confidence=0.3, window=28, stride=5,
+                    min_windows=2, try_mirror=True):
+    """Continuous recognition with the pretrained model alone: no pauses between signs needed.
+
+    A ~1 s window slides along the sentence; each position is classified. Windows below min_confidence
+    (usually the movement between two signs) are skipped, and a word is kept when at least min_windows
+    neighbouring windows agree on it. Same output as predict().
+    """
+    t0 = time.perf_counter()
+    pts = np.asarray(landmarks, np.float32)
+    span = _hand_span(pts)
+    if span is None:
+        return _result([], t0, 0.0)
+    first, last = span
+    clip = pts[first:last]
+    if len(clip) <= window + stride:   # one sign's worth of frames
+        return _result([classify_sign(clip, iso, vocab, threshold, try_mirror)], t0, min_confidence)
+    starts = list(range(0, len(clip) - window + 1, stride))
+    if starts[-1] != len(clip) - window:
+        starts.append(len(clip) - window)
+    allowed = None if vocab is None else np.isin(iso.labels, list(vocab))
+
+    def scores(x):
+        P = np.stack([iso.probabilities(x[s:s + window]) for s in starts])
+        if allowed is not None:
+            P = np.where(allowed, P, 0.0)
+            P = P / np.maximum(P.sum(1, keepdims=True), 1e-12)
+        return P
+
+    P = scores(clip)
+    if try_mirror:   # keep the orientation the model is more confident about over the whole sentence
+        Pm = scores(mirror(clip))
+        if Pm.max(1).mean() > P.max(1).mean():
+            P = Pm
+    label = np.where(P.max(1) >= min_confidence, P.argmax(1), -1)
+
+    runs = []   # [label, first window, last window]
+    for i, k in enumerate(label):
+        if k < 0:
+            continue
+        if runs and runs[-1][0] == k and i - runs[-1][2] <= 2:   # same sign, at most one skipped window between
+            runs[-1][2] = i
+        else:
+            runs.append([k, i, i])
+    words = []
+    for k, a, b in runs:
+        n = int((label[a:b + 1] == k).sum())
+        peak = float(P[a:b + 1, k].max())
+        if n < min_windows and peak < 0.7:   # a single shaky window: probably a transition
+            continue
+        mean = P[a:b + 1].mean(0)
+        top = np.argsort(-mean)[:3]
+        words.append({'word': iso.labels[k], 'confidence': round(peak, 3), 'uncertain': peak < threshold,
+                      'start': int(first + starts[a]), 'end': int(first + starts[b] + window),
+                      'alternatives': [(iso.labels[j], round(float(mean[j]), 3)) for j in top]})
+    return _result(words, t0, min_confidence)

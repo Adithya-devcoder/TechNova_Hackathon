@@ -28,7 +28,8 @@ DEMO_SENTENCES = json.loads((ROOT / 'data' / 'demo_sentences.json').read_text(en
 READABLE = {'minemy': 'my', 'weus': 'we', 'hesheit': 'he/she', 'thankyou': 'thank you', 'icecream': 'ice cream'}
 
 st.set_page_config(page_title='SignBridge', page_icon='🤟', layout='wide')
-SIGN_BY_SIGN = 'Sign by sign: Kaggle 1st-place (most accurate live)'
+CONTINUOUS = 'Continuous sentence: Kaggle 1st-place'
+SIGN_BY_SIGN = 'Sign by sign: Kaggle 1st-place (pause between signs)'
 HYBRID = 'Hybrid: ours + Kaggle 1st-place (continuous)'
 OURS = 'Our model (BiGRU-CTC)'
 
@@ -93,9 +94,10 @@ with st.sidebar:
     save_debug = st.checkbox('Save landmarks of each sentence (debugging)', False,
                              help='Saves only landmark coordinates (no video) to the local debug/ folder.')
     hybrid_ready = pretrained_isolated.available()
-    recogniser = st.radio('Recogniser', [SIGN_BY_SIGN, HYBRID, OURS], index=0 if hybrid_ready else 2,
+    recogniser = st.radio('Recogniser', [CONTINUOUS, SIGN_BY_SIGN, HYBRID, OURS], index=0 if hybrid_ready else 3,
                           disabled=not hybrid_ready,
-                          help='Sign by sign: lower your hands briefly between signs; each sign goes to the '
+                          help='Continuous: sign the whole sentence without pausing; the pretrained model reads it '
+                               'with a sliding window. Sign by sign: lower your hands briefly between signs. '
                                'Kaggle 1st-place model. Hybrid: continuous signing; our model finds the words, '
                                'the pretrained model names them. Ours: our BiGRU-CTC alone.')
     if not hybrid_ready:
@@ -103,7 +105,7 @@ with st.sidebar:
                    'in models/kaggle_1st/.')
     all_signs = st.checkbox('Allow all 250 signs', False, disabled=not hybrid_ready,
                             help='Pretrained model only. Off: only our 52-sign vocabulary.')
-    min_conf = st.slider('Ignore gestures below this confidence', 0.0, 0.9, 0.25, 0.05, disabled=not hybrid_ready,
+    min_conf = st.slider('Ignore gestures below this confidence', 0.0, 0.9, 0.3, 0.05, disabled=not hybrid_ready,
                          help='Pretrained model only: a gesture that is not a known sign gets low confidence '
                               'and is dropped instead of shown as a random word.')
     if recogniser == SIGN_BY_SIGN:
@@ -121,6 +123,8 @@ vocab = None if all_signs else bundle['vocab']
 
 
 def recognise(sentence):
+    if recogniser == CONTINUOUS:
+        return pretrained_isolated.predict_sliding(sentence, load_pretrained(), vocab, threshold, min_conf)
     if recogniser == SIGN_BY_SIGN:
         clips, starts = split_signs(sentence, gap_s=sign_gap_s, fps=target_fps)
         return pretrained_isolated.predict_signs(clips, load_pretrained(), vocab, threshold, min_conf, starts)

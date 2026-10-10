@@ -93,3 +93,29 @@ def test_split_signs_at_short_pauses():
     sentence = np.concatenate([sign, gap, sign, gap, sign])
     clips, starts = split_signs(sentence, gap_s=0.3, fps=30)
     assert len(clips) == 3 and starts == [0, 30, 60]
+
+
+class FakeByPosition(FakeIsolated):
+    """Names the sign from where the right hand is: x<0.35 water, x>0.65 mom, else zebra."""
+    def probabilities(self, clip):
+        x = np.nanmean(clip[:, 522:543, 0])
+        k = 0 if x < 0.35 else 2 if x > 0.65 else 1
+        p = np.full(3, 0.05)
+        p[k] = 0.9
+        return p
+
+
+def test_sliding_window_reads_a_sentence_without_pauses():
+    clip = np.full((120, 543, 3), np.nan, np.float32)
+    clip[:, 489:522] = 0.5
+    for i, x in enumerate((0.2, 0.5, 0.8)):          # three signs, 40 frames each, no pause between them
+        clip[i * 40:(i + 1) * 40, 522:543] = x
+    out = pi.predict_sliding(clip, FakeByPosition(), try_mirror=False)
+    assert out['text'] == 'water zebra mom'
+    assert [w['start'] < w['end'] for w in out['words']] == [True] * 3
+
+
+def test_sliding_window_short_clip_is_one_sign():
+    clip = np.full((20, 543, 3), np.nan, np.float32)
+    clip[:, 522:543] = 0.8
+    assert pi.predict_sliding(clip, FakeByPosition())['text'] == 'mom'

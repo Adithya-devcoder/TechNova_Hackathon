@@ -29,8 +29,11 @@ def available(folder=FOLDER):
 class IsolatedSignModel:
     def __init__(self, folder=FOLDER):
         folder = Path(folder)
-        import tensorflow as tf   # imported lazily: slow, and only needed for this model
-        self.interpreter = tf.lite.Interpreter(model_path=str(folder / MODEL_FILE))
+        try:   # LiteRT is the small, supported TFLite runtime; full TensorFlow also works
+            from ai_edge_litert.interpreter import Interpreter
+        except ImportError:
+            from tensorflow.lite import Interpreter
+        self.interpreter = Interpreter(model_path=str(folder / MODEL_FILE))
         signatures = self.interpreter.get_signature_list()
         key = 'serving_default' if 'serving_default' in signatures else next(iter(signatures))
         self.runner = self.interpreter.get_signature_runner(key)

@@ -167,7 +167,7 @@ Full results: [evaluation/results.md](evaluation/results.md). Per-sentence predi
 To enable it:
 1. Download `model.tflite` from the output of https://www.kaggle.com/code/hoyso48/1st-place-solution-inference.
 2. Download `sign_to_prediction_index_map.json` from https://www.kaggle.com/competitions/asl-signs/data.
-3. Put both in `models/kaggle_1st/` and install TensorFlow: `.venv\Scripts\python -m pip install tensorflow==2.20.0`.
+3. Put both in `models/kaggle_1st/`. The runtime (`ai-edge-litert`) is already in `requirements.txt`; the app then defaults to **Hybrid**.
 
 **Caveat:** the pretrained model was trained on every ASL Signs signer, including our test signers, so it must not be scored on our test split. Evaluate it only with live signing by new people. Its weights are not committed because their licence is not stated.
 

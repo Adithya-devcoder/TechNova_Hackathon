@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 
 import cv2
+import numpy as np
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,6 +90,8 @@ with st.sidebar:
     target_fps = int(st.number_input('Model frame rate (fps)', 10, 60, 30,
                                      help='Sentences are resampled to this rate before recognition.'))
     show_overlay = st.checkbox('Draw landmarks on video', True)
+    save_debug = st.checkbox('Save landmarks of each sentence (debugging)', False,
+                             help='Saves only landmark coordinates (no video) to the local debug/ folder.')
     hybrid_ready = pretrained_isolated.available()
     recogniser = st.radio('Recogniser', [SIGN_BY_SIGN, HYBRID, OURS], index=0 if hybrid_ready else 2,
                           disabled=not hybrid_ready,
@@ -126,7 +129,17 @@ def recognise(sentence):
     return sb.predict(sentence, bundle)
 
 
-def camera_loop(on_sentence, key):
+DEBUG_DIR = ROOT / 'debug'
+
+
+def save_sentence(sentence, result, reference, fps):
+    DEBUG_DIR.mkdir(exist_ok=True)
+    name = time.strftime('%H%M%S') + '_' + (reference.replace(' ', '-') or 'live')
+    np.savez_compressed(DEBUG_DIR / f'{name}.npz', landmarks=sentence, recognised=result['text'],
+                        reference=reference, recogniser=recogniser, camera_fps=fps)
+
+
+def camera_loop(on_sentence, key, reference=''):
     """Run the webcam until the toggle is switched off. Calls on_sentence(result, frames) per sentence."""
     if not st.toggle('Start camera', key=key):
         st.info('Switch on the camera, sign a sentence, then lower your hands for a moment to finish it.')
@@ -154,7 +167,10 @@ def camera_loop(on_sentence, key):
             landmarks = extractor.process(frame, t_ms)
             sentence = segmenter.push(landmarks, t_ms)
             if sentence is not None:
-                on_sentence(recognise(sentence), len(sentence))
+                result = recognise(sentence)
+                if save_debug:
+                    save_sentence(sentence, result, reference, fps)
+                on_sentence(result, len(sentence))
             view = draw_landmarks(frame, landmarks) if show_overlay else frame
             frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')   # mirrored like a selfie view
             hint = (f'lower your hands briefly between signs, and for {end_s:.1f} s to finish'
@@ -266,4 +282,4 @@ else:
                     LOG_PATH.unlink(missing_ok=True)
                     st.rerun()
     with cam_col:
-        camera_loop(on_sentence, key='cam_eval')
+        camera_loop(on_sentence, key='cam_eval', reference=reference)

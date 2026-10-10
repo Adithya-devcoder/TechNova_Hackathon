@@ -5,3 +5,4 @@ data/raw/
 .venv/
 models/holistic_landmarker.task
 models/kaggle_1st/
+debug/

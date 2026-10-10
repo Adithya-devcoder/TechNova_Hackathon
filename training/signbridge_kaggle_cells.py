@@ -204,6 +204,8 @@ DEFAULT_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'model_
 
 
 def load_model(path=DEFAULT_MODEL, device='cpu'):
+    if device == 'cpu':
+        torch.set_num_threads(1)   # one sentence at a time: a single thread was 2-3x faster than 8 on a laptop
     ck = torch.load(path, map_location=device)
     model = GRUCTC(ck['in_dim'], len(ck['vocab']) + 1, **ck['model_cfg']).to(device).eval()
     model.load_state_dict(ck['state'])

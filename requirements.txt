@@ -1,0 +1,8 @@
+# Tested with Python 3.13 on Windows 11 (CPU only).
+numpy==2.2.6
+pandas==2.3.2
+torch==2.7.1
+mediapipe==1.1.0
+opencv-python==4.13.0.92
+streamlit==1.65.0
+pytest==9.1.1

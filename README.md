@@ -61,6 +61,7 @@ PS-41 asks for a vocabulary of at least 50 signs, real-time inference on a lapto
 | Continuous mode with the pretrained model: a sliding window reads the whole sentence, no pauses needed | Implemented; default when the pretrained files are present |
 | Sign-by-sign mode: brief pause between signs, each sign read by the pretrained model | Implemented |
 | Rejecting gestures that are not signs (pretrained model's confidence below 0.25) | Implemented for the pretrained modes |
+| Readable English sentence from the recognised signs ("My brother is sick.") | Implemented, rule-based |
 | Translation into Tamil, Hindi and Telugu; text-to-speech | Future |
 | Text-to-sign avatar | Future |
 
@@ -221,7 +222,7 @@ The dataset itself is not in the repository; it stays on Kaggle.
 - **Synthetic sentences.** Test sentences are joined isolated clips with interpolated transitions, not real continuous signing, so real co-articulation is only approximated.
 - **Live performance is unmeasured.** The model was trained on phone videos processed with the older MediaPipe Holistic API; the app uses a laptop webcam and the newer MediaPipe Tasks API. Expect live accuracy below the test numbers.
 - **Hands and upper body only.** Facial expressions, which carry grammar in sign languages, are not used.
-- **Glosses, not English grammar.** Output follows sign order (`mom drink water now`), with only light clean-up for display (`minemy` → "my").
+- **English is approximate.** Signs are recognised as glosses (`minemy brother sick`); a rule-based converter (`models/gloss_to_english.py`) turns them into English ("My brother is sick.") for common patterns only. WER is always measured on the glosses.
 - **Overconfident words.** CTC predicts each word in a single frame, so confidences on correct words are close to 1.0.
 
 ## Privacy and responsible use

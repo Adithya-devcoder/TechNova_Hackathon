@@ -20,12 +20,11 @@ sys.path.insert(0, str(ROOT))
 from evaluation.live_log import LOG_PATH, append_result, load_results, summarize  # noqa: E402
 from models import pretrained_isolated  # noqa: E402
 from models import signbridge_model as sb  # noqa: E402
+from models.gloss_to_english import to_english  # noqa: E402
 from preprocessing.landmarks import HolisticExtractor, draw_landmarks, video_to_landmarks  # noqa: E402
 from preprocessing.segmenter import SentenceSegmenter, resample, split_signs  # noqa: E402
 
 DEMO_SENTENCES = json.loads((ROOT / 'data' / 'demo_sentences.json').read_text(encoding='utf-8'))
-# Dataset sign names -> readable English, for display only
-READABLE = {'minemy': 'my', 'weus': 'we', 'hesheit': 'he/she', 'thankyou': 'thank you', 'icecream': 'ice cream'}
 
 st.set_page_config(page_title='SignBridge', page_icon='🤟', layout='wide')
 CONTINUOUS = 'Continuous sentence: Kaggle 1st-place'
@@ -44,10 +43,6 @@ def load_pretrained():
     return pretrained_isolated.IsolatedSignModel()
 
 
-def readable(text):
-    return ' '.join(READABLE.get(w, w) for w in text.split())
-
-
 def words_html(result):
     """Recognised words as chips: green when confident, amber with a '?' when uncertain."""
     if not result['words']:
@@ -62,16 +57,19 @@ def words_html(result):
         else:
             style = 'background:rgba(22,163,74,.18);border:1px solid #16a34a'
             label = html.escape(w['word'])
-        chips.append(f'<span title="{tip}" style="{style};border-radius:6px;padding:2px 8px;'
-                     f'margin:2px;display:inline-block;font-size:1.25rem">{label}</span>')
+        chips.append(f'<span title="{tip}" style="{style};border-radius:6px;padding:1px 6px;'
+                     f'margin:2px;display:inline-block;font-size:0.95rem">{label}</span>')
     return ' '.join(chips)
 
 
 def result_html(result, frames, reference=None):
+    """The English sentence large, then the recognised signs (with confidence) small underneath."""
     meta = f"{result['latency_ms']:.0f} ms · {frames} frames"
-    line = f"<div style='margin:10px 0'>{words_html(result)}"
-    if result['text']:
-        line += f"<div style='opacity:.8;margin-top:4px'>“{html.escape(readable(result['text']))}”</div>"
+    sentence = to_english(result['text']) if result['text'] else ''
+    line = "<div style='margin:12px 0'>"
+    if sentence:
+        line += f"<div style='font-size:1.7rem;font-weight:600;line-height:1.3'>{html.escape(sentence)}</div>"
+    line += f"<div style='margin-top:4px'><small style='opacity:.6'>signs:</small> {words_html(result)}</div>"
     if reference is not None:
         mark = '✅' if result['text'] == reference else '❌'
         line += f"<div style='opacity:.8'>{mark} reference: {html.escape(reference)}</div>"

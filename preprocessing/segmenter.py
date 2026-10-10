@@ -73,3 +73,26 @@ class SentenceSegmenter:
         if not long_enough:   # a hand flickered into view; not a sign
             return None
         return resample(np.stack(frames), times, self.target_fps)
+
+
+def split_signs(frames, gap_s=0.3, fps=30.0):
+    """Split one sentence (uniform frames at `fps`) into single signs wherever the hands drop for gap_s.
+
+    Returns (sign_clips, start_frames). Used in sign-by-sign mode, where the signer pauses between signs.
+    """
+    segmenter = SentenceSegmenter(pause_s=gap_s, min_sign_s=0.15, target_fps=None)
+    clips, starts, start = [], [], None
+    for i, frame in enumerate(frames):
+        if start is None and has_hands(frame):
+            start = i
+        piece = segmenter.push(frame, i * 1000.0 / fps)
+        if piece is not None:
+            clips.append(piece)
+            starts.append(start)
+        if not segmenter.active:
+            start = None
+    tail = segmenter.flush()
+    if tail is not None:
+        clips.append(tail)
+        starts.append(start if start is not None else 0)
+    return clips, starts

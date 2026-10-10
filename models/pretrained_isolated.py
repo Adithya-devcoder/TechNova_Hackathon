@@ -52,13 +52,91 @@ class IsolatedSignModel:
         return out
 
 
+# MediaPipe pose points that swap when the image is mirrored (left <-> right)
+_POSE_PAIRS = [(1, 4), (2, 5), (3, 6), (7, 8), (9, 10), (11, 12), (13, 14), (15, 16), (17, 18), (19, 20),
+               (21, 22), (23, 24), (25, 26), (27, 28), (29, 30), (31, 32)]
+_MIRROR = np.arange(543)
+_MIRROR[468:489], _MIRROR[522:543] = np.arange(522, 543), np.arange(468, 489)
+for _a, _b in _POSE_PAIRS:
+    _MIRROR[489 + _a], _MIRROR[489 + _b] = 489 + _b, 489 + _a
+
+
+def mirror(clip):
+    """Left-right mirror of [T, 543, 3] landmarks: flip x and swap the hands and left/right pose points."""
+    out = np.asarray(clip, np.float32)[:, _MIRROR].copy()
+    out[..., 0] = 1.0 - out[..., 0]
+    return out
+
+
+def _hand_span(clip):
+    hands = np.isfinite(clip[:, 468:489, 0]).any(1) | np.isfinite(clip[:, 522:543, 0]).any(1)
+    if not hands.any():
+        return None
+    first, last = np.where(hands)[0][[0, -1]]
+    return int(first), int(last) + 1
+
+
+def classify_sign(clip, iso, vocab=None, threshold=0.6, try_mirror=True):
+    """One sign clip -> word dict (as in predict()), or None if no hand is visible.
+
+    try_mirror: also score the mirrored clip and keep the more confident reading, in case the camera's
+    left/right convention differs from the training videos.
+    """
+    clip = np.asarray(clip, np.float32)
+    span = _hand_span(clip)
+    if span is None:
+        return None
+    a, b = span
+    piece = clip[a:b]
+    allowed = None if vocab is None else np.isin(iso.labels, list(vocab))
+
+    def score(x):
+        p = iso.probabilities(x)
+        if allowed is not None:
+            p = np.where(allowed, p, 0.0)
+            p = p / p.sum() if p.sum() > 0 else p
+        return p
+
+    p = score(piece)
+    if try_mirror:
+        pm = score(mirror(piece))
+        if pm.max() > p.max():
+            p = pm
+    top = np.argsort(-p)[:3]
+    conf = float(p[top[0]])
+    return {'word': iso.labels[top[0]], 'confidence': round(conf, 3), 'uncertain': conf < threshold,
+            'start': a, 'end': b, 'alternatives': [(iso.labels[k], round(float(p[k]), 3)) for k in top]}
+
+
+def _result(words, t0, min_confidence):
+    kept = [w for w in words if w is not None and w['confidence'] >= min_confidence]
+    return {'text': ' '.join(w['word'] for w in kept), 'words': kept,
+            'latency_ms': round((time.perf_counter() - t0) * 1000, 1)}
+
+
+def predict_signs(sign_clips, iso, vocab=None, threshold=0.6, min_confidence=0.0, offsets=None):
+    """Sign-by-sign recognition: one clip per sign (the signer pauses between signs).
+
+    Words below min_confidence are dropped, so gestures that are not signs produce no word.
+    """
+    t0 = time.perf_counter()
+    words = []
+    for i, clip in enumerate(sign_clips):
+        w = classify_sign(clip, iso, vocab, threshold)
+        if w is not None and offsets is not None:
+            w['start'] += offsets[i]
+            w['end'] += offsets[i]
+        words.append(w)
+    return _result(words, t0, min_confidence)
+
+
 def _segments(n_frames, centres):
     """Split [0, n_frames) into one piece per word, cutting halfway between neighbouring word positions."""
     cuts = [0] + [(a + b) // 2 for a, b in zip(centres, centres[1:])] + [n_frames]
     return [(cuts[i], max(cuts[i + 1], cuts[i] + 1)) for i in range(len(centres))]
 
 
-def predict_hybrid(landmarks, bundle, iso, vocab=None, min_sign_frames=8):
+def predict_hybrid(landmarks, bundle, iso, vocab=None, min_sign_frames=8, min_confidence=0.0):
     """Same output as signbridge_model.predict(), with each word re-recognised by the pretrained model.
 
     vocab: optional list of allowed signs (e.g. our 52); None allows all 250.
@@ -66,25 +144,19 @@ def predict_hybrid(landmarks, bundle, iso, vocab=None, min_sign_frames=8):
     t0 = time.perf_counter()
     base = sb.predict(landmarks, bundle)
     pts = np.asarray(landmarks, np.float32)
-    hands = np.isfinite(pts[:, 468:489, 0]).any(1) | np.isfinite(pts[:, 522:543, 0]).any(1)
-    if not hands.any():
+    span = _hand_span(pts)
+    if span is None:
         return base
-    first, last = np.where(hands)[0][[0, -1]]
-    clip = pts[first:last + 1]
+    first, last = span
+    clip = pts[first:last]
     centres = [w['start'] - first for w in base['words']] or [len(clip) // 2]   # no word found: one sign
-    allowed = None if vocab is None else np.isin(iso.labels, list(vocab))
     words = []
     for (a, b), centre in zip(_segments(len(clip), centres), centres):
         if b - a < min_sign_frames:   # widen very short pieces around the word position
             a, b = max(0, centre - min_sign_frames // 2), min(len(clip), centre + min_sign_frames // 2 + 1)
-        p = iso.probabilities(clip[a:b])
-        if allowed is not None:
-            p = np.where(allowed, p, 0.0)
-            p = p / p.sum() if p.sum() > 0 else p
-        top = np.argsort(-p)[:3]
-        conf = float(p[top[0]])
-        words.append({'word': iso.labels[top[0]], 'confidence': round(conf, 3),
-                      'uncertain': conf < bundle['threshold'], 'start': int(first + a), 'end': int(first + b),
-                      'alternatives': [(iso.labels[k], round(float(p[k]), 3)) for k in top]})
-    return {'text': ' '.join(w['word'] for w in words), 'words': words,
-            'latency_ms': round((time.perf_counter() - t0) * 1000, 1)}
+        w = classify_sign(clip[a:b], iso, vocab, bundle['threshold'])
+        if w is not None:
+            w['start'] += first + a
+            w['end'] += first + a
+        words.append(w)
+    return _result(words, t0, min_confidence)

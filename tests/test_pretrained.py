@@ -64,3 +64,32 @@ def test_real_pretrained_model_runs(bundle):
     assert p.shape == (250,) and abs(p.sum() - 1) < 1e-3
     out = pi.predict_hybrid(clip_with_hands(), bundle, iso)
     assert all(w['word'] in iso.labels for w in out['words'])
+
+
+def test_mirror_swaps_hands_and_flips_x():
+    clip = np.full((3, 543, 3), np.nan, np.float32)
+    clip[:, 468:489] = 0.2                     # left hand on the image left
+    clip[:, 489 + 11] = (0.3, 0.5, 0.0)        # left shoulder
+    m = pi.mirror(clip)
+    assert np.isnan(m[:, 468:489]).all() and np.allclose(m[:, 522:543, 0], 0.8)
+    assert np.allclose(m[:, 489 + 12, 0], 0.7)  # became the right shoulder, flipped
+    assert np.allclose(pi.mirror(m), clip, equal_nan=True)
+
+
+def test_sign_by_sign_drops_low_confidence(bundle):
+    class Unsure(FakeIsolated):
+        def probabilities(self, clip):
+            return np.array([0.34, 0.33, 0.33])
+    clips = [clip_with_hands(), clip_with_hands()]
+    sure = pi.predict_signs(clips, FakeIsolated(), offsets=[0, 40])
+    assert sure['text'] == 'zebra zebra' and sure['words'][1]['start'] >= 40
+    assert pi.predict_signs(clips, Unsure(), min_confidence=0.5)['text'] == ''
+
+
+def test_split_signs_at_short_pauses():
+    from preprocessing.segmenter import split_signs
+    sign = clip_with_hands()[5:20]                                   # 15 frames with a hand
+    gap = np.full((15, 543, 3), np.nan, np.float32)                  # 0.5 s hands down
+    sentence = np.concatenate([sign, gap, sign, gap, sign])
+    clips, starts = split_signs(sentence, gap_s=0.3, fps=30)
+    assert len(clips) == 3 and starts == [0, 30, 60]

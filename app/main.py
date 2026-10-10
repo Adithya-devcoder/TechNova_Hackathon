@@ -20,13 +20,16 @@ from evaluation.live_log import LOG_PATH, append_result, load_results, summarize
 from models import pretrained_isolated  # noqa: E402
 from models import signbridge_model as sb  # noqa: E402
 from preprocessing.landmarks import HolisticExtractor, draw_landmarks, video_to_landmarks  # noqa: E402
-from preprocessing.segmenter import SentenceSegmenter, resample  # noqa: E402
+from preprocessing.segmenter import SentenceSegmenter, resample, split_signs  # noqa: E402
 
 DEMO_SENTENCES = json.loads((ROOT / 'data' / 'demo_sentences.json').read_text(encoding='utf-8'))
 # Dataset sign names -> readable English, for display only
 READABLE = {'minemy': 'my', 'weus': 'we', 'hesheit': 'he/she', 'thankyou': 'thank you', 'icecream': 'ice cream'}
 
 st.set_page_config(page_title='SignBridge', page_icon='🤟', layout='wide')
+SIGN_BY_SIGN = 'Sign by sign: Kaggle 1st-place (most accurate live)'
+HYBRID = 'Hybrid: ours + Kaggle 1st-place (continuous)'
+OURS = 'Our model (BiGRU-CTC)'
 
 
 @st.cache_resource
@@ -87,13 +90,22 @@ with st.sidebar:
                                      help='Sentences are resampled to this rate before recognition.'))
     show_overlay = st.checkbox('Draw landmarks on video', True)
     hybrid_ready = pretrained_isolated.available()
-    recogniser = st.radio('Recogniser', ['Our model (BiGRU-CTC)', 'Hybrid: ours + Kaggle 1st-place'],
-                          index=1 if hybrid_ready else 0, disabled=not hybrid_ready,
-                          help='Hybrid: our model finds where each word is; the pretrained model names each sign.')
+    recogniser = st.radio('Recogniser', [SIGN_BY_SIGN, HYBRID, OURS], index=0 if hybrid_ready else 2,
+                          disabled=not hybrid_ready,
+                          help='Sign by sign: lower your hands briefly between signs; each sign goes to the '
+                               'Kaggle 1st-place model. Hybrid: continuous signing; our model finds the words, '
+                               'the pretrained model names them. Ours: our BiGRU-CTC alone.')
     if not hybrid_ready:
-        st.caption('Hybrid needs model.tflite and sign_to_prediction_index_map.json in models/kaggle_1st/.')
-    all_signs = st.checkbox('Hybrid: allow all 250 signs', False, disabled=not hybrid_ready,
-                            help='Off: only our 52-sign vocabulary.')
+        st.caption('Sign by sign and Hybrid need model.tflite and sign_to_prediction_index_map.json '
+                   'in models/kaggle_1st/.')
+    all_signs = st.checkbox('Allow all 250 signs', False, disabled=not hybrid_ready,
+                            help='Pretrained model only. Off: only our 52-sign vocabulary.')
+    min_conf = st.slider('Ignore gestures below this confidence', 0.0, 0.9, 0.25, 0.05, disabled=not hybrid_ready,
+                         help='Pretrained model only: a gesture that is not a known sign gets low confidence '
+                              'and is dropped instead of shown as a random word.')
+    if recogniser == SIGN_BY_SIGN:
+        sign_gap_s = st.slider('Sign by sign: hands-down gap between signs (s)', 0.15, 1.0, 0.3, 0.05)
+        sentence_end_s = st.slider('Sign by sign: hands-down time that ends the sentence (s)', 0.8, 4.0, 1.5, 0.1)
     with st.expander(f"Vocabulary ({len(bundle_base['vocab'])} ASL signs)"):
         st.write(', '.join(sorted(bundle_base['vocab'])))
     with st.expander('Demo sentences'):
@@ -102,12 +114,15 @@ with st.sidebar:
                'This prototype makes mistakes and must not replace a qualified interpreter.')
 
 bundle = dict(bundle_base, threshold=threshold)
+vocab = None if all_signs else bundle['vocab']
 
 
 def recognise(sentence):
-    if recogniser.startswith('Hybrid'):
-        return pretrained_isolated.predict_hybrid(sentence, bundle, load_pretrained(),
-                                                  vocab=None if all_signs else bundle['vocab'])
+    if recogniser == SIGN_BY_SIGN:
+        clips, starts = split_signs(sentence, gap_s=sign_gap_s, fps=target_fps)
+        return pretrained_isolated.predict_signs(clips, load_pretrained(), vocab, threshold, min_conf, starts)
+    if recogniser == HYBRID:
+        return pretrained_isolated.predict_hybrid(sentence, bundle, load_pretrained(), vocab, min_confidence=min_conf)
     return sb.predict(sentence, bundle)
 
 
@@ -121,7 +136,8 @@ def camera_loop(on_sentence, key):
     if not cap.isOpened():
         st.error(f'Could not open camera {cam_index}. Close other apps that use it, or try another index.')
         return
-    segmenter = SentenceSegmenter(pause_s=pause_s, target_fps=target_fps)
+    end_s = sentence_end_s if recogniser == SIGN_BY_SIGN else pause_s
+    segmenter = SentenceSegmenter(pause_s=end_s, target_fps=target_fps)
     extractor = HolisticExtractor()
     t0 = last = time.perf_counter()
     fps = 0.0
@@ -141,7 +157,9 @@ def camera_loop(on_sentence, key):
                 on_sentence(recognise(sentence), len(sentence))
             view = draw_landmarks(frame, landmarks) if show_overlay else frame
             frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')   # mirrored like a selfie view
-            state = '✋ signing… lower your hands to finish' if segmenter.active else 'waiting for hands'
+            hint = (f'lower your hands briefly between signs, and for {end_s:.1f} s to finish'
+                    if recogniser == SIGN_BY_SIGN else 'lower your hands to finish')
+            state = f'✋ signing… {hint}' if segmenter.active else 'waiting for hands'
             status_ph.caption(f'{state} · {fps:.0f} fps')
     finally:
         cap.release()
@@ -191,7 +209,8 @@ elif mode == 'Upload video':
         if whole:
             sentences = [resample(landmarks, times, target_fps)] if len(landmarks) else []
         else:
-            segmenter = SentenceSegmenter(pause_s=pause_s, target_fps=target_fps)
+            end_s = sentence_end_s if recogniser == SIGN_BY_SIGN else pause_s
+            segmenter = SentenceSegmenter(pause_s=end_s, target_fps=target_fps)
             sentences = [s for s in (segmenter.push(lm, t) for lm, t in zip(landmarks, times)) if s is not None]
             tail = segmenter.flush()
             if tail is not None:

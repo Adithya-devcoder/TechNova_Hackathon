@@ -58,8 +58,9 @@ PS-41 asks for a vocabulary of at least 50 signs, real-time inference on a lapto
 | Recognise an uploaded video (split into sentences automatically) | Implemented |
 | Live evaluation mode: sign reference sentences, get live WER | Implemented |
 | Hybrid with the Kaggle 1st-place pretrained model (250 signs) | Implemented; needs a separate download, not yet scored |
+| Sign-by-sign mode: brief pause between signs, each sign read by the pretrained model | Implemented; recommended for the live demo |
+| Rejecting gestures that are not signs (pretrained model's confidence below 0.25) | Implemented for the pretrained modes |
 | Translation into Tamil, Hindi and Telugu; text-to-speech | Future |
-| Rejecting gestures that are not in the vocabulary | Future (see [Limitations](#limitations)) |
 | Text-to-sign avatar | Future |
 
 ## How it works
@@ -108,7 +109,7 @@ On macOS or Linux use `.venv/bin/python` instead of `.venv\Scripts\python`.
 The app opens at http://localhost:8501. The MediaPipe model file (`models/holistic_landmarker.task`, 13.7 MB) downloads automatically on first use.
 
 **Using the app**
-1. Choose a mode in the sidebar: **Live webcam**, **Upload video** or **Live evaluation**.
+1. Choose a mode in the sidebar: **Live webcam**, **Upload video** or **Live evaluation**. With the pretrained files installed, the recogniser defaults to **Sign by sign**: lower your hands briefly between signs, and for 1.5 s to finish the sentence.
 2. Switch on the camera and sign a sentence using signs from the **Vocabulary** list in the sidebar (for example `mom drink water now`).
 3. Lower your hands for about a second. The sentence appears with confident words in green and uncertain words in amber with a "?". Hover over a word to see its alternatives.
 

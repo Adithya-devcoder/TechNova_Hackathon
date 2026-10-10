@@ -1,0 +1,31 @@
+<section id="limitations" data-transition="fade" style="background:#15202B;color:#F7F6F2;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">What it cannot do yet</h2>
+<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E2C3A;border:1px solid #2C3A48;padding:28px;border-radius:12px">
+<h3 style="font-size:28px;font-weight:600;color:#E8B04A">52 ASL signs, nothing else</h3>
+<p style="font-size:24px;line-height:1.4;color:#C9D3D6">There is no "not a sign" option. An unknown gesture is mapped to the closest known sign, usually with low confidence.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E2C3A;border:1px solid #2C3A48;padding:28px;border-radius:12px">
+<h3 style="font-size:28px;font-weight:600;color:#E8B04A">Synthetic sentences</h3>
+<p style="font-size:24px;line-height:1.4;color:#C9D3D6">Test sentences are joined isolated clips with interpolated transitions. Real co-articulation is only approximated.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E2C3A;border:1px solid #2C3A48;padding:28px;border-radius:12px">
+<h3 style="font-size:28px;font-weight:600;color:#E8B04A">Live accuracy unmeasured</h3>
+<p style="font-size:24px;line-height:1.4;color:#C9D3D6">Trained on phone videos with the older MediaPipe; the app uses a laptop webcam and MediaPipe Tasks. Live WER: [not yet measured].</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E2C3A;border:1px solid #2C3A48;padding:28px;border-radius:12px">
+<h3 style="font-size:28px;font-weight:600;color:#E8B04A">Hands and upper body only</h3>
+<p style="font-size:24px;line-height:1.4;color:#C9D3D6">Facial expressions carry grammar in sign languages. The model never sees the face.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E2C3A;border:1px solid #2C3A48;padding:28px;border-radius:12px">
+<h3 style="font-size:28px;font-weight:600;color:#E8B04A">One seed, three test signers</h3>
+<p style="font-size:24px;line-height:1.4;color:#C9D3D6">The normalisation ablation (21.0% against 24.6%) is consistent but has not been repeated across random seeds.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E2C3A;border:1px solid #2C3A48;padding:28px;border-radius:12px">
+<h3 style="font-size:28px;font-weight:600;color:#E8B04A">Glosses, not English</h3>
+<p style="font-size:24px;line-height:1.4;color:#C9D3D6">Output follows sign order, such as "mom drink water now". Translation into Tamil, Hindi and Telugu is future work.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#8A98A5">Processing stays on the laptop and no video is stored · This prototype must not replace a qualified interpreter</p>
+<aside>Be direct here: judges reward honest negatives. The biggest gap is out-of-vocabulary gestures: in testing, a raised middle finger came out as "see", because the model has to pick from 52 signs. Live accuracy is the number we most want and do not yet have; give the demo's live WER as it is.</aside>
+</section>

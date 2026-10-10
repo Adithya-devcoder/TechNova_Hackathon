@@ -1,0 +1,28 @@
+<section id="approach" data-transition="fade" style="background:#F7F6F2;color:#15202B;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Approach</h2>
+<p style="font-size:32px;line-height:1.4;color:#4A5568;max-width:1500px">The public dataset has single signs only. We build the continuous sentences ourselves, then teach a sequence model to read them.</p>
+<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFE;border:1px solid #DDDBD3;padding:32px;border-radius:12px">
+<p style="font-size:24px;font-weight:600;color:#1D7A74">1 · Data</p>
+<h3 style="font-size:30px;font-weight:600">Google ASL Signs</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">250 isolated signs, 21 signers, MediaPipe landmarks already extracted. We keep 52 signs that combine into sentences: 19,590 clips.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFE;border:1px solid #DDDBD3;padding:32px;border-radius:12px">
+<p style="font-size:24px;font-weight:600;color:#1D7A74">2 · Split</p>
+<h3 style="font-size:30px;font-weight:600">By signer</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">15 signers train, 3 validate, 3 test. A test signer never appears in training, so word error rate measures generalisation to new people.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFE;border:1px solid #DDDBD3;padding:32px;border-radius:12px">
+<p style="font-size:24px;font-weight:600;color:#1D7A74">3 · Core idea</p>
+<h3 style="font-size:30px;font-weight:600">Sentence synthesis</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">2–5 clips from the same signer, joined with 3–8 interpolated transition frames, speed 0.8–1.25×. Half template sentences, half random orders. 20,000 new sentences per epoch.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFE;border:1px solid #DDDBD3;padding:32px;border-radius:12px">
+<p style="font-size:24px;font-weight:600;color:#1D7A74">4 · Features</p>
+<h3 style="font-size:30px;font-weight:600">Signer normalisation</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">Mirror so the dominant hand is on one side, centre on the shoulders, scale by shoulder width. Add velocity and a presence flag per hand.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6A7179">Template example: mom drink water now · Random example: grandma like grandpa sleep · Output is gloss order, not English grammar</p>
+<aside>Four decisions. The data is ASL, not ISL, because it is the only public set with enough signers and ready landmarks for a credible held-out-signer test in 24 hours; the pipeline does not depend on the language. The split is by signer before anything else, and synthesis stays inside each split, so nothing leaks. Random sign orders stop the model from simply memorising the 16 template sentences.</aside>
+</section>

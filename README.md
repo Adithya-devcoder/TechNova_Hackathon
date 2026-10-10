@@ -1,438 +1,259 @@
-# SignBridge — Reliable Continuous Sign-to-Text
+# SignBridge: Continuous Sign-to-Text
 
-> Breaking communication barriers through reliable sign-language recognition.
+> Turns sequences of signs from a laptop webcam into text, and shows how sure it is about every word.
 
-SignBridge is a hackathon prototype for **continuous, sentence-level sign language recognition**, built for **TECHNOVA 2026**. It aims to convert sequences of signs, captured through a laptop webcam, into readable text, with confidence-aware output and an optional translation layer for English, Tamil, Hindi, and Telugu.
+SignBridge is our **TECHNOVA 2026** prototype for **PS-41: Continuous Sign Language Recognition at Sentence Level**. It recognises sentences made from a **52-sign American Sign Language (ASL) vocabulary**, runs in real time on a laptop CPU, and is evaluated on **signers it never saw during training**.
 
-**Category:** AI/ML · Computer Vision · Accessibility · Natural Language Processing
+**Category:** AI/ML · Computer Vision · Accessibility
 
-> **Project status:** Early-stage prototype. Features below are labelled **Implemented**, **Planned**, or **Future**. Nothing marked *Planned* or *Future* should be assumed to work yet. Update the status column as the codebase evolves.
+## Results at a glance
 
----
+Measured on **1,000 continuous test sentences signed by 3 people who never appear in training** (details in [Evaluation](#evaluation)).
 
-## Table of Contents
+| Method | Word error rate (WER) ↓ | WER, random sign orders ↓ |
+|---|---|---|
+| Baseline: sliding window + LogisticRegression | 175.8% | 166.2% |
+| Baseline + smoothing (tuned on validation signers) | 96.2% | 96.6% |
+| Ablation: our model without signer normalisation | 24.6% | 35.0% |
+| **SignBridge: BiGRU + CTC** | **21.0%** | **29.4%** |
 
-1. [Problem Statement](#problem-statement)
-2. [Why SignBridge Matters](#why-signbridge-matters)
-3. [Project Objectives](#project-objectives)
-4. [Project Deliverables](#project-deliverables)
-5. [Key Features](#key-features)
-6. [How the System Works](#how-the-system-works)
-7. [System Architecture](#system-architecture)
-8. [Technology Stack](#technology-stack)
-9. [Dataset and Data Preparation](#dataset-and-data-preparation)
-10. [Model Architecture and Design Choices](#model-architecture-and-design-choices)
-11. [Installation and Setup](#installation-and-setup)
-12. [Configuration](#configuration)
-13. [How to Run the Application](#how-to-run-the-application)
-14. [Example Usage](#example-usage)
-15. [Multilingual Support](#multilingual-support)
-16. [Evaluation Methodology](#evaluation-methodology)
-17. [Results and Performance Metrics](#results-and-performance-metrics)
-18. [Limitations](#limitations)
-19. [Privacy and Responsible Use](#privacy-and-responsible-use)
-20. [Future Enhancements](#future-enhancements)
-21. [Project Structure](#project-structure)
-22. [Team Roles and Responsibilities](#team-roles-and-responsibilities)
-23. [Team Integration Workflow](#team-integration-workflow)
-24. [24-Hour Work Plan](#24-hour-work-plan)
-25. [Contributing](#contributing)
-26. [License](#license)
-27. [Acknowledgements](#acknowledgements)
-28. [Team and Contact](#team-and-contact)
+- 510 of 1,000 sentences are recognised exactly right.
+- When the model is confident (mean word confidence ≥ 0.9), WER drops to **6.7%**; below 0.6 it is **74.6%**, so the uncertainty flags are meaningful.
+- Recognition takes **8 ms for 1 s of signing and 77 ms for 10 s** on a laptop CPU.
 
----
+These test sentences are built from isolated dataset clips (see [How it works](#how-it-works)). **Live webcam accuracy has not been measured yet**; the app includes a mode for exactly that.
 
-## Problem Statement
+## Contents
+1. [Problem](#problem)
+2. [What the prototype does](#what-the-prototype-does)
+3. [How it works](#how-it-works)
+4. [Quick start](#quick-start)
+5. [Reproduce training](#reproduce-training)
+6. [Evaluation](#evaluation)
+7. [Optional: pretrained hybrid recogniser](#optional-pretrained-hybrid-recogniser)
+8. [Model input and output](#model-input-and-output)
+9. [Project structure](#project-structure)
+10. [Limitations](#limitations)
+11. [Privacy and responsible use](#privacy-and-responsible-use)
+12. [Future work](#future-work)
+13. [Acknowledgements and licences](#acknowledgements-and-licences)
 
-**Continuous Sign Language Recognition at Sentence Level.**
+## Problem
 
-Recognizing individual signs or fingerspelled letters is a comparatively well-studied task. Understanding *continuous* signing, where signs flow into one another, and converting whole signed sentences into text is much harder. A usable system must:
+Recognising single signs or fingerspelled letters is well studied. Understanding **continuous** signing, where signs flow into one another, is much harder. A usable system has to:
+- read **sequences** of signs, not single clips;
+- cope with **variation between signers** (speed, style, body size, camera position);
+- produce **readable text**, and be honest about its mistakes.
 
-- process **sequences** of signs rather than isolated clips,
-- cope with **variation between signers** (speed, style, body proportions, camera position),
-- and produce **readable text** as output.
+PS-41 asks for a vocabulary of at least 50 signs, real-time inference on a laptop, word error rate on unseen signers, and a live demo of at least 10 full sentences.
 
-## Why SignBridge Matters
+## What the prototype does
 
-Many Deaf and hard-of-hearing people use sign language as their primary language, while most hearing people do not understand it. This gap affects everyday situations such as healthcare, education, public services, and workplaces. A reliable sign-to-text tool could help reduce that gap, but only if it is honest about its errors and generalizes beyond the few people it was trained on. SignBridge is built around that idea.
+| Feature | Status |
+|---|---|
+| Continuous recognition of sign sequences (52 ASL signs) | Implemented, tested on held-out signers |
+| Hand and body landmark extraction (MediaPipe Holistic) | Implemented |
+| Real-time webcam app: sign, lower your hands, read the sentence | Implemented; live accuracy not yet measured |
+| Confidence for every word; uncertain words flagged with top-3 alternatives | Implemented |
+| Recognise an uploaded video (split into sentences automatically) | Implemented |
+| Live evaluation mode: sign reference sentences, get live WER | Implemented |
+| Hybrid with the Kaggle 1st-place pretrained model (250 signs) | Implemented; needs a separate download, not yet scored |
+| Translation into Tamil, Hindi and Telugu; text-to-speech | Future |
+| Rejecting gestures that are not in the vocabulary | Future (see [Limitations](#limitations)) |
+| Text-to-sign avatar | Future |
 
-## Project Objectives
-
-- Recognize a vocabulary of **at least 50 signs** in continuous sequences.
-- Run **real-time inference on a laptop** using a webcam.
-- Measure **Word Error Rate (WER)** on **held-out signers** not seen during training.
-- Demonstrate at least **10 complete sentences** live.
-- Surface **uncertainty** in predictions instead of hiding it.
-
-## Project Deliverables
-
-| # | Deliverable | Status |
-|---|-------------|--------|
-| 1 | Working prototype (real-time sign-to-text on a laptop) | Planned |
-| 2 | Public GitHub repository | `[TBD]` |
-| 3 | Reproducible README (setup and run steps verified on a clean environment) | Planned |
-| 4 | Baseline comparison (baseline vs. SignBridge model) | Planned |
-| 5 | Honest evaluation report (WER, latency, held-out-signer results, including failures) | Planned |
-| 6 | Live demo of at least 10 complete sentences | Planned |
-| 7 | Three-minute demo | Planned |
-| 8 | Six-slide technical pitch deck | Planned |
-
-> Update the status column only when each item is actually complete.
-
-## Key Features
-
-| # | Feature | Status |
-|---|---------|--------|
-| 1 | Continuous sign-language recognition (sequences, not just isolated signs) | Planned |
-| 2 | Indian Sign Language (ISL) as the initial target language | Planned |
-| 3 | Pose and hand landmark extraction | Planned |
-| 4 | Temporal sequence modelling (LSTM, Transformer, or CTC-based; to be compared) | Planned |
-| 5 | Real-time webcam inference on a laptop | Planned |
-| 6 | Confidence-aware predictions (flagging uncertain words/sentences) | Planned |
-| 7 | Correction mechanism for recognition errors (where feasible) | Planned |
-| 8 | Multilingual text output: English, Tamil, Hindi, Telugu via a translation layer | Planned |
-| 9 | Optional text-to-speech of the output | Planned |
-| 10 | Text-to-sign generation or avatar-based interface | Future |
-
-> Replace "Planned" with "Implemented" only once the feature works in the repository and has been tested.
-
-### What makes SignBridge different
-
-SignBridge's intended differentiator is **reliable continuous recognition with confidence-aware output**. Beyond basic isolated-sign classification, it aims to:
-
-- process sequences of signs,
-- evaluate generalization to **unseen signers**,
-- report **word-level** recognition errors,
-- identify uncertain predictions and allow corrections where feasible,
-- support several spoken-language outputs through a **separate translation layer**.
-
-These are design goals. They are not claims of being the first or best solution.
-
-## How the System Works
-
-1. **Capture:** Frames are read from the webcam.
-2. **Frame processing:** Frames are resized and normalized.
-3. **Landmark extraction:** Hand, pose, and (optionally) face landmarks are extracted per frame, reducing raw video to compact numerical features.
-4. **Sequence modelling:** A temporal model reads the landmark sequence and predicts the signed words.
-5. **Confidence assessment:** Each predicted word receives a confidence score; low-confidence words are flagged.
-6. **Sentence output:** Predicted words are assembled into text shown in the interface.
-7. **Optional steps:** Translation into other languages and text-to-speech.
-
-## System Architecture
-
-> Proposed pipeline. Dashed boxes are optional components and are not assumed to be working.
+## How it works
 
 ```mermaid
 flowchart LR
-    A[Webcam input] --> B[Frame processing]
-    B --> C[Hand and body landmark extraction]
-    C --> D[Temporal sequence model]
-    D --> E[Sign-to-text prediction]
-    E --> F[Confidence assessment]
-    F --> G[Sentence output]
-    G -.-> H[Optional: translation layer]
-    H -.-> I[Optional: text-to-speech]
-    F -.-> J[Optional: user correction]
-    J -.-> G
-
-    style H stroke-dasharray: 5 5
-    style I stroke-dasharray: 5 5
-    style J stroke-dasharray: 5 5
+    A[Webcam or video] --> B[MediaPipe Holistic<br/>543 landmarks per frame]
+    B --> C[Sentence segmenter<br/>hands up ... hands down 0.7 s<br/>resample to 30 fps]
+    C --> D[Features<br/>hands + upper body,<br/>signer-normalised]
+    D --> E[BiGRU + CTC]
+    E --> F[Greedy CTC decoding<br/>+ per-word confidence]
+    F --> G[Text with uncertain<br/>words flagged]
 ```
 
-## Technology Stack
+**1. Data.** [Google ASL Signs](https://www.kaggle.com/competitions/asl-signs) (Kaggle): 94,477 clips of 250 isolated signs from 21 signers, with MediaPipe Holistic landmarks already extracted. We use **52 signs that combine into sentences** (people, pronouns, actions, food, places, feelings, time): 19,590 clips.
 
-> **Proposed stack.** Verify against `requirements.txt` and the actual code before publishing.
+**2. Signer-disjoint split.** 15 signers for training, 3 for validation, **3 for testing** (`data/splits/split.json`). Nothing from a test signer is ever used in training.
 
-| Area | Tool |
-|------|------|
-| Language | Python |
-| Video capture and image processing | OpenCV |
-| Landmark extraction | MediaPipe Holistic (or another suitable hand/body landmark extractor) |
-| Deep learning | PyTorch |
-| Data handling | NumPy, Pandas |
-| Baselines and evaluation utilities | scikit-learn |
-| Word Error Rate | jiwer |
-| User interface | Streamlit |
-| Version control | Git and GitHub |
+**3. Continuous sentences from isolated clips (the core idea).** The dataset has single signs only, so we build sentences: 2–5 clips **from the same signer and the same split** are joined, each clip is randomly sped up or slowed down (0.8–1.25×), and 3–8 interpolated frames are inserted between signs to imitate the movement from one sign to the next. Half the sentences follow 16 meaningful templates (for example `mom drink water now`); half are random sign orders, so the model cannot simply memorise sentences. Training draws 20,000 new sentences per epoch.
 
-FastAPI will be added only if a separate backend API turns out to be necessary.
+**4. Features.** Per frame we keep both hands (2 × 21 points) and 7 upper-body points (nose, shoulders, elbows, wrists). Each sentence is **signer-normalised**: mirrored so the dominant hand is always on the same side, centred on the shoulder midpoint and scaled by shoulder width. We add frame-to-frame velocity and a presence flag per hand: 198 numbers per frame. Missing hands are handled explicitly rather than treated as real coordinates.
 
-## Dataset and Data Preparation
+**5. Model.** Linear projection → residual 1D convolution → 2-layer bidirectional GRU (256 units) → per-frame sign probabilities, trained with **CTC loss**, which learns where each sign is without frame-level labels. 2.38M parameters.
 
-> No dataset has been confirmed as downloaded or processed in this repository. Update this section with real details once data work is done.
+**6. Decoding and confidence.** Greedy CTC decoding. A word's confidence is its average probability over the frames that produced it; words below 0.6 (adjustable) are flagged as uncertain, with the top-3 alternatives.
 
-### Candidate datasets
+**7. Live use.** The app collects frames while hands are visible and recognises the sentence once the hands have been down for 0.7 s. MediaPipe runs at about 11 fps on our laptop CPU, so each sentence is resampled to the 30 fps the model was trained on.
 
-| Dataset | Language | Notes |
-|---------|----------|-------|
-| [ISLTranslate](https://github.com/Exploration-Lab/ISLTranslate) | Indian Sign Language | Most relevant starting candidate for an ISL project. Current structure, availability, annotations, and license must be verified. |
-| [How2Sign](https://how2sign.github.io/) | American Sign Language | Large-scale ASL dataset. Cannot simply replace an ISL dataset. |
-| [WLASL](https://github.com/dxli94/WLASL) | American Sign Language | Word-level ASL dataset. Cannot simply replace an ISL dataset. |
+## Quick start
 
-ASL and ISL are different languages with different vocabularies and grammar. How2Sign and WLASL may still be useful for experimenting with the pipeline or for pretraining ideas, but they do not provide ISL recognition by themselves.
+Requires Python 3.13 (tested on Windows 11, CPU only), Git and a webcam.
 
-### Planned data preparation steps
+```powershell
+git clone https://github.com/Adithya-devcoder/TechNova_Hackathon.git
+cd TechNova_Hackathon
+git checkout test-abe
 
-1. Verify dataset availability, structure, and license.
-2. Select a vocabulary of at least 50 signs and the sentences that use them.
-3. Extract landmarks from videos and save them as feature files.
-4. Split data **by signer**, so evaluation signers never appear in training.
-5. Document the final vocabulary, number of signers, and number of samples.
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
 
-### Licensing and consent
-
-Check each dataset's **license, usage restrictions, consent terms, and attribution requirements** before using it, especially before any commercial deployment. Do not redistribute datasets or commit them to this repository.
-
-## Model Architecture and Design Choices
-
-> To be finalized. Document what is actually built.
-
-Candidate approaches under consideration:
-
-- **Baseline:** a simple classifier (for example, scikit-learn) on landmark features, used for comparison.
-- **LSTM / GRU:** recurrent models over landmark sequences.
-- **Transformer encoder:** attention over the landmark sequence.
-- **CTC loss:** lets the model learn alignment between a frame sequence and a word sequence without frame-level labels, which suits continuous signing.
-
-Design choices to record here once decided: input features, sequence length, model size, loss function, training setup, and how confidence scores are computed (for example, softmax probability or other calibration methods).
-
-## Installation and Setup
-
-> These commands are templates. The final commands **must match the actual repository structure**. Replace placeholders accordingly.
-
-**Prerequisites:** Python 3.x (`[Python version]`), `git`, and a working webcam.
-
-```bash
-# 1. Clone the repository
-git clone [GitHub Repository URL]
-cd [repository-folder]
-
-# 2. Create a virtual environment
-python -m venv venv
-
-# 3. Activate it
-# Windows (PowerShell):
-venv\Scripts\Activate.ps1
-# macOS / Linux:
-source venv/bin/activate
-
-# 4. Install dependencies
-pip install -r requirements.txt
+.venv\Scripts\python -m streamlit run app/main.py
 ```
 
-## Configuration
+On macOS or Linux use `.venv/bin/python` instead of `.venv\Scripts\python`.
 
-Describe any configuration here once it exists, for example:
+The app opens at http://localhost:8501. The MediaPipe model file (`models/holistic_landmarker.task`, 13.7 MB) downloads automatically on first use.
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `[camera index]` | Which webcam to use | `[TBD]` |
-| `[model path]` | Location of trained model weights | `[TBD]` |
-| `[confidence threshold]` | Below this, a word is flagged as uncertain | `[TBD]` |
-| `[target language]` | Output language for the translation layer | `[TBD]` |
+**Using the app**
+1. Choose a mode in the sidebar: **Live webcam**, **Upload video** or **Live evaluation**.
+2. Switch on the camera and sign a sentence using signs from the **Vocabulary** list in the sidebar (for example `mom drink water now`).
+3. Lower your hands for about a second. The sentence appears with confident words in green and uncertain words in amber with a "?". Hover over a word to see its alternatives.
 
-Large model weights should be stored outside the repository (for example, in releases or external storage) and linked from here.
-
-## How to Run the Application
-
-> Replace with the real entry point once confirmed.
-
-```bash
-# Example only, if the Streamlit app lives at app/main.py
-streamlit run [path/to/app_entry_point.py]
+**Other commands**
+```powershell
+.venv\Scripts\python -m pytest                          # 25 automated tests
+.venv\Scripts\python -m evaluation.benchmark_latency    # latency on this machine
+.venv\Scripts\python -m evaluation.error_analysis       # regenerate evaluation/error_analysis.md
+.venv\Scripts\python -m evaluation.live_log             # live WER from Live evaluation mode
+.venv\Scripts\python -m models.predict_clip clip.npy    # recognise one saved clip [T, 543, 3]
 ```
 
-Then open the local URL shown in the terminal (typically `http://localhost:8501`) and allow webcam access.
+## Reproduce training
 
-## Example Usage
+Training runs in a Kaggle notebook, where the 40 GB dataset is already available.
 
-Fill this in with real behaviour after testing. A suggested format:
+1. Accept the competition rules at https://www.kaggle.com/competitions/asl-signs/rules.
+2. At https://www.kaggle.com/competitions/asl-signs/code, click **New Notebook**, then **File → Import Notebook** and choose [training/signbridge_kaggle.ipynb](training/signbridge_kaggle.ipynb).
+3. In the notebook settings, set **Accelerator: GPU** and **Internet: On**, and check that `asl-signs` is attached as input.
+4. Run the cells in order. On a Tesla T4: loading the clips takes about 2.5 min, the baseline about 2 min, and training (25 epochs, about 42 s each) about 18 min.
+5. The last cell writes `signbridge_member1.zip` with `model_main.pt`, `signbridge_model.py`, `split.json`, `results.md` and `test_predictions.csv`. Unzip the files into `models/`, `data/splits/` and `evaluation/`.
 
-| Signed sentence (ISL) | Recognized text | Confidence flags | Notes |
-|-----------------------|-----------------|------------------|-------|
-| `[sentence 1]` | `[output]` | `[TBD]` | `[TBD]` |
-| `[sentence 2]` | `[output]` | `[TBD]` | `[TBD]` |
+Training settings: AdamW, one-cycle learning rate (max 2e-3), batch 64, mixed precision, random rotation (±12°), scaling, shifting, noise, and brief hand dropouts. The split is seeded (42), so the same signers land in the same split every time.
 
-Add screenshots or a short demo GIF here: `![Demo](docs/demo.gif)`. Only include media that you have permission to share.
+## Evaluation
 
-## Multilingual Support
+**Metric.** Word error rate: (substitutions + deletions + insertions) ÷ reference words, computed by our own implementation and cross-checked with `jiwer` (both gave 21.0%).
 
-SignBridge aims to show recognized meaning in **English, Tamil, Hindi, and Telugu**.
+**Test set.** 1,000 continuous sentences built only from the 3 test signers' clips: 460 template sentences and 540 random sign orders. Template sentences also appear in training (signed by other people), so their WER is optimistic; **the random-order WER (29.4%) is the purer recognition number.**
 
-- ISL is a **distinct language**, not a word-for-word encoding of any spoken language.
-- Output in other languages therefore needs an **appropriate translation step**, not simple word substitution.
-- The translation layer is **separate** from sign recognition, so recognition accuracy and translation quality should be evaluated independently.
-- Translation tooling (`[translation method / library]`) is **to be decided**.
+**Baselines.** A sliding-window LogisticRegression classifier on window statistics (175.8% WER: it outputs many extra words). A fairer version only outputs a word when 3 consecutive windows agree, with 3 chosen on the validation signers, not the test signers (96.2%).
 
-## Evaluation Methodology
+**Ablation.** Removing signer normalisation raises WER from 21.0% to 24.6%, and from 29.4% to 35.0% on random orders. This is a single run with one random seed on 3 test signers, so the gain is consistent but not yet confirmed across seeds.
 
-### Word Error Rate (WER)
+**Error analysis** ([evaluation/error_analysis.md](evaluation/error_analysis.md))
+- 84% of errors are substitutions (a wrong sign); missed and extra signs are rare.
+- The hardest signs are pizza (64% wrong), girl (55%) and give (51%). The most frequent confusion is pizza → brother.
+- Confidence tracks correctness: 80% of sentences with mean confidence ≥ 0.9 are exactly right, against 2% below 0.6.
+
+**Latency** (`predict()` on one whole sentence, measured with `evaluation/benchmark_latency.py` on an Intel laptop CPU, 1 thread)
+
+| Sentence length | 1 s | 2 s | 3 s | 5 s | 10 s |
+|---|---|---|---|---|---|
+| Median latency | 8.4 ms | 16.1 ms | 22.7 ms | 42.0 ms | 76.7 ms |
+
+MediaPipe landmark extraction, at about 11 fps on the same CPU, is the slower part of the live pipeline.
+
+**Live evaluation (still to do).** In the app's **Live evaluation** mode, pick a reference sentence, sign it, and every attempt is saved to `evaluation/live_results.csv` with a running live WER. PS-41 asks for at least 10 complete sentences; `data/demo_sentences.json` lists 16.
+
+Full results: [evaluation/results.md](evaluation/results.md). Per-sentence predictions: [evaluation/test_predictions.csv](evaluation/test_predictions.csv).
+
+## Optional: pretrained hybrid recogniser
+
+`models/pretrained_isolated.py` combines our model with the **1st-place model of the Kaggle ASL Signs competition** (Hoyeol Sohn, 1D-CNN + Transformer, 250 signs). Our BiGRU-CTC finds where each word is in the sentence; the pretrained model decides which sign each piece is. The app's sidebar switches between **Our model** and **Hybrid**.
+
+To enable it:
+1. Download `model.tflite` from the output of https://www.kaggle.com/code/hoyso48/1st-place-solution-inference.
+2. Download `sign_to_prediction_index_map.json` from https://www.kaggle.com/competitions/asl-signs/data.
+3. Put both in `models/kaggle_1st/` and install TensorFlow: `.venv\Scripts\python -m pip install tensorflow==2.20.0`.
+
+**Caveat:** the pretrained model was trained on every ASL Signs signer, including our test signers, so it must not be scored on our test split. Evaluate it only with live signing by new people. Its weights are not committed because their licence is not stated.
+
+## Model input and output
+
+```python
+from models import signbridge_model as sb
+
+bundle = sb.load_model()          # models/model_main.pt, CPU
+result = sb.predict(landmarks)    # float32 [T, 543, 3], one whole signed sentence
+```
+
+- **Input:** MediaPipe Holistic landmarks in the dataset's row order (face 0–467, left hand 468–488, pose 489–521, right hand 522–542), raw normalised x, y, z, **NaN for anything not detected**, at about 30 fps. `preprocessing/landmarks.py` produces exactly this from video frames.
+- **Output:**
+  ```json
+  {"text": "mom drink water",
+   "words": [{"word": "mom", "confidence": 0.94, "uncertain": false, "start": 12, "end": 13,
+              "alternatives": [["mom", 0.94], ["dad", 0.03], ["hello", 0.01]]}],
+   "latency_ms": 9.8}
+  ```
+
+## Project structure
 
 ```
-WER = (Substitutions + Deletions + Insertions) / Number of reference words
+app/main.py                       Streamlit app: live webcam, upload video, live evaluation
+preprocessing/landmarks.py        Frames -> MediaPipe Holistic landmarks [543, 3], skeleton overlay
+preprocessing/segmenter.py        Live stream -> sentences (hands up/down), resampling to 30 fps
+models/signbridge_model.py        Features, BiGRU-CTC model, decoding, predict()
+models/model_main.pt              Trained weights (9.5 MB)
+models/pretrained_isolated.py     Optional hybrid with the Kaggle 1st-place model
+models/predict_clip.py            Recognise one saved clip and check its format
+training/signbridge_kaggle.ipynb  Full training and evaluation notebook (Kaggle)
+evaluation/results.md             Test results, baselines, ablation, latency
+evaluation/error_analysis.md      Error types, confusions, confidence analysis (made by error_analysis.py)
+demo/demo_script.md               3-minute demo script with the sentence order and fallback
+evaluation/live_log.py            Live demo log and live WER
+evaluation/benchmark_latency.py   Latency benchmark
+data/splits/split.json            Signer-disjoint train/val/test split
+data/demo_sentences.json          16 demo sentences
+tests/                            Automated tests (model, preprocessing, evaluation, hybrid)
 ```
 
-Lower is better. WER can exceed 100% if there are many insertions. It is computed by aligning the predicted word sequence against the reference sentence, for example with [`jiwer`](https://github.com/jitsi/jiwer).
-
-### Why unseen signers matter
-
-If the same signers appear in both training and test data, a model can learn individual habits (hand shape, speed, camera framing) instead of the signs themselves, and results look better than they truly are. Testing on **signers excluded from training** measures whether the model generalizes to new people, which is what real users will be.
-
-### Planned evaluation setup
-
-- Split train/validation/test **by signer**.
-- Report WER on the held-out-signer test set.
-- Measure inference latency on the target laptop (state hardware).
-- Run a live demonstration of at least 10 complete sentences and record the results honestly, including failures.
-
-## Results and Performance Metrics
-
-> No measurements have been recorded yet. **Do not fill in numbers that were not actually measured.**
-
-| Metric | Baseline | SignBridge | Evaluation method |
-|--------|----------|------------|-------------------|
-| Word Error Rate (WER) | TBD | TBD | Held-out signer test set |
-| Inference latency | TBD | TBD | Measure on target laptop |
-| Vocabulary size | TBD | TBD | Count validated signs |
-| Complete sentences tested | TBD | TBD | Document test examples |
-| Unseen-signer performance | TBD | TBD | Test on signers excluded from training |
+The dataset itself is not in the repository; it stays on Kaggle.
 
 ## Limitations
 
-- The prototype is limited to a small vocabulary and a limited set of sentence patterns.
-- Performance may drop with different lighting, backgrounds, camera angles, signing speeds, or signers not represented in training data.
-- Continuous sign recognition is an open research problem, so errors are expected.
-- Facial expressions and body movement carry grammatical meaning in sign languages, and the current feature set may capture them only partially.
-- Translation into other languages may lose nuance.
-- Dataset constraints (size, signer diversity, licensing) limit what the model can learn.
+- **Only 52 ASL signs.** Anything else is not recognised. The model has no "not a sign" option, so an unrelated gesture is often mapped to the closest-looking sign (in testing, a raised middle finger came out as "see"), usually with low confidence. Training with clips of other signs as negatives would fix this.
+- **ASL, not Indian Sign Language.** We used the dataset with enough signers and ready landmarks for a credible held-out-signer evaluation in 24 hours. The pipeline does not depend on the language; switching to ISL means swapping the dataset.
+- **Synthetic sentences.** Test sentences are joined isolated clips with interpolated transitions, not real continuous signing, so real co-articulation is only approximated.
+- **Live performance is unmeasured.** The model was trained on phone videos processed with the older MediaPipe Holistic API; the app uses a laptop webcam and the newer MediaPipe Tasks API. Expect live accuracy below the test numbers.
+- **Hands and upper body only.** Facial expressions, which carry grammar in sign languages, are not used.
+- **Glosses, not English grammar.** Output follows sign order (`mom drink water now`), with only light clean-up for display (`minemy` → "my").
+- **Overconfident words.** CTC predicts each word in a single frame, so confidences on correct words are close to 1.0.
 
-## Privacy and Responsible Use
+## Privacy and responsible use
 
-- Process webcam frames **locally** where practical.
-- **Do not store webcam footage by default.**
-- Obtain **informed consent** before collecting or using recordings of signers.
-- Do not upload personal recordings to public repositories.
-- This prototype can make mistakes. It **must not replace qualified human interpreters** in critical situations such as medical, legal, or emergency settings.
-- Involve Deaf and hard-of-hearing community members in testing and feedback wherever possible.
+- Webcam frames are processed on the computer running the app and are **never stored**. Uploaded videos are deleted right after processing.
+- Live evaluation saves only text results (reference, recognised words, confidence, latency), not video.
+- This prototype makes mistakes. It **must not replace qualified interpreters**, especially in medical, legal or emergency settings.
+- Testing with Deaf and hard-of-hearing signers is needed before any real use.
 
-## Future Enhancements
+## Future work
 
-- Larger vocabulary and more signers for better generalization.
-- Stronger confidence calibration and an in-app correction loop that feeds back into training.
-- Better handling of facial expressions and non-manual markers.
-- Text-to-sign generation or an avatar-based interface, subject to data and time.
-- Lightweight or on-device deployment (for example, mobile).
+- Reject out-of-vocabulary gestures by training with the dataset's other 198 signs as negatives.
+- Measure live WER with new signers, then fine-tune on a small amount of real continuous signing.
+- Add face landmarks and a stronger model (Transformer or Conformer); repeat the ablation over several seeds.
+- Translation of recognised sentences into Tamil, Hindi and Telugu, and text-to-speech.
+- Indian Sign Language with an ISL dataset; text-to-sign avatar.
 
-## Project Structure
+## Acknowledgements and licences
 
-> Example structure. Update to match the real repository.
+- Data: [Google – Isolated Sign Language Recognition](https://www.kaggle.com/competitions/asl-signs) (Kaggle, ASL Signs), used under the competition's terms. The data is not redistributed here.
+- Landmarks: [MediaPipe](https://github.com/google-ai-edge/mediapipe) Holistic Landmarker (Apache 2.0).
+- Optional pretrained model: [Hoyeol Sohn's 1st-place solution](https://github.com/hoyso48/Google---Isolated-Sign-Language-Recognition-1st-place-solution) (code under MIT).
+- Libraries: PyTorch, NumPy, pandas, scikit-learn, Streamlit, OpenCV, jiwer.
+- Problem statement: TECHNOVA 2026 organisers, PS-41.
 
-```
-signbridge/
-├── app/              # User interface and application entry point (e.g. Streamlit)
-├── data/             # Local data placeholders and instructions (do not commit large datasets)
-├── models/           # Model definitions; trained weights stored externally if large
-├── preprocessing/    # Frame handling, landmark extraction, dataset preparation
-├── training/         # Training scripts and configuration
-├── evaluation/       # WER computation, latency measurement, signer-held-out evaluation
-├── tests/            # Unit and integration tests
-├── notebooks/        # Exploration and experiments
-├── requirements.txt  # Python dependencies
-├── .gitignore        # Excludes data, weights, caches, and generated files
-├── README.md
-└── LICENSE
-```
+**Licence:** `[to be chosen, e.g. MIT]`. Third-party data and models keep their own licences.
 
-Avoid committing large datasets, model weights, private recordings, or generated files. Use `.gitignore` and external storage instead.
+## Team
 
-## Team Roles and Responsibilities
+| Name | Contact |
+|---|---|
+| `[Name]` | `[Email / LinkedIn]` |
+| `[Name]` | `[Email / LinkedIn]` |
+| `[Name]` | `[Email / LinkedIn]` |
+| `[Name]` | `[Email / LinkedIn]` |
 
-Our team has four members. Replace the placeholders with real names.
-
-| Role | Member | Responsibilities |
-|------|--------|------------------|
-| **AI/ML Model Lead** | `[Member 1 Name]` | Dataset selection, baseline classifier, temporal model (LSTM/GRU, or Transformer if feasible), model training, prediction function, and model evaluation |
-| **Computer Vision Lead** | `[Member 2 Name]` | OpenCV webcam capture, MediaPipe hand/body landmark extraction, frame preprocessing, landmark sequence generation, and data preparation |
-| **Frontend and Integration Lead** | `[Member 3 Name]` | Streamlit UI, webcam integration, recognized sentence display, multilingual output selection, confidence highlighting, and integration of all modules |
-| **Evaluation and Submission Lead** | `[Member 4 Name]` | WER evaluation, held-out-signer testing where data permits, latency measurement, test cases, GitHub documentation, demo preparation, and six-slide pitch deck |
-
-## Team Integration Workflow
-
-Data flows through the system as follows:
-
-**Webcam → Landmark extraction → Sign recognition model → Confidence assessment → Sentence output → Optional translation and text-to-speech**
-
-### Interfaces between members
-
-> The interfaces below are a proposed starting point. Agree on exact names, formats, and shapes early, and update this table to match the code.
-
-| From | To | Hand-off |
-|------|----|----------|
-| Computer Vision Lead | AI/ML Model Lead | Landmark sequences per clip or window, plus labels and the signer-based split (format and shape: `[TBD]`) |
-| AI/ML Model Lead | Frontend and Integration Lead | A prediction function that takes a landmark sequence and returns predicted words with confidence scores (function name and signature: `[TBD]`) |
-| Computer Vision Lead | Frontend and Integration Lead | Live landmark extraction from the webcam in the same format used for training |
-| AI/ML Model Lead and Computer Vision Lead | Evaluation and Submission Lead | Trained model, prediction function, and held-out-signer data for WER, latency, and test cases |
-| Evaluation and Submission Lead | All | Measured results, test sentences, README updates, demo script, and pitch deck |
-
-### Branching
-
-Use one branch per area, and merge into `main` through pull requests:
-
-| Branch | Owner |
-|--------|-------|
-| `vision` | Computer Vision Lead |
-| `model` | AI/ML Model Lead |
-| `frontend` | Frontend and Integration Lead |
-| `evaluation` | Evaluation and Submission Lead |
-
-### Working in parallel with mock predictions
-
-The frontend does not have to wait for the trained model. Until the real model is ready, the Frontend and Integration Lead can build the UI against a **mock prediction function** that returns fixed sample words with made-up confidence scores in the agreed format. Swapping in the real function should then need only a small change. Mock outputs are for development only: clearly label them in the code, never report them as results, and remove them before the final demo.
-
-## 24-Hour Work Plan
-
-| Hours | Focus |
-|-------|-------|
-| 0–2 | Dataset, vocabulary, architecture, and GitHub setup |
-| 2–8 | Parallel development of vision, model baseline, frontend, and evaluation scripts |
-| 8–14 | Integration of all core modules |
-| 14–18 | Testing and improving recognition; confidence handling if feasible |
-| 18–21 | WER, latency, sentence demonstrations, and multilingual output if feasible |
-| 21–24 | Bug fixes, README verification, demo rehearsal, and pitch completion |
-
-Items marked "if feasible" should be dropped from the demo, and listed as *Planned* or *Future* in this README, if they are not working in time.
-
-## Contributing
-
-Contributions and feedback are welcome.
-
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/your-feature`.
-3. Make your changes with clear commit messages.
-4. Test your changes and update documentation if needed.
-5. Open a pull request describing what you changed and why.
-
-Please do not submit personal recordings or datasets without confirming consent and licensing.
-
-## License
-
-`[License]` — choose a license (for example MIT or Apache-2.0) and add a matching `LICENSE` file. Third-party datasets and models keep their own licenses.
-
-## Acknowledgements
-
-- TECHNOVA 2026 organizers for the problem statement.
-- Dataset creators: [ISLTranslate](https://github.com/Exploration-Lab/ISLTranslate), [How2Sign](https://how2sign.github.io/), [WLASL](https://github.com/dxli94/WLASL), subject to each dataset's license and citation requirements.
-- Open-source libraries used in this project (OpenCV, MediaPipe, PyTorch, scikit-learn, jiwer, Streamlit, and others as applicable).
-- `[Mentors / community members / other acknowledgements]`
-
-## Team and Contact
-
-| Field | Details |
-|-------|---------|
-| Team name | `[Team Name]` |
-| Members | See [Team Roles and Responsibilities](#team-roles-and-responsibilities) |
-| Institution | `[Institution]` |
-| Contact | `[Email / LinkedIn]` |
-| Repository | `[GitHub Repository URL]` |
+Institution: `[Institution]` · Repository: https://github.com/Adithya-devcoder/TechNova_Hackathon

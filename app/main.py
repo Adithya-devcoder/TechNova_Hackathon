@@ -17,6 +17,7 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from evaluation.live_log import LOG_PATH, append_result, load_results, summarize  # noqa: E402
+from models import pretrained_isolated  # noqa: E402
 from models import signbridge_model as sb  # noqa: E402
 from preprocessing.landmarks import HolisticExtractor, draw_landmarks, video_to_landmarks  # noqa: E402
 from preprocessing.segmenter import SentenceSegmenter, resample  # noqa: E402
@@ -31,6 +32,11 @@ st.set_page_config(page_title='SignBridge', page_icon='🤟', layout='wide')
 @st.cache_resource
 def load_bundle():
     return sb.load_model()
+
+
+@st.cache_resource
+def load_pretrained():
+    return pretrained_isolated.IsolatedSignModel()
 
 
 def readable(text):
@@ -80,6 +86,14 @@ with st.sidebar:
     target_fps = int(st.number_input('Model frame rate (fps)', 10, 60, 30,
                                      help='Sentences are resampled to this rate before recognition.'))
     show_overlay = st.checkbox('Draw landmarks on video', True)
+    hybrid_ready = pretrained_isolated.available()
+    recogniser = st.radio('Recogniser', ['Our model (BiGRU-CTC)', 'Hybrid: ours + Kaggle 1st-place'],
+                          index=1 if hybrid_ready else 0, disabled=not hybrid_ready,
+                          help='Hybrid: our model finds where each word is; the pretrained model names each sign.')
+    if not hybrid_ready:
+        st.caption('Hybrid needs model.tflite and sign_to_prediction_index_map.json in models/kaggle_1st/.')
+    all_signs = st.checkbox('Hybrid: allow all 250 signs', False, disabled=not hybrid_ready,
+                            help='Off: only our 52-sign vocabulary.')
     with st.expander(f"Vocabulary ({len(bundle_base['vocab'])} ASL signs)"):
         st.write(', '.join(sorted(bundle_base['vocab'])))
     with st.expander('Demo sentences'):
@@ -88,6 +102,13 @@ with st.sidebar:
                'This prototype makes mistakes and must not replace a qualified interpreter.')
 
 bundle = dict(bundle_base, threshold=threshold)
+
+
+def recognise(sentence):
+    if recogniser.startswith('Hybrid'):
+        return pretrained_isolated.predict_hybrid(sentence, bundle, load_pretrained(),
+                                                  vocab=None if all_signs else bundle['vocab'])
+    return sb.predict(sentence, bundle)
 
 
 def camera_loop(on_sentence, key):
@@ -117,7 +138,7 @@ def camera_loop(on_sentence, key):
             landmarks = extractor.process(frame, t_ms)
             sentence = segmenter.push(landmarks, t_ms)
             if sentence is not None:
-                on_sentence(sb.predict(sentence, bundle), len(sentence))
+                on_sentence(recognise(sentence), len(sentence))
             view = draw_landmarks(frame, landmarks) if show_overlay else frame
             frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')   # mirrored like a selfie view
             state = '✋ signing… lower your hands to finish' if segmenter.active else 'waiting for hands'
@@ -179,7 +200,7 @@ elif mode == 'Upload video':
         if not sentences:
             st.warning('No signing found: no hands were detected long enough. Check lighting and framing.')
         for i, s in enumerate(sentences, 1):
-            st.markdown(f'**Sentence {i}**' + result_html(sb.predict(s, bundle), len(s)), unsafe_allow_html=True)
+            st.markdown(f'**Sentence {i}**' + result_html(recognise(s), len(s)), unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- live evaluation (Member 4)
 else:

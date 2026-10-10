@@ -21,6 +21,7 @@ from evaluation.live_log import LOG_PATH, append_result, load_results, summarize
 from models import pretrained_isolated  # noqa: E402
 from models import signbridge_model as sb  # noqa: E402
 from models.gloss_to_english import to_english  # noqa: E402
+from models.streaming import WordStream  # noqa: E402
 from preprocessing.landmarks import HolisticExtractor, draw_landmarks, video_to_landmarks  # noqa: E402
 from preprocessing.segmenter import SentenceSegmenter, resample, split_signs  # noqa: E402
 
@@ -64,7 +65,7 @@ def words_html(result):
 
 def result_html(result, frames, reference=None):
     """The English sentence large, then the recognised signs (with confidence) small underneath."""
-    meta = f"{result['latency_ms']:.0f} ms · {frames} frames"
+    meta = f"{result['latency_ms']:.0f} ms · {frames} frames" if frames is not None else ''
     sentence = to_english(result['text']) if result['text'] else ''
     line = "<div style='margin:12px 0'>"
     if sentence:
@@ -81,7 +82,8 @@ bundle_base = load_bundle()
 with st.sidebar:
     st.title('🤟 SignBridge')
     st.caption('Continuous ASL sign-to-text (PS-41)')
-    mode = st.radio('Mode', ['Live webcam', 'Upload video', 'Live evaluation'])
+    mode = st.radio('Mode', ['Live webcam', 'Sentence builder', 'Upload video', 'Live evaluation'],
+                    help='Sentence builder: each word appears the moment it is recognised.')
     st.subheader('Settings')
     cam_index = int(st.number_input('Camera index', 0, 5, 0))
     threshold = st.slider('Flag words below this confidence', 0.0, 1.0, 0.6, 0.05)
@@ -141,8 +143,11 @@ def save_sentence(sentence, result, reference, fps):
                         reference=reference, recogniser=recogniser, camera_fps=fps)
 
 
-def camera_loop(on_sentence, key, reference=''):
-    """Run the webcam until the toggle is switched off. Calls on_sentence(result, frames) per sentence."""
+def camera_loop(on_sentence, key, reference='', on_frame=None):
+    """Run the webcam until the toggle is switched off. Calls on_sentence(result, frames) per sentence.
+
+    on_frame(landmarks, t_ms) -> status text: if given, it receives every frame instead of the segmenter.
+    """
     if not st.toggle('Start camera', key=key):
         st.info('Switch on the camera, sign a sentence, then lower your hands for a moment to finish it.')
         return
@@ -167,6 +172,11 @@ def camera_loop(on_sentence, key, reference=''):
             last = now
             t_ms = (now - t0) * 1000
             landmarks = extractor.process(frame, t_ms)
+            if on_frame is not None:
+                view = draw_landmarks(frame, landmarks) if show_overlay else frame
+                frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')
+                status_ph.caption(f'{on_frame(landmarks, t_ms)} · {fps:.0f} fps')
+                continue
             sentence = segmenter.push(landmarks, t_ms)
             if sentence is not None:
                 result = recognise(sentence)
@@ -207,6 +217,60 @@ if mode == 'Live webcam':
     show_history()
     with cam_col:
         camera_loop(on_sentence, key='cam_live')
+
+# ---------------------------------------------------------------- sentence builder
+elif mode == 'Sentence builder':
+    st.header('Sentence builder')
+    st.caption('Sign at a normal pace, no pauses needed: each word appears next to the previous one as soon as it '
+               'is recognised. Lower your hands for a moment to finish the sentence.')
+    if not hybrid_ready:
+        st.warning('The sentence builder needs the Kaggle 1st-place files in models/kaggle_1st/ (see README).')
+        st.stop()
+    with st.sidebar:
+        st.subheader('Sentence builder')
+        agree = st.slider('Checks that must agree before a word is added', 1, 4, 2,
+                          help='Higher: fewer wrong words between signs, but each word appears a little later.')
+        builder_end_s = st.slider('Hands-down time that finishes the sentence (s)', 0.8, 4.0, 1.5, 0.1)
+    st.session_state.setdefault('built', [])
+    cam_col, text_col = st.columns([3, 2])
+    with text_col:
+        st.subheader('Now signing')
+        live_ph = st.empty()
+        st.subheader('Finished sentences')
+        if st.button('Clear', key='clear_built'):
+            st.session_state.built = []
+        done_ph = st.empty()
+
+    def show_live(words):
+        if not words:
+            live_ph.markdown('<span style="opacity:.6">Waiting for the first sign…</span>', unsafe_allow_html=True)
+            return
+        text = ' '.join(w['word'] for w in words)
+        live_ph.markdown(result_html({'text': text, 'words': words, 'latency_ms': 0}, None), unsafe_allow_html=True)
+
+    def show_done():
+        items = st.session_state.built[-8:][::-1]
+        body = ''.join(result_html(r, None) for r in items) or '<span style="opacity:.6">Nothing yet.</span>'
+        done_ph.markdown(body, unsafe_allow_html=True)
+
+    stream = WordStream(load_pretrained(), vocab, threshold, min_conf, agree=agree, end_s=builder_end_s,
+                        fps=target_fps)
+
+    def on_frame(landmarks, t_ms):
+        if stream.push(landmarks, t_ms):
+            show_live(stream.words)
+        if stream.finished:
+            words = stream.finished
+            st.session_state.built.append({'text': ' '.join(w['word'] for w in words), 'words': words,
+                                           'latency_ms': 0})
+            show_done()
+            show_live([])
+        return f'✋ {len(stream.words)} word(s) so far' if stream.words else 'waiting for signs'
+
+    show_live([])
+    show_done()
+    with cam_col:
+        camera_loop(None, key='cam_builder', on_frame=on_frame)
 
 # ---------------------------------------------------------------- uploaded video
 elif mode == 'Upload video':

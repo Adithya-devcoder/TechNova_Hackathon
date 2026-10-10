@@ -55,6 +55,7 @@ PS-41 asks for a vocabulary of at least 50 signs, real-time inference on a lapto
 | Hand and body landmark extraction (MediaPipe Holistic) | Implemented |
 | Real-time webcam app: sign, lower your hands, read the sentence | Implemented; live accuracy not yet measured |
 | Confidence for every word; uncertain words flagged with top-3 alternatives | Implemented |
+| Sentence builder: each word appears next to the previous one the moment it is recognised | Implemented (pretrained model) |
 | Recognise an uploaded video (split into sentences automatically) | Implemented |
 | Live evaluation mode: sign reference sentences, get live WER | Implemented |
 | Hybrid with the Kaggle 1st-place pretrained model (250 signs) | Implemented; needs a separate download, not yet scored |
@@ -111,7 +112,7 @@ On macOS or Linux use `.venv/bin/python` instead of `.venv\Scripts\python`.
 The app opens at http://localhost:8501. The MediaPipe model file (`models/holistic_landmarker.task`, 13.7 MB) downloads automatically on first use.
 
 **Using the app**
-1. Choose a mode in the sidebar: **Live webcam**, **Upload video** or **Live evaluation**. With the pretrained files installed, the recogniser defaults to **Continuous sentence**: sign the whole sentence, then lower your hands to finish. **Sign by sign** (a brief pause between signs) is the fallback if continuous reading struggles.
+1. Choose a mode in the sidebar: **Live webcam**, **Sentence builder** (words appear one by one as you sign), **Upload video** or **Live evaluation**. With the pretrained files installed, the recogniser defaults to **Continuous sentence**: sign the whole sentence, then lower your hands to finish. **Sign by sign** (a brief pause between signs) is the fallback if continuous reading struggles.
 2. Switch on the camera and sign a sentence using signs from the **Vocabulary** list in the sidebar (for example `mom drink water now`).
 3. Lower your hands for about a second. The sentence appears with confident words in green and uncertain words in amber with a "?". Hover over a word to see its alternatives.
 
@@ -195,7 +196,9 @@ result = sb.predict(landmarks)    # float32 [T, 543, 3], one whole signed senten
 ## Project structure
 
 ```
-app/main.py                       Streamlit app: live webcam, upload video, live evaluation
+app/main.py                       Streamlit app: live webcam, sentence builder, upload video, live evaluation
+models/streaming.py               Sentence builder: adds each word as soon as it is recognised
+models/gloss_to_english.py        Recognised signs -> readable English sentence
 preprocessing/landmarks.py        Frames -> MediaPipe Holistic landmarks [543, 3], skeleton overlay
 preprocessing/segmenter.py        Live stream -> sentences (hands up/down), resampling to 30 fps
 models/signbridge_model.py        Features, BiGRU-CTC model, decoding, predict()

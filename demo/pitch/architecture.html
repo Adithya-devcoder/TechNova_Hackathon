@@ -1,0 +1,50 @@
+<section id="architecture" data-transition="fade" style="background:#ECEBE4;color:#15202B;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:48px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Architecture</h2>
+<div style="display:flex;align-items:center;gap:0">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FBFBF8;border:1px solid #D5D3CA;padding:24px;border-radius:12px">
+<h3 style="font-size:26px;font-weight:600">Webcam</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5568">Laptop camera or an uploaded video</p>
+</div>
+<x-connector style="width:32px;color:#1D7A74"></x-connector>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FBFBF8;border:1px solid #D5D3CA;padding:24px;border-radius:12px">
+<h3 style="font-size:26px;font-weight:600">MediaPipe</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5568">Holistic: 543 landmarks per frame</p>
+</div>
+<x-connector style="width:32px;color:#1D7A74"></x-connector>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FBFBF8;border:1px solid #D5D3CA;padding:24px;border-radius:12px">
+<h3 style="font-size:26px;font-weight:600">Segmenter</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5568">Hands up to hands down 0.7 s; resample to 30 fps</p>
+</div>
+<x-connector style="width:32px;color:#1D7A74"></x-connector>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FBFBF8;border:1px solid #D5D3CA;padding:24px;border-radius:12px">
+<h3 style="font-size:26px;font-weight:600">Features</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5568">Hands + 7 body points, normalised: 198 per frame</p>
+</div>
+<x-connector style="width:32px;color:#1D7A74"></x-connector>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#1D7A74;border:1px solid #1D7A74;padding:24px;border-radius:12px">
+<h3 style="font-size:26px;font-weight:600;color:#F7F6F2">BiGRU + CTC</h3>
+<p style="font-size:24px;line-height:1.35;color:#DCF1EE">Conv1D, 2 BiGRU layers, 2.38M parameters</p>
+</div>
+<x-connector style="width:32px;color:#1D7A74"></x-connector>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FBFBF8;border:1px solid #D5D3CA;padding:24px;border-radius:12px">
+<h3 style="font-size:26px;font-weight:600">Text</h3>
+<p style="font-size:24px;line-height:1.35;color:#4A5568">Greedy decoding; words under 0.6 confidence flagged</p>
+</div>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;border-top:4px solid #1D7A74;padding:24px 0 0 0">
+<p style="font-size:44px;font-weight:600;line-height:1.1">CTC loss</p>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">Learns where each sign starts and ends from sentence labels alone; no frame-level annotation needed.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;border-top:4px solid #1D7A74;padding:24px 0 0 0">
+<p style="font-size:44px;font-weight:600;line-height:1.1">8 ms per second of signing</p>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">Recognition latency on a laptop CPU, one thread; 77 ms for a 10-second sentence. MediaPipe at about 11 fps is the slower stage.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;border-top:4px solid #1D7A74;padding:24px 0 0 0">
+<p style="font-size:44px;font-weight:600;line-height:1.1">Confidence per word</p>
+<p style="font-size:24px;line-height:1.4;color:#4A5568">Mean probability over the frames that produced the word, with the top-3 alternatives for correction.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6A7179">Training: AdamW, one-cycle schedule, mixed precision, 25 epochs of about 42 s on a Kaggle T4 · Augmentation: rotation, scale, shift, noise, brief hand dropouts</p>
+<aside>Every frame becomes 543 landmarks; we keep both hands and seven upper-body points. The segmenter waits for the hands to drop for 0.7 seconds, then the whole sentence goes through the model at once. CTC is the key choice: it aligns frames to words on its own. The model is small enough that recognition takes single-digit milliseconds; the landmark extraction is what limits the frame rate.</aside>
+</section>

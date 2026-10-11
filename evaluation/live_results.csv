@@ -1,0 +1,5 @@
+time,reference,hypothesis,mean_confidence,uncertain_words,latency_ms,frames
+2026-10-10 22:10:55,minemy brother sick,thankyou,0.332,thankyou,169.7,70
+2026-10-10 22:11:04,minemy brother sick,minemy,0.989,,96.2,82
+2026-10-10 22:11:08,minemy brother sick,,0.0,,22.3,72
+2026-10-10 22:11:24,minemy brother sick,,0.0,,48.4,73

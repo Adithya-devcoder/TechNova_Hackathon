@@ -1,0 +1,1001 @@
+reference,model,baseline,kind,mean_confidence
+hello grandma thankyou,hello grandma thankyou,hello,template,1.0
+weus go outside later,weus go later,cry toy cry outside bed food hungry thirsty later bed thirsty,template,0.84
+minemy brother sick,minemy brother sick,,template,0.907
+minemy dad give apple,minemy dad give apple,,template,0.995
+brother sleepy go bed,brother sleepy go bed,sleepy,template,0.994
+minemy home pizza happy hello,please home pizza thankyou boy,home,random,0.8
+child happy find toy,child happy find toy,child child child child boy toy yesterday toy read toy go child please happy thankyou book please thankyou happy please thankyou book please happy wait hungry read find thirsty toy car toy hesheit toy car bed milk car toy,template,0.907
+bed like toy find child,bed like toy find child,bed bed drink toy go find bed food water boy child cry read weus thirsty,random,0.878
+child thirsty milk please,grandma thirsty car sick,go,template,0.423
+happy book,happy happy book,happy,random,0.863
+hesheit sad cry,night give sleep cry,store icecream please brother store brother please store please store toy brother toy brother grandma store hello store toy please cry toy cry dad car cry brother cry grandma please grandma no weus dad sleepy read read food bed food sleep bed food sleep tomorrow sleep food tomorrow milk bed thirsty,template,0.477
+boy mom tomorrow home,boy grandma give home,mom home,random,0.822
+child happy find toy,child happy find toy,please find,template,0.986
+yes toy store,yes toy store,yesterday store,random,0.666
+minemy read sleepy,minemy read sleepy,minemy,random,0.968
+mom water yesterday child,like grandpa sick cry,drink mom go outside go sick drink like give child yesterday child give yesterday,random,0.544
+sleep toy,thirsty toy,,random,0.486
+child happy find toy,water happy find toy,happy,template,0.877
+have cry mom like,have cry mom like,cry mom,random,0.99
+milk apple go,have yes icecream car,pizza brother pizza bed pizza bed pizza bed pizza bed pizza read weus toy weus please weus have weus girl icecream bed go,random,0.435
+pizza yesterday ride,ride yesterday ride,yesterday,random,0.965
+give yesterday happy water weus,pizza yesterday happy water weus,sleep tomorrow thirsty tomorrow thankyou bed food bed tomorrow yesterday tomorrow yesterday tomorrow girl hungry please happy hungry milk see water mom drink weus,random,0.864
+girl like pizza,girl like pizza like,brother icecream give like happy please bed cry later see read child like go child go please bed please hungry book sleepy cry,template,0.784
+happy ride tomorrow hello,happy ride tomorrow hello,hungry thankyou cry find water bed brother tomorrow pizza tomorrow have water sleep hello bed,random,0.901
+child thirsty milk please,child thirsty milk please,thirsty sleepy milk please,template,0.953
+no icecream happy,no icecream outside,icecream girl hello outside have,random,0.961
+brother sleepy go bed,brother boy go bed,brother dad icecream toy toy weus bed girl bed food,template,0.754
+minemy dad give apple,minemy dad give apple,,template,0.998
+apple thirsty,icecream thirsty,yes apple brother bed icecream girl bed thirsty cry,random,0.822
+weus go outside later,weus go outside later,,template,0.958
+icecream mom water car,mom water boy,dad drink dad drink dad mom water drink,random,0.862
+like apple home outside,hungry apple home outside,,random,0.908
+mom drink water now,mom drink water now,now,template,0.98
+book have weus now,grandma have tomorrow now,go now have now,random,0.772
+go cry give,hesheit cry give,cry,random,0.713
+minemy dad give apple,minemy dad give apple,minemy dad,template,0.993
+minemy dad give apple,minemy dad give apple,dad icecream apple,template,0.982
+water brother minemy,water brother minemy,,random,0.997
+store boy see bed toy,store boy car bed toy,boy tomorrow car give milk give milk thirsty bed food weus bed tomorrow bed tomorrow bed thirsty milk tomorrow thirsty hungry thirsty hungry bed food bed food toy brother toy,random,0.868
+grandpa thirsty see wait,dad read child see now,dad weus food weus dad read bed food weus icecream cry outside like please bed thirsty book car see bed wait bed,random,0.681
+mom drink water now,mom water store,dad dad find sad water,template,0.925
+grandma hungry icecream,grandma hungry icecream,please bed mom bed grandma cry thankyou minemy tomorrow weus thirsty weus bed food outside hungry food hungry bed food weus hungry drink hungry,template,0.997
+have water store yesterday,have water store yesterday,have water store boy yesterday,random,0.994
+drink girl sick boy,drink girl sick boy,food icecream girl brother girl grandma bed sick bed boy,random,0.877
+weus go outside later,hesheit sick outside later,,template,0.975
+brother sleepy go bed,brother sleepy go bed,hungry bed sleepy bed thirsty toy cry toy cry toy cry toy cry toy bed,template,0.947
+hesheit sad cry,hesheit sad cry,toy brother pizza hesheit outside sleepy thirsty girl cry,template,0.944
+like yes brother,give night brother,,random,0.701
+store hungry grandma book cry,store hungry book cry,store hungry minemy cry,random,0.996
+child thankyou,boy thankyou,sick,random,0.906
+boy have toy car,boy have toy car,boy weus toy car toy car toy toy car milk,template,0.921
+like give,hungry go,,random,0.73
+dad hello sad,dad hello sad,dad night grandma child hello sick sad,random,0.929
+child icecream now,child icecream now,boy child find child give weus read child weus bed toy water yesterday icecream bed home,random,0.995
+weus go outside later,weus go outside later,hungry read hungry hungry thirsty cry go girl bed outside go later,template,0.886
+night car,store food,store yesterday car bed food,random,0.96
+happy weus book later car,happy weus go later car,please minemy car,random,0.856
+wait please mom,wait please mom,wait sad please minemy,template,0.998
+girl like pizza,yesterday like brother,pizza,template,0.799
+car boy grandma grandpa,car boy hello grandpa,boy drink bed drink bed mom,random,0.883
+hungry thirsty,girl apple,,random,0.317
+girl like pizza,girl like bed,sad like now read book home book,template,0.75
+girl like pizza,girl like no,,template,0.752
+find pizza,find hello,find,random,0.968
+yesterday weus ride car home,yesterday weus ride car home,yesterday,template,0.976
+hungry later sick hello,hungry later sick hello,hungry,random,0.929
+find give later car have,find thankyou later car have,later car,random,0.989
+minemy brother sick,minemy brother sick,happy thankyou minemy icecream brother sleepy sick,template,0.932
+milk food pizza girl,car food brother yesterday,toy,random,0.826
+milk mom sleepy sad,mom home sick,toy car milk tomorrow give sad home give home bed cry weus food bed outside sick sleepy food sleep food bed food cry icecream cry,random,0.451
+later bed,later bed,,random,0.977
+mom no,mom no,car,random,0.669
+thirsty food sick outside cry,thirsty food bed outside cry,thirsty weus thirsty hungry sleepy food tomorrow bed food sleepy tomorrow food sleepy drink find bed dad bed mom go outside car thirsty toy cry toy cry brother,random,0.863
+wait sad girl mom now,wait sad girl mom now,book read weus go wait weus book wait weus wait weus bed grandma bed weus wait bed sleep sad girl night girl mom now food now bed now weus bed now,random,0.921
+night no,night no,,random,0.702
+sleepy thirsty milk boy,sleepy thirsty milk boy,sick thirsty thirsty food milk car boy,random,0.77
+brother icecream hesheit sad,brother icecream hesheit sad,brother give brother yesterday icecream toy brother dad sick dad brother home give water sad,random,0.896
+find bed please milk hello,find bed please milk hello,find hello bed minemy,random,0.861
+grandma hungry icecream,grandma hungry icecream,icecream,template,0.994
+toy see thankyou pizza thirsty,toy see thankyou thirsty,pizza,random,0.946
+child happy find toy,child happy find toy,hungry happy,template,1.0
+dad go store tomorrow,dad go store tomorrow,dad store,template,0.975
+child happy find toy,child happy find toy,boy child outside happy thankyou happy find weus toy car toy car hesheit toy car toy,template,0.999
+pizza yes grandpa later,hello yes dad later,yes grandpa dad,random,0.781
+yesterday weus ride car home,yesterday weus ride car home,yesterday weus drink food weus mom read girl read icecream no icecream night no bed toy thirsty toy car sleep thirsty,template,0.984
+cry dad grandma sick,cry dad mom give,bed go weus bed apple toy icecream dad book,random,0.663
+dad toy have,dad have have,dad pizza food cry read have go have read,random,0.693
+wait please mom,wait please mom,minemy,template,0.986
+boy thirsty find grandma drink,boy thirsty find grandma drink,boy find dad drink boy,random,0.9
+ride icecream see sleepy outside,ride icecream see sleepy outside,icecream sad see sleepy food,random,0.886
+girl like pizza,apple like hello,,template,0.749
+minemy dad give apple,minemy dad dad give apple,thankyou please thankyou please thankyou dad boy dad icecream weus bed hungry,template,0.961
+now like pizza bed book,now like brother bed book,,random,0.988
+bed toy,bed toy,toy,random,0.943
+girl like pizza,girl like pizza,girl brother tomorrow icecream bed sad like bed read bed like give now car tomorrow now tomorrow thirsty hesheit milk yesterday hesheit give pizza icecream tomorrow icecream,template,0.883
+yesterday boy,yesterday boy,yesterday boy,random,0.994
+thankyou weus boy yesterday,thankyou weus boy yesterday,boy yesterday,random,0.981
+boy have toy car,boy have toy car,toy,template,0.994
+milk grandpa hello,milk grandpa hello,grandpa,random,0.991
+wait please mom,wait please mom,go weus brother go wait go bed go hello ride weus now weus water please minemy please hungry please food please food minemy tomorrow bed food tomorrow bed,template,0.94
+brother sleepy go bed,brother brother sleepy go bed,girl please bed brother give brother hungry food weus cry outside drink bed drink tomorrow read cry have sleep bed,template,0.884
+weus go outside later,weus go outside later,weus,template,0.897
+boy thankyou sad thirsty,boy thankyou sad thirsty,sad thirsty,random,0.972
+sad food,sad food,,random,0.998
+sleep book brother cry apple,car book brother cry apple,toy cry toy,random,0.765
+minemy brother sick,minemy brother sick,,template,0.919
+find yes,find night,find,random,0.721
+boy like sad weus,boy hungry sad weus,boy weus,random,0.912
+boy have,boy have,boy store icecream,random,0.957
+pizza water girl,food bed brother,sleepy icecream like hungry read bed food thirsty,random,0.443
+girl like pizza,toy like no,,template,0.857
+hesheit mom,hesheit mom,mom,random,0.996
+hello grandma thankyou,hello grandma thankyou,grandpa,template,0.998
+dad go store tomorrow,dad go store please minemy,dad drink toy milk girl have hungry have weus food cry dad have store night minemy please food bed please minemy happy tomorrow bed happy minemy please minemy please,template,0.724
+child cry,child read,,random,0.394
+child happy find toy,child outside find apple,find outside find find,template,0.795
+outside brother later thankyou night,go brother go thankyou night,toy sad,random,0.719
+hello grandma thankyou,hello grandma thankyou,grandma,template,0.931
+minemy dad give apple,minemy dad give apple,minemy dad,template,0.998
+home bed find,home bed find,,random,0.999
+brother happy,brother thankyou,brother weus hesheit,random,0.791
+grandpa read book night,grandpa read book night,dad bed weus go,template,0.988
+night yesterday bed dad,night yesterday bed dad,yesterday,random,0.992
+like store girl pizza,like store girl hello,store sleepy,random,0.951
+minemy dad give apple,minemy dad give apple,please weus food please like wait book happy minemy dad sleepy food minemy pizza minemy tomorrow have tomorrow apple tomorrow child bed child apple bed apple,template,0.958
+child happy find toy,grandma happy find toy,boy happy find,template,0.829
+brother sleepy go bed,brother sleepy go go bed,brother sick bed pizza bed toy later girl pizza please happy food bed,template,0.83
+girl like pizza,brother like pizza,yesterday bed hungry have hungry please like weus bed,template,0.928
+cry store go girl,sleepy store go cry,store bed sleepy food store sleepy bed,random,0.605
+sleepy find hungry book tomorrow,sleepy find hungry book tomorrow,,random,0.948
+mom pizza wait drink grandma,food brother wait drink grandma,thirsty drink,random,0.807
+minemy dad give apple,minemy dad give apple,hello dad go,template,0.932
+wait please mom,wait outside mom,book wait outside go bed please minemy thankyou please minemy please minemy mom,template,0.796
+grandpa read book night,grandpa read book night,bed bed grandpa weus tomorrow icecream girl pizza read bed icecream bed food give girl bed girl car dad night read store night store night car read car,template,0.732
+yesterday weus ride car home,yesterday weus ride car home,yesterday tomorrow yesterday brother girl bed icecream bed icecream cry icecream thirsty night no icecream no yes toy car toy car weus ride girl thirsty girl pizza thirsty milk food toy food home food sleep tomorrow sleep tomorrow home tomorrow home food weus girl sleep,template,0.823
+bed no milk cry,bed no milk cry,bed,random,0.927
+home hesheit yesterday pizza wait,home hesheit yesterday brother wait,home yesterday hesheit yesterday child yesterday pizza thirsty,random,0.958
+store toy,store toy,toy,random,0.995
+ride outside,yes outside,bed brother icecream bed icecream ride yes ride icecream bed weus bed icecream icecream grandma outside toy outside bed girl weus have thirsty weus bed girl,random,0.603
+minemy brother sick,minemy brother sick,thankyou please thankyou minemy thankyou minemy thankyou please thankyou minemy grandma bed brother bed sleep dad pizza brother bed food hungry girl thirsty pizza thirsty please thankyou,template,0.856
+later drink give,later night,icecream boy drink boy,random,0.762
+girl like pizza,toy sleepy pizza,apple yesterday,template,0.667
+girl mom like see milk,girl mom hungry go milk,drink dad drink dad mom car outside car,random,0.781
+grandma read,drink thirsty,thirsty,random,0.762
+give go food sick,toy sick,bed food bed food bed weus ride bed give grandma bed car bed thirsty toy cry toy cry read tomorrow cry toy cry toy milk toy thirsty bed weus tomorrow weus food water food sleep sick sleepy food weus,random,0.827
+toy yes wait see drink,toy yes wait see drink,,random,0.923
+hello yes,hello night,hello,random,0.729
+grandma please grandpa thankyou,hello please grandpa thankyou,hello minemy happy please happy please happy please happy dad,random,0.786
+icecream read store dad find,icecream read store dad find,yesterday brother icecream toy read store dad sick dad icecream find,random,0.812
+hesheit sad cry,hesheit sad cry,,template,0.999
+give boy hesheit sleepy,give boy hesheit sleep,boy hesheit,random,0.855
+hesheit sad cry,hesheit sad cry,sad,template,0.999
+book sad,grandma sad,,random,0.754
+dad go store tomorrow,give go store tomorrow,icecream bed sleepy store dad night,template,0.681
+no store,no store,store,random,0.871
+store boy car go,store boy car outside,boy toy car,random,0.938
+cry like find,cry like find,cry,random,0.969
+sick yesterday yes home,sick toy home,sick go outside go sick drink like give child yesterday give child give yesterday yesterday brother bed brother go home,random,0.857
+child happy find toy,water happy find toy,please find,template,0.881
+book yesterday,sad yesterday,book wait give hungry bed icecream bed tomorrow yesterday tomorrow yesterday tomorrow girl,random,0.874
+minemy dad give apple,minemy dad give apple,,template,0.996
+dad go store tomorrow,dad go store tomorrow,store,template,0.988
+hesheit sad cry,hesheit sad cry,hesheit car sick,template,1.0
+hungry cry bed,hungry cry bed,thirsty toy cry toy cry toy bed,random,0.812
+cry brother store dad weus,cry brother store dad hesheit,cry brother store,random,0.845
+please boy,please boy,please minemy dad boy,random,0.982
+minemy brother sick,minemy brother outside,please like please minemy brother sad,template,0.775
+yes no,yesterday no,car,random,0.752
+food brother icecream grandpa,food brother icecream grandpa,sleep sleepy go tomorrow sleepy tomorrow sleepy brother sleep icecream yes drink icecream book sleep dad grandpa dad grandpa,random,0.921
+weus store night wait,weus store wait,store,random,0.788
+yes hello book go yesterday,yes hello book no yesterday,bed,random,0.855
+later yesterday milk sick like,later yesterday milk sick like,later brother girl icecream girl icecream yesterday brother home brother grandma car sick sick like thirsty,random,0.879
+dad go store tomorrow,dad go store tomorrow,night,template,0.937
+child happy find toy,cry happy find toy,toy find toy cry toy brother toy,template,0.869
+yesterday sleepy sleep,yesterday sleepy sleep,toy tomorrow yesterday sick drink cry toy give sick bed give bed pizza bed home bed home tomorrow give thankyou minemy sleep give,random,0.771
+boy have toy car,boy have toy car,boy toy,template,0.97
+child icecream ride book,child icecream book,icecream,random,0.681
+read later find girl,read later find girl,find,random,0.931
+hello grandma thankyou,hello grandma thankyou thankyou,hello mom bed grandma have bed thankyou wait sleepy weus,template,0.917
+dad sleepy,dad sleep,grandpa,random,0.931
+have night,have night,night,random,0.969
+grandma hungry icecream,grandma hungry icecream,hungry,template,1.0
+yesterday weus ride car home,yesterday weus ride car home,yesterday weus ride read car milk cry later brother bed sleepy bed store home,template,0.959
+hello grandma thankyou,hello grandma thankyou,,template,1.0
+minemy brother sick,minemy brother sick,please minemy please have brother brother have brother,template,0.915
+sleepy find see ride hello,sleepy find see ride hello,,random,0.954
+tomorrow sick yes,tomorrow sick yes,,random,0.9
+hesheit sad cry,hesheit sick cry,thirsty drink drink icecream cry weus food bed outside sleepy sick sleep sleepy food sleep food icecream cry outside toy cry toy,template,0.871
+boy have toy car,boy have toy car,have toy,template,0.968
+grandpa read book night,grandpa read book night,book,template,0.996
+go drink,home grandpa,,random,0.405
+boy have toy car,boy have toy car,boy store,template,0.915
+girl book please,girl please,brother icecream drink hello weus wait girl brother please thankyou,random,0.879
+yesterday weus ride car home,yesterday weus ride car car home,car boy yesterday yesterday boy go car,template,0.87
+minemy brother sick,minemy brother sick,minemy sad sleep,template,0.96
+grandma hungry icecream,grandma hungry icecream,hungry brother icecream,template,0.986
+grandma hungry icecream,mom hungry icecream,dad,template,0.89
+weus go outside later,have go toy outside later,weus toy cry toy cry read cry toy cry toy cry milk car toy outside bed give girl icecream,template,0.545
+minemy brother sick,minemy brother,minemy please minemy thankyou minemy brother,template,0.931
+mom like give night,minemy brother outside night,go store store night,random,0.417
+milk water sleepy store please,car pizza car store please,store please,random,0.821
+cry now give,cry now go,cry now,random,0.769
+read sleepy bed,read sleepy bed,,random,0.978
+child thirsty milk please,child thirsty milk please,please food,template,0.999
+girl like pizza,yesterday like pizza,,template,0.954
+dad go store tomorrow,dad go store tomorrow,,template,0.868
+drink yes mom grandma girl,boy yes mom car apple,dad,random,0.671
+child thirsty milk please,child thirsty milk please,mom cry go happy bed weus milk,template,0.971
+child thirsty milk please,child thirsty milk please,minemy,template,0.922
+yesterday water boy,yesterday water boy,yesterday like,random,1.0
+hello grandma thankyou,hello grandma thankyou,grandpa,template,0.992
+minemy dad give apple,minemy dad give apple,minemy please minemy sick dad thirsty go ride brother ride brother bed,template,0.805
+sad pizza,sad brother,sad,random,0.962
+brother sleepy go bed,brother sleepy car bed,brother cry brother girl bed toy brother toy bed pizza bed sleepy icecream,template,0.864
+outside thankyou store,boy thankyou store,store store,random,0.878
+hello grandma thankyou,hello grandma thankyou,hello happy no bed weus bed mom drink bed grandma bed grandma tomorrow mom food drink give milk girl happy thankyou,template,0.954
+later thankyou child sleep,later thankyou child sleep,outside,random,0.844
+boy have toy car,boy have toy car,brother dad ride hesheit dad boy store ride brother weus sleepy weus night girl weus bed weus pizza toy car milk,template,0.979
+grandpa mom outside,grandpa mom outside,grandpa mom go child outside,random,0.944
+cry sad toy ride hesheit,cry sad toy ride hesheit,cry toy later,random,0.953
+minemy water child sleepy,minemy water child food,hungry thirsty thankyou minemy thankyou minemy thankyou please thankyou minemy thankyou hungry minemy like child mom bed mom water mom water mom bed please bed bed boy child toy cry toy cry give sick bed go give outside bed icecream bed pizza bed tomorrow thankyou,random,0.715
+see hesheit,see hesheit,hesheit,random,1.0
+hello grandma thankyou,hello grandma thankyou,,template,0.991
+child happy find toy,child child happy find toy,bed child food pizza drink happy thankyou thankyou find toy,template,0.887
+later read,later read,,random,0.994
+yesterday weus ride car home,yesterday weus ride car home,like sleep sleep home,template,0.987
+grandma hungry icecream,grandma hungry icecream,yesterday icecream,template,0.997
+child happy find toy,child happy find toy,find find toy cry toy brother toy,template,0.849
+wait please mom,wait please mom,please,template,1.0
+child thirsty milk please,child thirsty please,sad milk,template,0.819
+dad go store tomorrow,dad go store tomorrow,dad store,template,0.982
+girl like pizza,toy like no,,template,0.813
+grandpa read book night,grandpa read book night,dad boy store food child read thirsty drink sleep food thirsty girl now brother night dad weus,template,0.876
+later read,see read,like go hungry read,random,0.946
+now yesterday home read see,now yesterday home read see,yesterday,random,0.992
+please thirsty child outside weus,please thirsty child outside ride,please happy weus,random,0.66
+grandpa read book night,grandpa read book night,book night,template,0.944
+weus sick milk,weus outside car,,random,0.816
+grandma please wait,later please wait,child minemy please happy please hungry wait,random,0.794
+child happy find toy,child happy find toy,child store minemy please minemy,template,0.999
+child thirsty milk please,apple thirsty milk please,apple outside happy please happy please,template,0.771
+thirsty water go no,apple water go child,weus read go mom give bed thirsty bed weus thirsty water bed icecream thirsty cry toy girl bed pizza read,random,0.792
+go pizza home store,sleep car home store,home home,random,0.865
+boy have toy car,boy have toy car,boy toy,template,0.994
+toy now,toy bed,icecream bed toy brother bed mom grandma book give grandma please grandma book,random,0.637
+like weus tomorrow dad,like hesheit later dad,weus bed grandma like brother tomorrow have pizza tomorrow brother dad,random,0.788
+weus go outside later,weus outside later,girl car bed drink thirsty outside bed now weus toy,template,0.769
+brother sleepy go bed,brother sleepy go bed,sleep sleepy bed sleepy,template,0.942
+home see,no home see,boy home drink pizza water see later see sleepy cry dad brother food,random,0.883
+night yesterday dad,store night dad,night yesterday home boy dad,random,0.648
+dad yesterday hungry wait brother,dad boy hungry wait brother,dad go outside go outside go home drink like give yesterday drink give yesterday go,random,0.813
+thirsty minemy icecream hungry no,thirsty happy icecream hungry no,thirsty weus thirsty hungry food please hungry drink drink icecream bed icecream weus no pizza read,random,0.831
+thankyou night pizza,happy hello,,random,0.811
+grandpa read book night,grandpa read book night,grandpa dad grandpa hello toy hello,template,0.879
+bed thankyou,bed thankyou,,random,0.927
+hello grandma thankyou,hello grandma thankyou,food drink read find hello dad food read weus read dad brother food have thirsty weus thirsty wait see bed drink,template,0.904
+brother sleepy go bed,brother go go bed,sleep,template,0.869
+child happy find toy,child happy find toy,happy,template,1.0
+cry girl have later,cry toy have brother,toy,random,0.866
+night dad go happy brother,tomorrow dad go child brother,icecream sick girl sick sick dad go cry bed cry milk bed milk toy icecream thirsty hungry bed food bed thirsty have brother brother cry,random,0.767
+child thirsty milk please,child thirsty milk please,icecream child girl thirsty icecream milk icecream milk girl bed please thirsty pizza bed thankyou like thankyou please thankyou like bed please like bed please bed like,template,0.982
+minemy dad give apple,minemy dad give apple,minemy dad sad sad like thirsty give give toy brother toy brother icecream brother icecream apple brother cry brother toy,template,0.999
+no water milk,no water milk,pizza milk,random,0.822
+child thirsty milk please,child thirsty milk please,child outside read child outside child no bed read bed no toy thirsty weus thirsty weus bed thirsty now toy car milk please,template,0.967
+hesheit sad cry,hesheit sad cry,thirsty drink food drink thirsty girl icecream girl hello dad sick dad give sleep water sad water sad mom toy brother toy,template,0.938
+bed give ride thirsty,bed book thirsty,ride,random,0.732
+child no,child no,child outside child child outside hello child no read bed read no bed read,random,0.697
+minemy brother sick,minemy brother sick,minemy yesterday brother sad sick,template,0.918
+minemy brother sick,minemy brother sick,brother brother sick,template,0.943
+go like happy,outside like happy,please happy sleepy grandma give please,random,0.851
+weus go outside later,weus go outside later,go,template,0.766
+tomorrow brother later water minemy,tomorrow brother later water please,brother brother pizza,random,0.906
+grandma hungry icecream,grandma icecream,mom tomorrow,template,0.883
+toy see read hello please,toy see read hello minemy,toy hello,random,0.905
+wait please mom,wait please mom,read sad happy please grandma grandma bed,template,0.998
+cry child home book,cry child home go,home,random,0.736
+drink give tomorrow no,drink store tomorrow no,sleepy drink sleepy store,random,0.978
+see thirsty hungry book outside,go hungry outside,outside hesheit store food,random,0.777
+wait drink mom go icecream,outside drink icecream,child give drink dad drink,random,0.7
+girl like pizza,girl like pizza,,template,0.833
+brother sleepy go bed,brother sleepy go bed,go outside go outside go outside go outside sleepy home food sleepy go sleepy toy go toy girl hello weus bed icecream bed weus bed,template,0.961
+grandma hungry icecream,grandma hungry icecream,icecream,template,0.985
+toy give,toy home,like give,random,0.543
+hello tomorrow see,hello yes see,,random,0.581
+sad sleep car no see,sad sleep car no see,sad sleepy,random,0.901
+boy tomorrow wait pizza,boy tomorrow wait hello,boy,random,0.874
+pizza yesterday later,mom yesterday,pizza yesterday,random,0.45
+girl like pizza,store like brother,,template,0.711
+child happy find toy,child happy find toy,please minemy,template,1.0
+minemy grandma yes,minemy hello store,grandma,random,0.543
+pizza toy have later apple,brother toy have later apple,toy toy have,random,0.96
+grandma hungry icecream,grandma hungry icecream,icecream apple,template,0.967
+yesterday weus ride car home,yesterday ride car home,yesterday weus car home,template,0.931
+wait please mom,wait please mom,please,template,1.0
+brother sleepy go bed,brother sleepy go bed,brother minemy sleepy outside sleepy car now hungry drink thirsty toy milk thirsty girl thirsty bed pizza bed weus now sleepy weus sleepy,template,0.905
+mom drink water now,mom drink water now,drink,template,0.98
+find milk wait store,find milk wait night,,random,0.768
+car sick thirsty hungry hello,car sick thirsty hungry brother,sick go cry thirsty go happy bed happy weus,random,0.846
+see hesheit go,see hesheit outside,hesheit car,random,0.895
+dad weus hungry night,dad weus night,dad,random,0.741
+mom drink water now,mom drink water now,dad now pizza have now,template,0.81
+child happy find toy,child happy find toy,please find bed,template,0.935
+thankyou child,thankyou boy,boy dad night weus book please child,random,0.932
+food mom sad grandpa,minemy food drink sleep grandpa,food tomorrow give sleepy water sad give brother sleepy sad sleepy hungry food,random,0.676
+brother sleepy go bed,brother sleepy go bed,bed brother bed food bed dad bed pizza brother bed food hungry have thirsty pizza thirsty pizza sleep food boy sleep sleepy outside sleep toy sleepy outside sleep food bed read weus thirsty hungry thirsty thirsty bed cry toy bed give toy give toy toy bed,template,0.888
+child hungry hesheit like please,child hesheit like please,child child car child hello child no read bed go read no car weus hesheit thirsty weus brother thirsty hesheit bed food icecream weus thirsty mom like thirsty now hungry hungry thankyou please thankyou bed grandma,random,0.92
+wait please mom,hello please dad,happy sick minemy dad,template,0.754
+like home tomorrow mom,like home later mom,home,random,0.877
+minemy brother sick,minemy brother sick,minemy,template,0.991
+toy yesterday boy drink grandpa,weus yesterday child boy drink dad,thirsty bed food brother dad toy yesterday boy boy icecream have drink,random,0.762
+mom hesheit sad yes,grandma hesheit sad night,hesheit,random,0.808
+have outside mom food hello,have outside mom food hello,,random,0.977
+toy please minemy icecream,apple minemy icecream,icecream,random,0.713
+hesheit sad cry,hesheit sad cry,,template,1.0
+dad go store tomorrow,weus go store tomorrow,icecream bed sleepy store,template,0.895
+happy see sick yesterday,happy see sick yesterday,minemy see find yesterday,random,0.864
+weus go outside later,go outside later,,template,0.754
+minemy find icecream brother,minemy find icecream toy,,random,0.847
+minemy brother sick,minemy brother sick,please minemy brother,template,0.908
+minemy drink thirsty icecream,minemy drink thirsty icecream,book bed tomorrow apple please minemy please sleep thirsty icecream,random,0.94
+boy yes weus sick grandma,boy store weus sick grandma,boy,random,0.801
+cry yes water hesheit,cry yes water hesheit,water hesheit,random,0.81
+boy have toy car,boy have toy car,boy have toy,template,0.999
+go weus child,outside now boy,sad hello dad brother give child book please later,random,0.585
+grandma happy sick,mom happy sick,bed wait happy have have weus food sleep sick sleepy food girl,random,0.854
+brother later food water now,brother later food water now,water,random,0.847
+sleepy boy yes dad,sleepy boy yes dad,dad,random,0.889
+child happy find toy,child happy find toy,child bed find please happy find bed read food go toy,template,1.0
+wait please mom,wait please mom,happy please,template,1.0
+book minemy,child minemy,,random,0.764
+grandpa sleep night,grandpa sleep night,,random,0.947
+mom drink water now,mom drink water now,sleepy water bed water sleep water sleep sleepy like,template,0.998
+mom drink water now,mom drink water now,mom drink water,template,0.989
+weus grandpa thankyou dad,weus grandpa thankyou dad,weus dad,random,0.913
+icecream sick tomorrow dad sad,icecream sick tomorrow dad sad,sick dad,random,0.992
+sleep night thirsty cry,sleepy night cry,sad boy night have go cry,random,0.854
+minemy drink night,minemy drink night,minemy,random,0.958
+child happy find toy,child happy find toy,child minemy,template,0.974
+yesterday weus ride car home,yesterday now ride car home,store outside apple toy icecream milk home,template,0.862
+pizza outside tomorrow give drink,drink thirsty minemy car drink,read please food bed please minemy tomorrow bed happy minemy please car toy have tomorrow have food drink dad,random,0.515
+have weus outside book,have weus outside book,weus,random,0.949
+wait later,wait later,go,random,0.946
+dad go store tomorrow,dad go store tomorrow,dad sad store,template,0.956
+cry no milk store icecream,cry no car store icecream,cry store night,random,0.964
+hesheit sad cry,hesheit sad cry,cry thirsty cry dad outside sad cry wait weus cry icecream,template,0.961
+please weus,please hungry,please weus,random,0.732
+toy give yesterday weus happy,toy sleepy yesterday happy,toy car toy car hesheit toy thirsty tomorrow have tomorrow have thirsty icecream yesterday brother home brother go brother thirsty happy tomorrow icecream read sleep read grandma bed read sleep food bed food thankyou book thankyou thankyou,random,0.822
+hungry yesterday sad,hungry yesterday sad,yesterday,random,0.993
+grandpa sleep give see,dad sick like see,dad thirsty please child pizza bed sleepy outside sleep weus bed weus see,random,0.774
+sad give,night brother,,random,0.505
+hesheit boy thirsty sick store,hesheit boy thirsty sick store,thirsty thirsty tomorrow bed boy thirsty bed sick have hungry weus have food cry dad read store,random,0.89
+hesheit drink water happy wait,hesheit drink water happy wait,yesterday drink water minemy please,random,0.931
+child thirsty milk please,child thirsty milk please,thirsty weus milk,template,0.927
+wait please mom,wait mom,dad,template,0.996
+weus go outside later,apple car home later,toy weus go toy cry toy cry outside food outside go later,template,0.718
+dad go store tomorrow,dad boy store brother,dad boy sleep dad boy store brother,template,0.824
+book hello girl thankyou,book brother thankyou,store,random,0.623
+child thirsty milk please,child thirsty milk please,child,template,0.941
+sleepy icecream girl,hello icecream girl,boy sick icecream brother icecream bed pizza icecream icecream girl brother,random,0.769
+hesheit grandma,icecream grandma,bed brother wait please bed mom bed mom bed grandma happy thankyou minemy happy,random,0.752
+mom drink water now,mom drink water now,water,template,0.853
+sick boy have like,sick boy have toy,sick dad sick boy,random,0.873
+boy have toy car,boy have toy car,boy toy car,template,0.994
+cry dad apple,cry dad give apple,dad,random,0.91
+grandma hello,book hello,,random,0.926
+grandpa read book night,grandpa read book night,boy water night,template,0.995
+child thirsty milk please,child girl thirsty thirsty please,bed child home tomorrow thirsty weus weus bed pizza brother pizza brother pizza bed pizza bed pizza bed pizza bed pizza bed pizza read brother weus toy weus please weus have weus toy happy please,template,0.745
+minemy dad give apple,minemy dad give apple,minemy dad bed girl icecream tomorrow brother icecream girl,template,0.937
+milk toy,milk toy,,random,0.923
+milk water pizza sad wait,milk water pizza sad wait,milk water sad sad,random,0.87
+girl like pizza,toy like brother,,template,0.868
+no thirsty,no thirsty,,random,0.976
+yesterday weus ride car home,yesterday ride ride car home,yesterday food go car pizza home,template,0.855
+cry sleepy later,cry sleep later,sleepy sleep,random,0.828
+car ride read sleep,car ride ride read sleep,thirsty toy car thirsty icecream ride icecream ride toy girl bed read outside sleep toy food,random,0.84
+child happy find toy,child happy find toy,happy,template,1.0
+child happy find toy,child happy find toy,minemy,template,1.0
+minemy brother sick,minemy brother sick,happy please minemy tomorrow brother brother give,template,0.997
+yesterday weus ride car home,yesterday weus ride car home,child yesterday child weus,template,0.957
+bed thankyou sad sleep child,bed thankyou sad sleepy child,sick sleepy thankyou sleepy food sleepy,random,0.788
+grandma have,later child,read ride,random,0.716
+toy store icecream sick,brother store icecream bed,brother store toy icecream yes bed,random,0.855
+grandpa read book night,grandpa read grandma night,night yes,template,0.875
+minemy brother sick,minemy brother sick,thirsty like minemy please minemy girl thirsty bed sleepy brother bed food bed dad bed pizza brother bed food hungry girl thirsty pizza thirsty go sick dad sick brother drink food,template,0.998
+brother sleepy go bed,brother sleepy cry bed,brother happy please bed food pizza toy thirsty bed,template,0.954
+give minemy food toy yesterday,night minemy sleepy food toy yesterday,food toy yesterday,random,0.756
+thankyou home sleep minemy happy,thankyou home sleep minemy happy,home sleepy minemy please,random,0.905
+minemy dad give apple,minemy dad give apple,minemy dad apple,template,0.988
+hello weus brother pizza,hello brother pizza,sick read girl pizza bed brother icecream brother give hungry have tomorrow pizza happy pizza sleepy girl pizza sleepy cry,random,0.984
+brother bed,home bed,,random,0.756
+have boy,have boy,,random,1.0
+go weus water book,car weus water bed,drink hungry weus thirsty water bed weus icecream find sleep bed water sad,random,0.843
+book go see,grandma sleep outside,sleep go have boy go,random,0.587
+hello grandma thankyou,hello hello thankyou,bed,template,0.833
+go grandma thirsty tomorrow,outside grandma thirsty ride,,random,0.728
+child yesterday,child yesterday,child yesterday,random,0.786
+thankyou mom minemy go,thankyou mom minemy outside,drink,random,0.698
+wait please mom,wait please mom,please minemy dad,template,0.927
+yesterday weus ride car home,yesterday weus ride car home,toy yesterday toy yesterday hungry read hungry hungry thirsty icecream ride read toy food thirsty home,template,0.986
+food have thirsty please,food have please,food have please,random,0.978
+thirsty hello,thirsty hello,,random,0.982
+hungry bed food girl find,hungry bed food find,sleepy sleep now icecream icecream bed thankyou sleep tomorrow sleepy tomorrow sleep find drink now read food,random,0.958
+grandma hungry icecream,grandma hungry icecream,please bed mom grandma bed mom bed grandma ride happy minemy happy pizza hungry like yesterday brother icecream,template,0.997
+child happy find toy,child happy find toy,child child outside hello child no read bed weus bed read no please please happy thirsty tomorrow bed find child bed thirsty brother cry food cry dad toy,template,0.994
+minemy dad give apple,minemy dad give apple,dad,template,0.935
+mom drink water now,mom drink mom now,bed drink boy,template,0.865
+boy have toy car,boy have toy car,have toy,template,0.933
+boy have toy car,boy apple toy boy,boy,template,0.76
+yesterday weus ride car home,yesterday weus ride car home,yesterday weus,template,0.991
+mom drink water now,mom drink water now,drink mom water bed,template,1.0
+mom drink water now,mom drink water now,dad dad go go now have pizza now,template,0.819
+minemy brother sick,minemy brother sick,minemy brother sick,template,0.993
+dad go store tomorrow,dad go store tomorrow,dad store,template,0.984
+minemy dad give apple,minemy dad give apple,apple,template,0.996
+find car later,find car later,find car,random,0.931
+wait bed,wait bed,bed hello child,random,0.604
+pizza outside,brother outside,,random,0.925
+wait please mom,wait please mom,dad,template,0.984
+outside girl,outside yesterday,sleepy sleepy brother,random,0.816
+toy give go,car sleep hungry bed,bed go bed brother dad hesheit toy bed weus now weus milk now milk water bed icecream sleep thirsty bed bed food bed weus give bed thirsty car milk thirsty bed thirsty thirsty toy go girl,random,0.385
+hello grandma thankyou,hello grandma thankyou,,template,0.994
+child happy find toy,child happy find toy,happy find,template,0.999
+drink toy,boy toy,icecream,random,0.74
+child happy find toy,find outside find toy,hello find have find toy,template,0.839
+tomorrow hesheit,later hesheit,later,random,0.668
+child happy find toy,child happy find toy,please happy,template,0.992
+yesterday milk go like,yesterday milk outside like,yesterday milk toy,random,0.877
+milk please see happy thankyou,milk please see happy thankyou,milk icecream happy please happy please see thankyou happy minemy thankyou,random,0.844
+boy have toy car,boy have toy car,boy boy find please thankyou milk hesheit toy girl,template,0.864
+yesterday weus ride car home,yesterday weus ride car home,like like weus car home,template,0.911
+car boy,car boy,toy car,random,0.992
+hello girl water mom,hello toy water grandma,water,random,0.779
+minemy dad give apple,minemy dad give apple,please hungry sick dad grandpa bed give bed have tomorrow apple,template,0.918
+cry weus grandpa grandma tomorrow,cry weus grandpa book tomorrow,cry weus dad,random,0.927
+home read girl icecream,drink read girl icecream,icecream home bed tomorrow home read tomorrow icecream,random,0.843
+like toy wait grandma,like toy wait grandma,,random,0.914
+happy outside food night thankyou,hungry happy apple food night thankyou,hungry sad,random,0.877
+mom drink water now,mom drink read now,dad car go,template,0.885
+grandma hungry icecream,grandma hungry icecream,icecream,template,0.999
+thirsty sleepy happy apple mom,thirsty sleepy happy apple mom,thirsty food happy,random,0.916
+grandpa read book night,grandpa read child happy,dad read grandma bed grandma bed sleepy weus child bed like minemy,template,0.745
+apple yesterday,apple yesterday,yesterday,random,0.982
+yesterday now go happy give,yesterday now go happy car,yesterday outside icecream have now cry go cry girl bed sleep sad thankyou happy bed food bed food bed give grandma bed car thirsty bed thirsty,random,0.912
+boy have toy car,boy toy car,boy brother girl icecream toy night have sleepy ride brother yesterday toy,template,0.976
+minemy brother sick,minemy brother sick,please now brother brother tomorrow girl icecream girl icecream girl water food sleepy dad sleep sick bed food,template,0.973
+weus go drink,weus go outside drink,weus,random,0.611
+grandpa read book night,grandma read book store,dad outside hesheit weus later read,template,0.47
+brother sleepy go bed,brother sleepy go bed,sleepy,template,0.958
+wait give,wait sleepy,hungry cry hungry sad tomorrow,random,0.785
+now bed,now boy,,random,0.811
+child thirsty milk please,child thirsty please,sad,template,0.773
+now like yesterday,now like yesterday,toy now food now bed go mom bed now weus now weus bed weus now like happy please car later see child like see like go please yesterday,random,0.905
+wait please mom,wait sick mom,dad,template,0.759
+boy have toy car,boy have toy car,boy brother icecream bed toy brother,template,0.942
+mom drink water now,mom drink water now,drink water,template,0.965
+wait please mom,wait please mom,please minemy,template,0.999
+grandpa read book night,grandpa read book night,grandpa,template,0.971
+yesterday ride,yesterday read,yesterday child yesterday child,random,0.756
+minemy dad give apple,minemy dad give apple,thankyou please minemy please minemy thankyou minemy dad give thankyou weus thirsty milk give icecream weus,template,0.978
+see girl,see girl,give cry see tomorrow girl icecream night,random,0.929
+minemy dad give apple,minemy dad give apple,dad,template,0.979
+apple toy yesterday,apple toy yesterday,toy,random,0.994
+brother sleepy go bed,brother sleepy go bed,brother toy brother drink home read bed cry bed,template,0.932
+grandpa read book night,grandpa read book night,dad read store thankyou sleepy weus sleep icecream bed read bed food happy please minemy,template,0.83
+milk sleep apple please now,milk sleepy give please now,sleepy please,random,0.896
+sleepy wait water sad icecream,sleep wait mom sad icecream,food bed sad,random,0.782
+boy have toy car,boy have toy car,boy have have thirsty milk car car toy car give car toy toy bed grandma dad car,template,0.968
+yesterday weus ride car home,yesterday apple ride car home,thirsty now milk bed pizza icecream pizza bed yesterday brother yesterday brother yesterday icecream bed thirsty girl girl weus icecream night girl thirsty car toy car,template,0.891
+wait please mom,wait please mom,sad please,template,1.0
+minemy brother sick,minemy brother sick,tomorrow please brother home brother girl icecream girl water food bed sleepy dad sleep sick bed food bed icecream food,template,0.976
+car now go food store,car now go food store,wait,random,0.946
+grandma hungry icecream,grandma hungry icecream,hungry,template,0.999
+hello milk go weus sleepy,hello store food go sleep,dad go sleep,random,0.685
+mom happy now like outside,mom happy now like outside,minemy please minemy now,random,0.905
+see thankyou grandpa give apple,go sleepy dad store apple,sleepy sleep dad apple,random,0.69
+grandpa read book night,grandpa read night,dad,template,0.92
+grandma hungry icecream,grandma hungry icecream,hello,template,0.992
+happy home now ride have,minemy home now apple have,please happy thirsty bed food home bed food now hesheit weus tomorrow weus go weus bed mom weus mom weus food brother icecream ride icecream sleepy,random,0.68
+grandpa read book night,grandpa read grandma night,dad grandpa weus read read,template,0.971
+night tomorrow give,night now,,random,0.96
+like no yesterday brother book,like now yesterday hesheit book,like yesterday food,random,0.846
+have find car happy,have find car happy,find,random,0.877
+drink thankyou mom food home,drink thankyou mom food home,book mom food,random,0.964
+no food now grandma,no food now mom,give food sleepy tomorrow food sleepy tomorrow sleepy give now bed go bed now weus bed weus girl mom,random,0.764
+hesheit food now minemy,hesheit food now minemy,thirsty cry thirsty bed food water now bed now have happy minemy,random,0.829
+later home grandpa,later home dad like,tomorrow drink tomorrow brother cry bed bed food bed home food bed sleepy dad food weus food weus dad read bed food read cry,random,0.741
+hello grandma thankyou,hello grandma thankyou,,template,0.908
+sleepy please drink grandma toy,sleepy please drink grandma toy,minemy please,random,0.836
+brother minemy tomorrow home,brother minemy tomorrow home,brother happy bed please happy please food bed please minemy happy minemy tomorrow bed happy minemy please minemy please minemy home,random,0.971
+grandma minemy sleep please hesheit,grandma sleep please hesheit,bed grandma mom bed hungry hungry like please outside brother thirsty cry weus cry bed dad outside sleepy food bed sleep bed thirsty please thankyou please thankyou hungry bed food water bed girl bed brother hesheit brother hesheit drink hesheit,random,0.847
+mom drink water now,mom drink water now,girl bed food icecream food icecream food now bed icecream pizza food bed food thankyou book thankyou thankyou grandma drink sad see water mom have now,template,0.839
+home child store sleepy boy,home child store tomorrow boy,drink book bed child bed child bed child grandma pizza drink store outside icecream tomorrow girl bed toy brother toy boy,random,0.843
+minemy brother sick,minemy brother sick,go,template,0.99
+grandma hungry icecream,grandma hungry icecream,bed grandma mom bed grandma food hungry icecream,template,0.938
+wait please mom,wait mom,,template,0.982
+milk food like now,milk minemy food yes now,grandma food milk car milk minemy food weus cry icecream now,random,0.688
+mom drink water now,mom drink water now,drink drink dad drink drink water bed icecream have now,template,0.998
+girl like pizza,girl like pizza,yesterday milk go like,template,0.926
+weus go outside later,weus go outside later,milk car milk car home weus weus home book home go,template,0.954
+boy have toy car,boy have toy car,boy yesterday icecream bed toy toy milk outside sleep go brother sleep go give grandma,template,0.959
+child thirsty milk please,child thirsty milk please,child bed go toy thirsty cry thirsty cry bed weus thirsty weus now outside milk toy car please thankyou please bed grandma read,template,0.942
+have car,have car,,random,0.718
+brother sleepy go bed,brother sleepy go bed,sleepy sleep sleepy,template,0.917
+milk store,milk store,car milk toy car toy outside read store,random,0.991
+night sick cry,have sick,night read sick dad sick drink food have hungry weus bed tomorrow,random,0.323
+yesterday weus ride car home,yesterday ride car home,car,template,1.0
+sick bed like happy sad,sick bed happy sleep,sick bed no weus food weus bed grandma like please thankyou please tomorrow sick sleepy sad girl,random,0.908
+wait toy,wait brother,home icecream bed toy,random,0.63
+no later yesterday food apple,read boy yesterday food apple,boy yesterday food sleepy night apple,random,0.871
+home drink toy give,home drink toy book,toy,random,0.747
+boy have toy car,boy have toy car,have,template,0.965
+wait please mom,wait please mom,sad please,template,1.0
+boy have toy car,boy have toy car,boy store icecream night toy,template,0.924
+home no child sleep,home no child sleep,thirsty pizza thirsty milk food home food tomorrow home tomorrow home food weus sleep thirsty pizza no bed yes now give boy give outside sleepy food,random,0.9
+mom happy,mom happy,drink,random,0.768
+hesheit sad cry,weus sad have,drink food drink tomorrow sick sleepy sad hungry hungry bed tomorrow,template,0.398
+apple home sick,apple home bed,toy apple food bed dad bed home food home bed food sleepy cry hesheit read bed dad,random,0.856
+drink brother,drink night,,random,0.719
+boy have toy car,boy have toy car,have toy,template,0.983
+cry sad ride,girl sleep ride,sleepy brother girl icecream night,random,0.858
+sleep sick water,sad sick water,please thirsty please sleepy sleep car thirsty pizza food pizza sleep pizza food pizza sleep water sleep food sleep thirsty now sleep sick drink sleep ride,random,0.782
+grandma hungry icecream,grandma hungry icecream,mom icecream,template,0.927
+boy yes ride now,boy yes now,boy ride read ride,random,0.979
+hello please car tomorrow,hello please car tomorrow,minemy car,random,0.982
+sleepy milk apple,sleepy car apple,sleepy,random,0.931
+icecream boy apple,icecream boy apple,boy,random,0.991
+sick girl,sick girl,girl,random,0.902
+icecream grandma book,icecream bed bed,yesterday brother icecream bed bed brother thankyou mom drink read cry girl,random,0.638
+read sleep hesheit food no,read hesheit no,read child bed sleepy dad outside sleep outside bed food bed food water bed girl bed brother bed hesheit brother hesheit bed hesheit icecream hesheit girl give sleep girl pizza read bed food sleep sleepy sick sleepy toy,random,0.998
+mom ride see night,night mom minemy ride see store,sleepy sad sleepy happy icecream ride icecream see give night,random,0.914
+now bed,now bed,now bed food,random,0.994
+wait hesheit grandma bed outside,go hesheit bed bed cry,wait thirsty weus drink hesheit drink weus thirsty bed book bed bed,random,0.802
+hesheit night sleep weus,child night sleep weus,drink toy brother thirsty pizza thirsty pizza bed hesheit night night child sleepy pizza food hungry,random,0.806
+grandpa read book night,grandpa read book night,,template,0.999
+minemy brother sick,minemy brother sick,hungry thirsty minemy please minemy thankyou minemy thankyou hungry minemy brother bed thankyou sick sick,template,0.983
+happy have pizza cry,happy have pizza cry,minemy please pizza no toy,random,0.994
+girl like pizza,girl bed pizza,,template,0.702
+bed hesheit sleep,bed hesheit sleep,read weus dad bed icecream bed bed ride dad sleepy sleep,random,0.756
+bed ride,bed no,,random,0.7
+store mom food like child,store mom food hungry boy,dad sleepy food boy night,random,0.795
+child happy find toy,child happy find brother,sick find,template,0.843
+dad go store tomorrow,dad go store tomorrow,drink icecream dad outside store night bed girl tomorrow,template,0.981
+minemy brother sick,minemy brother sick,book now tomorrow now please minemy please bed,template,0.952
+weus sad,weus sad,dad sleepy sad sleepy,random,0.429
+apple hesheit happy thirsty car,apple hesheit happy thirsty car,later minemy pizza weus thirsty weus,random,0.919
+toy have milk grandma,toy have milk grandma,toy have car,random,0.846
+pizza see,pizza go,,random,0.7
+wait thankyou sick,wait thankyou sick,sick,random,0.962
+please tomorrow pizza drink,please apple ride drink,please icecream,random,0.717
+grandpa read book night,grandpa read read night,grandpa have read mom child,template,0.776
+grandpa read book night,grandpa read book night,bed read no toy read dad cry dad sleep brother,template,0.801
+wait please mom,pizza please mom,happy sick please minemy,template,0.708
+grandpa read book night,grandpa read book night,dad night,template,0.971
+thankyou hungry see,thankyou hungry sleep,,random,0.698
+child thirsty milk please,child thirsty milk please,thirsty minemy,template,0.956
+store now dad sad night,store now dad thankyou night,store dad,random,0.907
+hello grandma thankyou,hello grandma sleepy,sleep,template,0.875
+child thirsty milk please,child thirsty milk please,child bed child bed child thirsty cry weus hungry cry milk happy please thirsty give thirsty give please bed please give grandma give please book,template,0.978
+pizza mom icecream sick,pizza mom icecream sick,sick pizza read night read sleepy mom sleepy sleep read tomorrow icecream brother icecream brother icecream brother icecream icecream girl icecream water icecream girl icecream water food sleepy dad sleep sick sleep bed food bed icecream food,random,0.98
+dad night boy,dad store girl boy,dad night boy night icecream dad car grandma thankyou night pizza girl boy,random,0.772
+dad go store tomorrow,dad go store tomorrow,,template,0.943
+food pizza read hungry give,food ride read hungry store,ride read pizza read store,random,0.813
+outside like minemy book store,hello happy minemy bed store,pizza thirsty thankyou minemy thirsty book cry food store,random,0.736
+yesterday car apple,yesterday car apple,yesterday milk outside sleep go sleep icecream give book tomorrow later apple weus apple,random,0.865
+wait please mom,wait please mom,hungry go outside please thankyou night yesterday bed drink,template,0.997
+child happy find toy,child happy find toy,night happy please happy minemy find,template,0.995
+go sleepy icecream hello milk,car sleepy icecream hello car,go sleep food boy sleep food read sleep food sleep outside sleep food toy outside sleep food bed weus thirsty hungry icecream bed icecream bed food bed yes bed toy hello tomorrow weus food car milk car milk car,random,0.78
+girl like pizza,girl like dad,,template,0.845
+store have food sleepy drink,store now home sleep drink,home sleepy food sleepy sleep sleepy home,random,0.794
+weus go outside later,weus outside bed later,sad weus,template,0.68
+weus go outside later,weus go outside later,,template,0.836
+hello grandma thankyou,hello grandma thankyou,grandpa sleepy,template,0.994
+wait please mom,wait please mom,girl thankyou bed wait bed thankyou book water please minemy please thankyou please thankyou please grandma bed grandma cry sleepy mom sleepy grandpa,template,0.998
+hesheit sad cry,hesheit sad cry,sad cry,template,0.946
+have dad,have dad,,random,0.989
+have boy,brother boy,girl icecream minemy pizza dad boy,random,0.873
+boy have toy car,boy have toy car,boy have please go toy tomorrow yes read cry toy car,template,0.987
+wait please mom,wait please car,wait cry weus please minemy please hungry please bed food please minemy please minemy milk car weus icecream,template,0.807
+happy weus,minemy weus,weus,random,0.887
+hesheit food ride toy cry,hesheit food ride toy cry,car pizza toy,random,0.981
+grandpa read book night,grandpa grandpa grandma night,dad grandpa now yesterday like sleepy pizza ride find night,template,0.874
+yes thankyou toy happy,night thankyou toy happy,yes toy minemy please,random,0.954
+brother sleepy go bed,brother sleepy go bed,brother sleepy toy cry go cry toy cry toy brother bed,template,0.957
+wait please mom,outside happy mom,give minemy,template,0.66
+child happy find toy,child happy find toy,child store minemy,template,0.986
+brother sleepy go bed,brother sleepy go bed,sleepy,template,0.956
+child happy find toy,child happy find toy,happy minemy hello,template,1.0
+mom drink water now,mom drink water now,mom drink icecream drink water have weus have toy now wait now,template,0.983
+minemy dad give apple,minemy dad give apple,dad,template,0.971
+store book dad,store book dad,store sad,random,0.996
+cry read happy pizza weus,car find thankyou pizza weus,yesterday like pizza book sleepy thankyou weus grandma grandma,random,0.855
+milk boy dad car,milk boy dad drink,milk food sleep icecream icecream boy drink boy,random,0.916
+hello grandma thankyou,hello grandma thankyou,grandpa,template,0.921
+yesterday weus ride car home,now ride drink home,go drink outside,template,0.644
+child night hello give,child girl hello sleep,child brother night read weus girl give hello dad,random,0.744
+dad go store tomorrow,grandpa go store tomorrow,mom food bed dad food dad bed minemy grandma outside find icecream dad boy night dad brother night yesterday tomorrow brother tomorrow bed tomorrow brother icecream brother tomorrow girl tomorrow,template,0.858
+pizza apple bed,ride give bed,milk yesterday give pizza no pizza girl tomorrow girl weus tomorrow tomorrow minemy pizza minemy tomorrow read tomorrow apple tomorrow child apple bed grandma bed bed pizza bed pizza bed pizza bed now weus bed,random,0.551
+mom drink water now,mom drink water now,sleepy mom sleepy sleep sleepy tomorrow drink drink water drink bed read now now tomorrow please weus bed mom,template,0.998
+boy have toy car,boy have toy car,boy toy milk car,template,0.995
+brother sleepy go bed,brother sleepy go bed,brother hello sleep home sleepy,template,0.964
+child thirsty milk please,child thirsty milk please,thirsty cry thirsty bed thirsty car read car weus please minemy please hungry please food bed please minemy please minemy,template,0.925
+boy have toy car,boy have toy home,boy brother have please toy read weus toy read toy read toy food bed mom food toy tomorrow car bed food,template,0.939
+find car go,find find boy outside,find boy,random,0.814
+wait dad mom,wait dad mom,dad,random,0.998
+girl like pizza,yesterday like brother,,template,0.909
+girl like pizza,toy like brother,,template,0.767
+hesheit sad cry,hesheit sad cry,sad cry,template,1.0
+go please,toy please,bed give cry toy home give toy brother toy child child please,random,0.618
+minemy brother sick,minemy brother sick,minemy brother bed,template,0.826
+like apple home yesterday,like apple home yesterday,like thirsty now apple icecream apple girl bed food home bed food sleep bed food icecream girl yesterday home yesterday brother go brother,random,0.891
+like brother,like brother,brother,random,0.939
+mom sick yes,icecream sick yes,icecream bed sick cry toy tomorrow toy icecream toy yes icecream yes icecream yesterday yes icecream yes cry icecream bed,random,0.594
+minemy dad give apple,minemy dad give apple,hello dad,template,0.936
+boy water sick,boy water boy,boy water,random,0.708
+sleep sleepy store,sleepy sleepy store,sleepy food,random,0.726
+mom drink water now,mom drink water now,mom read weus food bed water toy give food bed sleep food drink icecream bed water mom water mom have now,template,1.0
+water thirsty,mom weus,car grandma,random,0.513
+brother sleepy go bed,brother sleep apple bed,brother please,template,0.737
+book wait mom sleepy yes,book mom sleep yes,go dad boy home icecream,random,0.869
+store sick weus,store sick weus,boy,random,0.905
+mom drink water now,drink water now,home weus night water dad bed,template,0.919
+read book car tomorrow thankyou,read wait car night thankyou,read,random,0.735
+hello grandma thankyou,hello grandma thankyou,,template,0.928
+happy water icecream,happy drink icecream,please happy child water mom grandma bed mom water mom water mom bed please bed night please bed icecream,random,0.807
+no read milk,boy read car,mom read bed read bed ride milk,random,0.567
+tomorrow toy milk no read,tomorrow toy milk have no,toy have ride no ride,random,0.92
+brother sleepy go bed,brother sleepy go bed,,template,0.925
+book thankyou icecream yesterday have,thankyou thankyou icecream yesterday have,store food yesterday,random,0.976
+boy have toy car,boy have toy car,boy girl icecream read like read toy give have weus milk weus bed weus toy toy car,template,0.995
+yesterday weus ride car home,yesterday apple car home,yesterday icecream toy home,template,0.822
+hello grandma thankyou,hello grandma thankyou,hello find sick water water give,template,0.912
+wait thankyou,child wait wait,read sad,random,0.951
+have store grandma,have store book,have store,random,0.923
+brother sleepy go bed,brother sleepy bed,brother sleepy sleep,template,0.968
+girl like pizza,yesterday like brother,,template,0.848
+bed wait night toy,bed wait night toy,bed,random,0.992
+boy pizza hesheit read,boy pizza ride,bed boy give sleepy cry hesheit,random,0.786
+girl like pizza,apple thankyou hello,,template,0.542
+yesterday weus ride car home,yesterday weus ride car home,bed food bed tomorrow yesterday tomorrow yesterday tomorrow bed girl icecream cry icecream milk food toy icecream no toy no weus cry food weus read have toy bed ride thirsty car milk toy car drink home,template,0.986
+minemy dad give apple,minemy dad no give apple,minemy please minemy dad give night dad brother,template,0.958
+yesterday weus ride car home,yesterday weus ride car home,bed icecream bed tomorrow yesterday tomorrow yesterday tomorrow girl drink weus hungry weus thirsty hungry read icecream no icecream no toy tomorrow car toy car toy home,template,0.961
+sleepy mom minemy,sleepy mom minemy,sleepy,random,0.995
+pizza have,pizza girl,sleepy pizza sleep home bed weus hungry,random,0.677
+girl like pizza,girl like pizza,tomorrow bed girl like thirsty now wait toy pizza pizza,template,0.933
+minemy dad give apple,minemy dad give apple,minemy dad,template,0.959
+outside wait,outside wait,,random,0.841
+go yesterday see pizza icecream,cry yesterday see pizza icecream,toy girl weus bed yesterday drink see outside happy brother icecream brother icecream,random,0.947
+boy have toy car,boy have toy car,have toy,template,0.928
+water wait,water wait,dad mom dad mom bed dad,random,0.873
+sleep cry weus home thirsty,sleep cry weus home thirsty,cry weus go,random,0.848
+hello grandma thankyou,hello grandma thankyou,,template,0.998
+dad go store tomorrow,dad go store tomorrow,dad outside store store read store tomorrow,template,0.948
+girl like pizza,girl like bed,icecream like book now read book,template,0.83
+mom drink water now,mom drink water now,drink,template,1.0
+dad go store tomorrow,dad sick grandma store tomorrow,dad store bed brother girl,template,0.821
+girl car pizza sleep please,yesterday boy pizza sleepy please,boy sleepy please minemy,random,0.768
+grandpa read book night,grandpa read book night,dad read book,template,0.978
+brother read yes icecream,brother read yes icecream,yes icecream,random,0.935
+minemy brother sick,minemy brother sick,happy please happy minemy brother sad find bed dad,template,0.907
+find hungry food bed dad,find hungry girl hello dad,find sleep sleepy sleep now grandpa dad,random,0.726
+hello bed yesterday thankyou store,hello bed yesterday thankyou store,bed child yesterday,random,0.978
+child minemy night apple,child minemy night apple,child minemy night,random,0.907
+book night please,book store please,mom book mom drink store drink hungry tomorrow weus food weus tomorrow food drink night store night tomorrow store please happy,random,0.676
+child thirsty milk please,child thirsty milk,go weus thirsty milk,template,0.888
+yesterday weus ride car home,yesterday weus ride car home,yesterday weus ride,template,0.997
+cry water sleepy,cry water sleepy,cry sleepy,random,0.966
+like brother outside girl grandma,hungry store go yesterday grandma,,random,0.689
+grandpa read book night,grandpa no sad night,dad store read pizza read grandma read grandma read weus no drink read mom bed read bed read tomorrow hungry food store hungry sad pizza dad night sleepy night icecream,template,0.637
+hello grandma thankyou,hello hello thankyou,,template,0.893
+weus go outside later,weus go outside later,weus,template,0.816
+pizza toy boy,pizza toy boy,pizza pizza go child go toy apple toy hesheit car read please bed icecream icecream boy,random,0.745
+wait please mom,wait please mom,wait book wait please sad,template,0.999
+mom drink water now,mom drink water now,drink water,template,0.937
+grandpa read book night,grandpa read book night,dad grandpa pizza ride book night,template,0.96
+grandma hungry icecream,mom icecream,,template,0.661
+find weus,find girl,find,random,0.649
+brother sleepy go bed,brother sleepy go bed,brother food sleepy,template,0.893
+have toy go yesterday car,have now outside yesterday now,give like yesterday,random,0.566
+tomorrow like find go,tomorrow hungry find sleep,find give home book,random,0.635
+yes sleepy outside bed,have sleepy outside bed,sleepy icecream,random,0.676
+please later,please later,please happy please happy child please toy weus hungry weus bed later hesheit no give later cry toy girl brother toy brother,random,0.902
+girl minemy child toy,yesterday happy child toy,yesterday minemy thankyou please thankyou child tomorrow,random,0.581
+have no mom,store mom,,random,0.625
+grandpa read book night,grandpa read thankyou night,grandpa sleepy weus girl pizza read grandma read brother grandma sleep child brother grandma read book bed thankyou sad read child read find give read night brother night find night read weus bed night go,template,0.821
+weus go outside later,weus go outside later,grandma read outside give have,template,0.859
+pizza book milk toy sleepy,ride book milk brother sick,sleepy food milk brother brother,random,0.82
+grandma hungry icecream,grandma hungry brother,hello,template,0.849
+brother sleepy go bed,brother sleepy go bed,brother sleepy go bed,template,0.858
+tomorrow like,yes sick,,random,0.335
+dad go store tomorrow,dad go store tomorrow,dad store,template,0.996
+dad tomorrow,dad tomorrow,dad,random,0.982
+grandma hungry icecream,grandma hungry icecream,icecream,template,0.97
+boy yesterday sleepy,boy yesterday sleep,boy home give yesterday food,random,0.657
+food icecream ride home weus,no icecream ride home milk,yesterday home icecream milk car,random,0.811
+hello grandma thankyou,hello grandma thankyou,hello dad bed mom,template,0.858
+yesterday weus ride car home,yesterday child ride car home,thirsty brother yesterday tomorrow thirsty tomorrow like child drink bed grandma water drink car toy car have home bed,template,0.769
+hello ride wait,brother ride food,,random,0.619
+yesterday store home girl,yesterday home toy,yesterday home,random,0.977
+weus ride,hesheit ride,weus night,random,0.525
+brother hesheit give find pizza,brother hesheit hesheit find brother,car hesheit later find,random,0.899
+grandpa read book night,grandpa read book night,grandpa,template,0.933
+wait grandma no,wait grandma no,,random,0.762
+child happy find toy,child happy find toy,minemy,template,0.999
+brother sleepy go bed,brother boy toy drink,icecream brother boy drink toy brother toy later go grandma go outside bed grandma go toy,template,0.817
+child night milk,child ride car,child,random,0.734
+hello grandma thankyou,hello grandma thankyou,,template,0.934
+child happy find toy,child happy find toy,child boy child outside read please find give go toy toy car milk toy,template,0.988
+grandpa cry food sad,grandpa home sad,dad sleepy bed sleepy,random,0.579
+minemy go hello child,minemy go hello child,minemy,random,0.954
+have later grandpa tomorrow,have later dad yes,have dad,random,0.802
+wait minemy thankyou see,wait please thankyou see,thankyou minemy apple hungry book thankyou hungry thirsty see thirsty,random,0.84
+grandma hungry icecream,grandma hungry icecream,bed mom bed mom sad brother icecream,template,0.89
+grandpa read book night,grandpa read book night,read,template,0.997
+grandma yes child,grandma yesterday child,no bed weus bed go mom drink grandma drink bed grandma bed go mom hesheit mom food mom drink toy yesterday yes drink child,random,0.726
+grandma hungry icecream,grandma hungry icecream,bed grandma bed weus hungry icecream,template,0.99
+dad go store tomorrow,dad go store tomorrow,dad toy pizza bed cry toy grandma home give toy brother toy brother toy brother store girl bed brother tomorrow,template,0.963
+milk ride hesheit bed cry,milk ride hesheit bed cry,car car bed toy,random,0.992
+give no like have yesterday,store have hungry thirsty yesterday,have sleepy ride no like drink yesterday,random,0.603
+grandpa read book night,grandpa read book night,grandpa,template,0.927
+child thirsty milk please,child thirsty milk please,thirsty minemy,template,0.998
+dad go store tomorrow,dad dad go store tomorrow,night dad drink toy girl now now bed find bed night store dad night store yes store night store night,template,0.92
+sleepy wait,boy wait,boy brother pizza brother boy sick now icecream tomorrow give bed like bed wait bed now bed tomorrow thirsty hungry thirsty hungry,random,0.834
+thankyou pizza,thankyou hello,,random,0.592
+go now see read,sick grandpa now find,child,random,0.567
+sleepy tomorrow have apple see,child boy tomorrow store apple see,sick tomorrow icecream tomorrow have tomorrow toy water read tomorrow brother bed see,random,0.672
+child thirsty milk please,child thirsty milk please,please,template,0.961
+sleepy child read car,sleepy child thirsty car,child thirsty,random,0.894
+boy have toy car,boy have toy car,toy,template,0.999
+weus go outside later,weus weus go outside later,,template,0.786
+boy weus water drink,boy weus water drink,boy water,random,0.972
+hello food girl,hello food brother,hello give thankyou grandma bed food yesterday,random,0.665
+hesheit girl outside,girl go,toy brother night hesheit yesterday drink outside,random,0.714
+mom drink water now,mom drink water now,drink water,template,0.828
+child happy find toy,child happy find toy,minemy happy hello brother,template,1.0
+wait please mom,wait please mom,book weus have wait now have now bed thirsty now see please sad sleep water sad mom sad sleepy mom sad mom sleep hesheit bed give bed hesheit,template,0.991
+water car go,water car go,boy car,random,0.825
+water car please tomorrow,mom milk please tomorrow,,random,0.734
+like sleepy hesheit bed mom,like sleep hesheit bed grandma,sleepy hesheit yesterday bed,random,0.802
+sad have sick,sad brother boy,sad sick sad bed food brother girl icecream sleepy,random,0.824
+grandpa read book night,grandpa read book store,grandpa tomorrow read find night,template,0.915
+later weus wait hesheit,see wait hesheit,weus wait,random,0.754
+water find,water find,,random,1.0
+hello wait dad yesterday minemy,child wait dad yesterday please,hello dad like,random,0.823
+apple tomorrow have sleep,apple go have sleep,apple,random,0.83
+now grandma dad minemy apple,brother grandma dad please tomorrow,dad,random,0.767
+girl like pizza,girl bed pizza,,template,0.843
+wait car give home sleepy,wait drink toy home sleepy,sad happy store car home home bed sleepy food sleepy icecream sleepy food bed food,random,0.921
+minemy brother sick,minemy brother sick,please minemy give brother bed food hungry dad sick outside,template,0.934
+yes yesterday,yes yesterday,yesterday,random,0.99
+dad go store tomorrow,dad go store tomorrow,boy store,template,0.903
+weus go outside later,go outside later,,template,0.673
+minemy brother sick,minemy brother sick,minemy brother later girl tomorrow girl icecream girl food bed dad sick bed food,template,0.942
+book please sad ride,wait please sad ride,please,random,0.869
+minemy brother sick,minemy brother sick,minemy sick,template,0.926
+grandpa read book night,grandpa read night,grandpa dad sad home wait bed tomorrow now tomorrow home grandma give drink book have weus book home book wait home,template,0.949
+store please ride thirsty brother,store please ride toy,please minemy no read no,random,0.849
+ride water boy,read water boy,read ride pizza boy,random,0.824
+yesterday weus ride car home,yesterday weus ride car home,girl yesterday tomorrow brother food weus thirsty girl apple read car read car icecream cry icecream bed home bed home bed,template,0.905
+weus go outside later,weus go outside later,,template,0.807
+wait boy,outside boy,go give boy,random,0.615
+car pizza,car pizza,toy milk bed read cry car toy car read cry car toy car toy outside car outside thankyou store pizza happy,random,0.984
+book wait dad read outside,bed wait dad outside,thirsty bed give thirsty hungry now icecream bed thankyou bed wait bed thirsty hungry dad icecream read go outside,random,0.902
+brother sleepy go bed,brother sleepy bed,drink home,template,0.841
+wait please mom,wait please mom,now icecream bed like book wait bed tomorrow thirsty hungry please mom,template,1.0
+mom drink water now,mom drink water now,mom grandma food bed food brother book thankyou sleepy thankyou drink drink sleepy sad thankyou water mom have weus have toy have now wait now,template,0.938
+minemy dad give apple,minemy dad give apple,dad drink icecream,template,0.993
+give no dad,give no dad,dad,random,0.791
+grandpa night,grandpa night,dad brother,random,0.951
+sleepy minemy tomorrow,sleep minemy tomorrow,please,random,0.903
+minemy cry hesheit night,minemy cry hesheit night,minemy cry later,random,0.992
+boy have toy car,boy have toy car,,template,0.997
+tomorrow drink have car book,tomorrow drink have car grandma,find,random,0.864
+weus go outside later,weus sleepy outside later,go,template,0.889
+minemy brother sick,minemy grandpa sick,sick sleepy,template,0.605
+boy have toy car,boy have toy car,boy have,template,0.999
+minemy brother sick,minemy brother sick,minemy,template,0.999
+later brother give food yes,later store sleep night,,random,0.621
+wait please mom,wait please mom,happy minemy please happy minemy hello,template,0.97
+child tomorrow milk car drink,boy tomorrow milk drink,sad brother sleepy milk car sleepy dad,random,0.924
+hello grandma thankyou,hello grandma thankyou,,template,1.0
+child thirsty milk please,child thirsty milk please,,template,0.993
+later thankyou go wait now,weus later thankyou toy wait now,later girl sad toy cry sleep cry toy cry toy cry milk toy girl thankyou bed wait toy now,random,0.84
+grandma hungry icecream,grandma hungry icecream,icecream,template,0.998
+hello grandma thankyou,child hello grandma thankyou,boy dad bed grandma bed wait thankyou,template,0.981
+girl like pizza,yesterday like no,,template,0.841
+dad find mom,dad find car,dad find weus icecream,random,0.819
+bed now night thankyou drink,bed toy now thankyou boy,now pizza,random,0.617
+hello grandma thankyou,hello grandma thankyou,,template,0.979
+mom drink water now,mom drink water now,mom dad mom drink water drink night tomorrow night drink sleep bed drink sleepy water grandma pizza water sleepy now,template,0.997
+wait please mom,wait please mom,please mom,template,1.0
+minemy grandpa tomorrow pizza toy,minemy grandpa tomorrow brother toy,grandpa toy,random,0.897
+go later water give,go later water toy,mom,random,0.721
+girl like pizza,toy like brother,pizza,template,0.833
+weus go outside later,weus go outside later,sleepy,template,0.961
+hello grandma thankyou,hello grandma thankyou,,template,0.999
+yesterday give water have go,yesterday ride brother outside,drink yesterday brother store brother girl icecream sleepy,random,0.786
+child happy find toy,child happy find toy,child no hello store child child child boy cry please thankyou please thankyou read yesterday bed find,template,0.993
+minemy brother sick,minemy brother sick,please happy minemy sick,template,0.966
+sad see girl,sick ride girl,sleepy brother now drink toy girl tomorrow read night home toy brother tomorrow,random,0.694
+tomorrow yes dad find,tomorrow yes dad find,tomorrow girl icecream dad,random,0.974
+brother sleepy go bed,brother sleepy car bed,outside give outside go outside sleepy home food sleepy outside go outside sleepy toy go cry toy cry toy bed food bed food,template,0.71
+mom go dad,grandma go dad,dad,random,0.754
+yes wait read,yes wait read,brother go bed brother yes go,random,0.703
+car food,car girl,car thirsty bed icecream bed,random,0.674
+hello like tomorrow now later,hello hungry tomorrow now later,tomorrow brother have toy have read bed read bed read grandma girl now toy have read find tomorrow,random,0.907
+food grandpa ride milk,food grandpa read car,hello,random,0.913
+minemy dad give apple,minemy dad give apple,please minemy grandpa sleepy thirsty cry tomorrow tomorrow icecream apple icecream brother,template,0.993
+outside hesheit,outside hesheit,,random,0.904
+later car,see car,sick hesheit toy toy read car toy car read car toy car,random,0.947
+icecream water,icecream water,icecream brother cry sick cry food water dad child,random,0.976
+please grandpa apple pizza,please grandpa girl pizza,bed please pizza bed thankyou like thankyou please like thankyou bed please like please bed please bed like grandpa dad yes tomorrow icecream apple tomorrow apple icecream tomorrow apple tomorrow icecream cry icecream girl bed girl pizza pizza,random,0.847
+hesheit please thankyou,hesheit please thankyou,toy brother pizza hesheit please like girl thankyou,random,0.932
+hello outside minemy ride drink,hello outside minemy ride drink,hello outside please minemy ride bed girl bed,random,0.878
+sick store,sick store,store,random,0.982
+pizza drink thirsty,brother drink thirsty,drink,random,0.943
+dad go store tomorrow,dad go store tomorrow,dad,template,0.781
+happy yesterday icecream dad,thankyou yesterday icecream dad,yesterday icecream,random,0.914
+hesheit sad cry,hesheit sad cry,,template,1.0
+minemy like,minemy yesterday,like,random,0.767
+child thirsty milk please,boy thirsty milk thankyou,dad night weus book please later child please milk,template,0.839
+minemy brother sick,minemy brother sick,thankyou hungry home brother cry brother cry food sleep sick food sleepy food weus,template,0.975
+later pizza read,later pizza read,go icecream pizza,random,0.734
+no hungry happy like,no hungry thankyou hungry,,random,0.749
+boy have toy car,boy have toy car,boy have toy,template,0.963
+weus go outside later,weus go outside later,outside go,template,0.885
+girl like pizza,girl like please,tomorrow yesterday like happy please bed later see read child like go child please like please read please hungry please book sleepy have cry,template,0.69
+weus go outside later,weus go outside later,find yes cry outside night toy weus hungry bed later hesheit no car later brother toy girl tomorrow brother,template,0.979
+apple bed read,apple bed read,bed ride,random,0.972
+grandma food book,grandma food book,,random,0.817
+ride later,ride later,go,random,0.711
+grandpa read book night,grandpa read book night,read night,template,0.999
+boy have toy car,boy have toy car,boy brother boy have like child go toy apple toy apple toy store hesheit car read please bed outside cry outside toy car toy car,template,0.937
+grandma hungry icecream,grandma hungry icecream,icecream,template,0.908
+child thirsty milk please,child thirsty milk please,thirsty weus milk,template,0.996
+dad milk sleep give,dad milk sleep go,,random,0.831
+weus go outside later,weus go outside later,brother thirsty weus thirsty outside outside bed toy please hungry water read grandma go no go hesheit cry bed weus cry food weus have thirsty,template,0.961
+yesterday weus ride car home,yesterday ride car home,yesterday,template,0.976
+girl like pizza,tomorrow like read,like,template,0.5
+yesterday weus ride car home,yesterday weus ride car home,home,template,0.963
+child happy find toy,child happy find toy,find toy,template,0.995
+wait please mom,wait please mom,please,template,0.994
+child happy find toy,child happy find toy,store find,template,1.0
+hesheit sad cry,hesheit sad cry,hesheit sad,template,0.921
+girl car,apple car,bed cry toy milk,random,0.776
+minemy icecream girl,minemy icecream girl,please minemy brother icecream apple icecream girl girl,random,0.947
+mom drink water now,drink water now,sleepy,template,0.802
+food car,food car,food food car toy car,random,0.99
+sleepy hesheit book have sick,sleepy hesheit book have outside,sleep hesheit car hesheit have,random,0.807
+hesheit sad cry,hesheit sick cry,cry thirsty thirsty thankyou bed find sleepy sleep outside sleep sleepy sleepy bed give outside sad wait bed pizza thankyou now happy please girl thirsty bed thankyou pizza now bed weus thankyou bed thankyou now girl toy cry toy cry tomorrow tomorrow toy,template,0.848
+no later grandma,no go grandma,,random,0.695
+minemy brother sick,minemy brother sick,brother,template,0.992
+toy yesterday weus,please yesterday store,food bed weus read cry read thirsty toy yesterday toy yesterday cry read water food girl pizza please hesheit,random,0.607
+night like yesterday brother,night bed yesterday brother,brother boy dad find yesterday,random,0.773
+read ride now see,read ride now now,read now,random,0.899
+grandpa thirsty weus,grandpa thirsty weus,weus,random,0.994
+child sleepy thankyou,grandma sleepy thankyou,sleepy,random,0.911
+child happy find toy,child happy find toy,happy please happy minemy hello find toy,template,0.997
+minemy dad give apple,minemy dad now give apple,please minemy dad boy dad toy cry car tomorrow pizza minemy pizza minemy thirsty tomorrow apple tomorrow apple child bed apple bed thirsty,template,0.927
+girl like pizza,yesterday like brother,pizza,template,0.751
+mom like icecream wait,mom like icecream wait,give icecream,random,0.986
+weus go outside later,weus go later,,template,0.942
+grandma hungry icecream,grandma hungry icecream,bed food brother hesheit minemy mom hungry icecream,template,0.977
+apple yes sick sleep milk,apple yes sick sleep milk,yesterday sick sleepy,random,0.794
+book night yesterday like dad,book night yesterday like dad,drink yesterday like,random,0.941
+drink food,drink home,drink,random,0.863
+minemy dad give apple,minemy dad give apple,dad,template,0.909
+see go brother sleep,see outside brother sleep,see,random,0.819
+outside find pizza,outside find brother,,random,0.992
+yesterday weus ride car home,yesterday weus ride car home,,template,0.973
+hello grandma thankyou,hello grandma thankyou,,template,1.0
+boy give milk,boy go milk,boy,random,0.834
+dad go store tomorrow,dad go store tomorrow,dad store,template,0.937
+thankyou water,sleepy mom,water,random,0.676
+ride boy icecream cry night,ride boy icecream cry night,icecream cry sad,random,0.976
+boy have toy car,boy go toy car,boy dad night give child toy car toy car car,template,0.857
+hesheit sleepy,hesheit outside,thirsty wait,random,0.982
+have outside give store water,girl outside go give store water,girl grandma outside toy outside bed weus have thirsty bed happy sad thirsty give store brother store read store no child tomorrow weus tomorrow go bed grandma water mom water mom drink thirsty please like child,random,0.854
+pizza wait sleepy,brother wait sleepy,pizza wait sad,random,0.934
+minemy dad give apple,minemy dad give apple,dad store,template,0.986
+tomorrow food,tomorrow food,,random,0.945
+toy tomorrow cry hungry,toy tomorrow cry hungry,cry,random,0.799
+now icecream,now icecream,,random,0.956
+drink milk food yesterday,boy milk food thirsty,milk food sleep,random,0.708
+like grandma,like bed,like please hungry now hungry bed,random,0.99
+hello grandma thankyou,hello grandma thankyou,,template,0.925
+store wait book milk,store wait book milk,store,random,0.859
+sick cry,sick ride,,random,0.735
+yesterday boy,yesterday boy,find boy,random,0.996
+yesterday bed milk mom child,yesterday bed milk mom night,yesterday food milk dad drink dad drink,random,0.849
+mom thankyou tomorrow,grandma thankyou tomorrow,,random,0.892
+mom drink water now,mom drink pizza now,,template,0.802
+go now home,sleep now grandpa,home child book go,random,0.703
+brother sleepy go bed,brother sleepy bed,,template,0.882
+dad go store tomorrow,dad go store tomorrow,store,template,0.899
+brother water hello bed pizza,store water bed bed brother,water bed toy,random,0.824
+read home,find home,sleepy ride find home,random,0.865
+see have,see have,,random,1.0
+grandpa read book night,grandpa read book night,dad grandpa read later read hello,template,0.874
+hesheit dad hungry thirsty,hesheit dad hungry thirsty,icecream food icecream cry sleepy dad thirsty,random,0.943
+please no cry,please no cry,have weus please like please minemy please hungry please food bed please minemy bed read read girl cry,random,0.898
+boy have toy car,boy apple toy car,boy icecream toy,template,0.887
+icecream pizza please hello yesterday,icecream thirsty please hello yesterday,pizza please yesterday,random,0.934
+child happy find toy,child please find find toy,child give child bed give please hungry outside find,template,0.792
+girl like pizza,girl like pizza,girl no mom grandma hungry now hungry tomorrow happy pizza grandma grandma pizza happy pizza night pizza,template,1.0
+cry grandpa sick,cry grandpa sick,girl cry grandpa drink dad sick icecream,random,0.957
+give pizza,hesheit pizza,pizza,random,0.722
+home girl,home girl,home icecream,random,0.938
+dad thankyou no give,boy happy boy brother,,random,0.545
+sick minemy thankyou sleep,sick minemy thankyou sleep,,random,0.71
+mom drink water now,mom drink water store,dad drink dad drink dad sleepy food,template,0.976
+drink weus,drink weus weus,,random,0.792
+hesheit sad cry,hesheit sad cry,cry,template,1.0
+now yesterday mom child grandpa,now yesterday mom store grandpa,find mom store child,random,0.91
+hello grandma thankyou,hello grandma thankyou,,template,0.999
+child happy find toy,child happy find toy,child read please happy find toy food,template,0.995
+read like food,read hungry food,food,random,0.915
+hesheit sad cry,hesheit sad cry,,template,0.957
+thankyou give,thankyou car,thankyou happy bed night bed food weus bed food weus bed give grandma bed car thirsty bed thirsty,random,0.788
+icecream home wait boy dad,icecream home wait boy dad,girl icecream brother icecream brother icecream toy toy home girl thankyou book bed store wait go boy dad,random,0.948
+sleep tomorrow grandpa,sleep tomorrow mom,sleep sleepy food thankyou brother tomorrow girl tomorrow girl yesterday dad,random,0.833
+brother sleepy go bed,brother sleepy go bed,see sleepy,template,0.756
+now drink sad,now drink sad,now bed pizza bed drink sad,random,0.997
+give store thankyou,brother store wait,brother store thankyou,random,0.749
+hello grandma thankyou,hello mom thankyou thankyou,tomorrow bed dad hello mom hungry sad thankyou wait,template,0.943
+now sick,now night,now have now toy no read,random,0.931
+home night toy,home night toy,store,random,0.993
+car grandma,car mom,toy read cry car toy car toy car read car toy car thirsty car toy,random,0.989
+grandpa read book night,grandpa read book night,grandpa read weus read bed sleepy brother tomorrow child child read child read dad read grandma like night water night water night apple night sleep night find night read weus bed read sick have,template,0.948
+home happy night child hesheit,home happy store child hesheit,happy store yesterday,random,0.937
+hungry boy outside book like,hungry boy outside grandma like,boy go outside go,random,0.912
+milk dad mom food later,milk dad mom food later,dad,random,0.862
+milk sad girl,milk sleep girl,grandma car tomorrow yesterday,random,0.751
+girl like pizza,apple like read,,template,0.731
+water see dad,water see dad,,random,0.995
+minemy dad give apple,minemy dad give apple,dad apple home book,template,0.964
+minemy brother sick,minemy brother sick,minemy,template,0.887
+like tomorrow ride boy thankyou,like tomorrow ride boy thankyou,like weus thirsty now brother read girl toy grandma tomorrow yesterday brother bed tomorrow ride boy thankyou,random,0.932
+grandpa sad icecream child drink,grandpa sad icecream child drink,,random,0.964
+dad go store tomorrow,dad go store tomorrow,dad grandpa toy cry toy cry toy,template,0.924
+give girl bed see wait,now toy bed see wait,bed see,random,0.961
+hello grandma thankyou,hello mom thankyou,hello grandpa hello thirsty food thankyou food drink bed food now thirsty food thirsty,template,0.662
+apple car thankyou ride icecream,apple thankyou ride icecream,apple home book please brother apple icecream,random,0.929
+pizza sleepy go tomorrow,pizza outside tomorrow,sleepy sleep sleepy give,random,0.915
+child yesterday,child yesterday,child bed child tomorrow yesterday,random,0.779
+grandpa read book night,grandpa read book night,,template,0.998
+minemy dad give apple,minemy dad dad now,happy minemy please minemy dad boy dad toy cry now car tomorrow,template,0.812
+child thirsty milk please,child thirsty milk please,thirsty minemy,template,1.0
+hello bed,hello bed,,random,0.998
+have child like tomorrow no,have boy bed tomorrow give,boy dad brother weus book later child,random,0.815
+drink no cry,boy boy cry,find thirsty apple cry apple,random,0.69
+food sick hungry weus child,food boy hungry weus boy,bed drink food sleep sick sleepy food weus girl hungry hungry hungry hungry drink hungry thirsty child bed child bed food bed,random,0.76
+child happy find toy,child happy find toy,happy brother,template,0.986
+outside later see grandma,outside hesheit see grandma,go,random,0.72
+see hesheit go give bed,see hesheit sad thankyou bed,hesheit sad sad,random,0.895
+thirsty later boy dad,thirsty later boy dad,mom cry thirsty go cry bed weus see later brother dad,random,0.959
+child thirsty milk please,boy thirsty milk hello,sad milk bed please,template,0.728
+minemy dad give apple,minemy dad store give apple,dad sleepy,template,0.981
+mom drink water now,mom drink water now,cry sleepy mom grandpa drink food sleepy icecream drink read water mom toy now,template,0.85
+child go girl book please,mom now toy please,girl bed mom bed happy,random,0.53
+thankyou minemy,thankyou please,please minemy please,random,0.734
+child thirsty milk please,child thirsty milk please,sleepy please,template,0.962
+later minemy,later minemy,please hungry read go hesheit weus cry weus have thirsty have please,random,0.897
+hello grandma apple,hello grandma tomorrow,icecream hungry drink mom hello bed read night icecream food hungry girl,random,0.807
+grandpa read book night,grandpa yes book night,dad read sad home wait book give tomorrow icecream now apple home book grandma give book have weus book give home book outside sad night brother read like,template,0.906
+mom drink water now,mom drink water now,mom hesheit drink drink like bed read please have weus have toy have now bed now,template,0.95
+store home yes tomorrow,store home yes tomorrow,store home yesterday yesterday,random,0.924
+go outside,go outside outside,read bed cry no food bed outside,random,0.439
+minemy dad give apple,minemy dad give apple,dad,template,0.99
+dad go store tomorrow,dad go store tomorrow,dad store read bed cry store toy yesterday brother tomorrow,template,0.969
+sleepy sleep have outside,sleepy have outside,sleepy have,random,0.802
+hesheit sad cry,hesheit sad cry,sick cry,template,0.999
+hesheit hello see tomorrow food,hesheit hello see tomorrow food,see,random,0.969
+weus grandma,weus bed,weus weus bed,random,0.998
+water minemy bed give,water minemy bed give,minemy bed,random,0.885
+hesheit sad cry,hesheit sad cry,sad cry,template,0.913
+toy car wait outside pizza,toy toy wait outside ride,toy car bed dad car wait outside outside give yesterday give pizza no pizza icecream girl,random,0.769
+sad thirsty hello,sad weus bed hello,sleep sick sad find hello bed,random,0.82
+like sleep please,go sleep please please,food bed cry food brother food weus dad go weus sleepy please happy please,random,0.769
+have car grandpa night drink,have brother grandpa night drink,milk car outside sleep give brother sleep go give grandma book dad brother store go,random,0.92
+hesheit sad cry,hesheit sad cry,read tomorrow sick sleepy sick sad wait hungry tomorrow girl cry,template,0.706
+girl like pizza,girl bed read,,template,0.529
+wait find thankyou home food,hello child happy home home,home sleepy,random,0.801
+hello grandma thankyou,hello grandma thankyou,hello weus have thirsty thankyou book thirsty hungry,template,0.885
+sleep sleepy give night,sleep boy give night,sleep food bed sick bed icecream home,random,0.75
+dad go store tomorrow,dad go store tomorrow,store,template,0.991
+grandma hungry icecream,grandma hungry icecream,hungry,template,0.993
+girl like pizza,girl like pizza,brother drink like thirsty now,template,0.991
+hello book thirsty car,hello book thirsty car,,random,0.893
+night hungry,night hungry,,random,0.982
+wait please mom,wait please mom,sick go cry please thankyou please grandma please bed please bed grandma bed grandma read mom,template,0.865
+milk like happy apple hesheit,milk like apple hesheit,pizza apple,random,0.966
+drink yes bed child,drink go bed child,pizza brother yesterday yes ride grandpa grandpa,random,0.746
+ride happy boy brother,ride happy boy brother,happy,random,0.931
+child find girl,child find toy,find apple book,random,0.793
+dad go store tomorrow,dad go store tomorrow,mom food bed dad food dad bed grandma outside cry yesterday bed outside bed please night boy store yesterday brother tomorrow girl,template,0.797
+book now sad food,grandma now sick food,have bed book bed book give book sad sick book give grandma bed grandma bed mom bed book bed home sleepy food,random,0.698
+later like thirsty girl go,later like toy outside,,random,0.729
+brother sleepy go bed,brother sad toy bed,thankyou brother water dad sleepy outside sleepy now sleepy go toy cry toy cry toy cry toy cry toy cry toy cry toy bed icecream weus,template,0.793
+grandpa read book night,grandpa read book night,dad,template,0.887
+thirsty minemy,thirsty minemy,,random,0.831

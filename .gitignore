@@ -1,0 +1,8 @@
+__pycache__/
+.ipynb_checkpoints/
+*.zip
+data/raw/
+.venv/
+models/holistic_landmarker.task
+models/kaggle_1st/
+debug/

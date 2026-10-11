@@ -1,0 +1,24 @@
+# SignBridge — Python dependencies
+# Tested against Python 3.11.15 (Windows 64-bit)
+# Install: pip install -r requirements.txt
+#
+# NOTE: mediapipe 0.10.x requires numpy<2.0.  Do not upgrade numpy or
+#       opencv-python independently — update all three together.
+
+# ── Computer Vision ─────────────────────────────────────────────────────────
+opencv-python==4.11.0.86
+mediapipe==0.10.21
+
+# ── Numerical / Data ────────────────────────────────────────────────────────
+# numpy<2.0 required by mediapipe 0.10.x
+numpy==1.26.4
+
+# ── Testing ─────────────────────────────────────────────────────────────────
+pytest==9.1.1
+
+# ── To be added by other members ────────────────────────────────────────────
+# torch          — Member 1 (AI/ML Model Lead)
+# streamlit      — Member 3 (Frontend and Integration Lead)
+# jiwer          — Member 4 (Evaluation and Submission Lead)
+# pandas         — shared (data handling)
+# scikit-learn   — Member 1 (baseline classifier)

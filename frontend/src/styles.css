@@ -1,0 +1,203 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-stage: var(--stage);
+  --color-stage-foreground: var(--stage-foreground);
+  --color-stage-muted: var(--stage-muted);
+  --color-paper: var(--paper);
+  --color-paper-foreground: var(--paper-foreground);
+  --color-paper-muted: var(--paper-muted);
+  --color-paper-border: var(--paper-border);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.125rem;
+  --background: oklch(0.245 0.03 155);
+  --foreground: oklch(0.955 0.015 90);
+  --card: oklch(0.28 0.03 155);
+  --card-foreground: oklch(0.955 0.015 90);
+  --popover: oklch(0.32 0.03 150);
+  --popover-foreground: oklch(0.955 0.015 90);
+  --primary: oklch(0.94 0.19 120);
+  --primary-foreground: oklch(0.22 0.03 155);
+  --secondary: oklch(0.32 0.03 150);
+  --secondary-foreground: oklch(0.955 0.015 90);
+  --muted: oklch(0.28 0.03 155);
+  --muted-foreground: oklch(0.74 0.02 140);
+  --accent: oklch(0.32 0.03 150);
+  --accent-foreground: oklch(0.955 0.015 90);
+  --destructive: oklch(0.66 0.14 30);
+  --destructive-foreground: oklch(0.98 0 0);
+  --warning: oklch(0.72 0.12 70);
+  --warning-soft: oklch(0.9 0.06 80);
+  --stage: oklch(0.19 0.022 155);
+  --stage-foreground: oklch(0.955 0.015 90);
+  --stage-muted: oklch(0.6 0.02 145);
+  --paper: oklch(0.955 0.015 90);
+  --paper-foreground: oklch(0.24 0.03 155);
+  --paper-muted: oklch(0.5 0.02 145);
+  --paper-border: oklch(0.87 0.015 90);
+  --border: oklch(0.37 0.03 150);
+  --input: oklch(0.42 0.03 150);
+  --ring: oklch(0.94 0.19 120);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: background-color 200ms, color 200ms, border-color 200ms;
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+@utility btn-primary {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  &:hover:not(:disabled) { background: color-mix(in oklab, var(--color-primary) 85%, white); }
+}
+
+@utility btn-outline {
+  background: transparent;
+  color: var(--color-foreground);
+  border-color: var(--color-input);
+  &:hover:not(:disabled) { background: var(--color-muted); }
+}
+
+@utility btn-ghost {
+  background: transparent;
+  color: var(--color-muted-foreground);
+  height: 2rem;
+  padding: 0 0.5rem;
+  font-weight: 500;
+  &:hover:not(:disabled) { color: var(--color-foreground); background: var(--color-muted); }
+}
+
+@utility frame-marks {
+  position: relative;
+  &::before, &::after {
+    content: ""; position: absolute; width: 18px; height: 18px; pointer-events: none; z-index: 2;
+    border-color: var(--color-primary);
+  }
+  &::before { top: 12px; left: 12px; border-top: 1px solid; border-left: 1px solid; }
+  &::after { bottom: 12px; right: 12px; border-bottom: 1px solid; border-right: 1px solid; }
+}
+
+/* ---------- Motion (subtle, reduced-motion aware) ---------- */
+@keyframes sb-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sb-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sb-drop {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@utility animate-rise {
+  animation: sb-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@utility animate-fade {
+  animation: sb-fade 500ms ease-out both;
+  animation-delay: var(--d, 0ms);
+}
+@utility animate-drop {
+  animation: sb-drop 260ms ease-out both;
+}
+
+/* Staggers direct children (and children of a nested form) into view. */
+@utility stagger {
+  & > *, & > form > * { animation: sb-rise 650ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  & > :nth-child(1), & > form > :nth-child(1) { animation-delay: 220ms; }
+  & > :nth-child(2), & > form > :nth-child(2) { animation-delay: 290ms; }
+  & > :nth-child(3), & > form > :nth-child(3) { animation-delay: 360ms; }
+  & > :nth-child(4), & > form > :nth-child(4) { animation-delay: 430ms; }
+  & > :nth-child(5), & > form > :nth-child(5) { animation-delay: 500ms; }
+  & > :nth-child(6), & > form > :nth-child(6) { animation-delay: 570ms; }
+  & > :nth-child(n+7), & > form > :nth-child(n+7) { animation-delay: 640ms; }
+  & > form { animation: none; }
+}
+
+/* Tactile press for buttons. */
+@utility press {
+  transition-property: background-color, color, border-color, opacity, transform, box-shadow;
+  transition-duration: 200ms;
+  &:active:not(:disabled) { transform: scale(0.985); }
+}
+
+@layer base {
+  button, a { -webkit-tap-highlight-color: transparent; }
+  .btn:active:not(:disabled) { transform: scale(0.985); }
+  .btn { transition-property: background-color, color, border-color, opacity, transform; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

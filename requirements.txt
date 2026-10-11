@@ -7,3 +7,11 @@ mediapipe==1.1.0
 streamlit==1.65.0
 pytest==9.1.1
 ai-edge-litert==2.3.0
+
+# FastAPI backend runtime
+fastapi==0.115.12
+uvicorn==0.34.2
+opencv-contrib-python==4.11.0.86
+pydantic==2.11.5
+transformers==4.57.1
+sentencepiece==0.2.0

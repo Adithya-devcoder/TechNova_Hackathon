@@ -24,6 +24,7 @@ from models import pretrained_isolated  # noqa: E402
 from models import signbridge_model as sb  # noqa: E402
 from models.gloss_to_english import to_english  # noqa: E402
 from models.streaming import WordStream  # noqa: E402
+from preprocessing.camera import SharedCamera  # noqa: E402
 from preprocessing.landmarks import draw_landmarks, shared_extractor, video_to_landmarks  # noqa: E402
 from preprocessing.segmenter import SentenceSegmenter, resample, split_signs  # noqa: E402
 
@@ -161,21 +162,10 @@ def show_frame(placeholder, frame, landmarks):
     placeholder.image(view, channels='BGR', output_format='JPEG', width='stretch')
 
 
-def open_camera(index, attempts=10):
-    """Open the webcam at 640x480 with a 1-frame buffer (fresh frames, less lag).
-
-    Retries for about 2 s, because after a rerun the previous run may still be releasing the camera.
-    """
-    for _ in range(attempts):
-        cap = cv2.VideoCapture(index, cv2.CAP_DSHOW) if os.name == 'nt' else cv2.VideoCapture(index)
-        if cap.isOpened():
-            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-            cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-            return cap
-        cap.release()
-        time.sleep(0.2)
-    return None
+@st.cache_resource
+def get_camera():
+    """One webcam for the whole app, handed between reruns (see preprocessing/camera.py)."""
+    return SharedCamera()
 
 
 def camera_loop(on_sentence, key, reference='', on_frame=None):
@@ -183,12 +173,14 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
 
     on_frame(landmarks, t_ms) -> status text: if given, it receives every frame instead of the segmenter.
     """
+    camera = get_camera()
     if not st.toggle('Start camera', key=key):
+        camera.release()   # camera switched off: free the webcam
         st.info('Switch on the camera, sign a sentence, then lower your hands for a moment to finish it.')
         return
     frame_ph, status_ph = st.empty(), st.empty()
-    cap = open_camera(cam_index)
-    if cap is None:
+    token = camera.acquire(cam_index)   # takes over from the previous run without reopening the device
+    if token is None:
         st.error(f'Could not open camera {cam_index}. Close other apps that use it, or try another index.')
         return
     end_s = sentence_end_s if recogniser == SIGN_BY_SIGN else pause_s
@@ -201,9 +193,12 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
     tracking, last_track = None, t0   # (future, t_ms): the frame MediaPipe is working on in the background
     try:
         while True:
-            ok, frame = cap.read()
+            ok, frame = camera.read(token)
+            if ok is None:   # a newer run has taken over the camera
+                break
             if not ok:
-                st.error('The camera stopped sending frames.')
+                camera.release()
+                st.error('The camera stopped sending frames. Switch it off and on again.')
                 break
             now = time.perf_counter()
             fps = 0.9 * fps + 0.1 / max(now - last, 1e-3)
@@ -253,7 +248,6 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
     finally:
         if tracking is not None:
             tracking[0].result()   # let the last background frame finish before the next session
-        cap.release()
 
 
 # ---------------------------------------------------------------- live webcam

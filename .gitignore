@@ -1,8 +1,60 @@
+﻿# Python
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
 .ipynb_checkpoints/
-*.zip
-data/raw/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.egg-info/
+*.egg
+
+# Environments
 .venv/
+venv/
+env/
+ENV/
+
+# Build output
+dist/
+build/
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Data and model files
+data/raw/
+data/processed/
+models/weights/
 models/holistic_landmarker.task
 models/kaggle_1st/
+*.h5
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.zip
+
+# Debug output
 debug/
+tmp/
+absl_logging/
+
+# Webcam recordings
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Secrets
+.env
+*.env

@@ -1,0 +1,6 @@
+﻿# SignBridge Computer Vision dependencies
+# Tested with Python 3.11 on Windows
+numpy==1.26.4
+opencv-python==4.11.0.86
+mediapipe==0.10.21
+pytest==9.1.1

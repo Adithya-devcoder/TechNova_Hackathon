@@ -1,8 +1,9 @@
+﻿# Backend dependencies — existing project environment
 # Tested with Python 3.13 on Windows 11 (CPU only).
 numpy==2.2.6
 pandas==2.3.2
 torch==2.7.1
-mediapipe==1.1.0        # also installs opencv-contrib-python (provides cv2)
+mediapipe==1.1.0
 streamlit==1.65.0
 pytest==9.1.1
-ai-edge-litert==2.3.0   # runs the optional Kaggle 1st-place model (models/pretrained_isolated.py)
+ai-edge-litert==2.3.0

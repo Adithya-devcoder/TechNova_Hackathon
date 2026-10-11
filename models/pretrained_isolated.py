@@ -11,6 +11,7 @@ Note: this model was trained on every ASL Signs signer, including our test signe
 scored on our Kaggle test split (leakage). Evaluate it only on live signing by new people.
 """
 import json
+import threading
 import time
 from pathlib import Path
 
@@ -39,13 +40,17 @@ class IsolatedSignModel:
         self.runner = self.interpreter.get_signature_runner(key)
         self.input_name = signatures[key]['inputs'][0]
         self.output_name = signatures[key]['outputs'][0]
+        # A TFLite interpreter crashes the whole process (segfault) if two threads run it at once, which
+        # happens in Streamlit when a rerun overlaps the previous camera loop. One call at a time.
+        self._lock = threading.Lock()
         index = json.loads((folder / LABEL_FILE).read_text())
         self.labels = [s for s, _ in sorted(index.items(), key=lambda kv: kv[1])]
 
     def probabilities(self, clip):
         """[T, 543, 3] landmarks of one sign (NaN = missing) -> probabilities over the 250 signs."""
-        out = np.asarray(self.runner(**{self.input_name: np.asarray(clip, np.float32)})[self.output_name],
-                         np.float64).reshape(-1)
+        with self._lock:
+            out = np.asarray(self.runner(**{self.input_name: np.asarray(clip, np.float32)})[self.output_name],
+                             np.float64).reshape(-1)
         if out.min() < 0 or abs(out.sum() - 1) > 1e-3:   # logits -> probabilities
             out = np.exp(out - out.max())
             out /= out.sum()
@@ -192,10 +197,15 @@ def predict_sliding(landmarks, iso, vocab=None, threshold=0.6, min_confidence=0.
         return P
 
     P = scores(clip)
-    if try_mirror:   # keep the orientation the model is more confident about over the whole sentence
-        Pm = scores(mirror(clip))
-        if Pm.max(1).mean() > P.max(1).mean():
-            P = Pm
+    if try_mirror:   # probe a few windows mirrored; redo the sentence mirrored only if that reads more confidently
+        probe = sorted(set(np.linspace(0, len(starts) - 1, min(5, len(starts))).astype(int)))
+        mirrored = mirror(clip)
+        Pm_probe = np.stack([iso.probabilities(mirrored[starts[i]:starts[i] + window]) for i in probe])
+        if allowed is not None:
+            Pm_probe = np.where(allowed, Pm_probe, 0.0)
+            Pm_probe = Pm_probe / np.maximum(Pm_probe.sum(1, keepdims=True), 1e-12)
+        if Pm_probe.max(1).mean() > P[probe].max(1).mean():
+            P = scores(mirrored)
     label = np.where(P.max(1) >= min_confidence, P.argmax(1), -1)
 
     runs = []   # [label, first window, last window]

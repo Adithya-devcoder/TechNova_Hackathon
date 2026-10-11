@@ -143,6 +143,23 @@ def save_sentence(sentence, result, reference, fps):
                         reference=reference, recogniser=recogniser, camera_fps=fps)
 
 
+def open_camera(index, attempts=10):
+    """Open the webcam at 640x480 with a 1-frame buffer (fresh frames, less lag).
+
+    Retries for about 2 s, because after a rerun the previous run may still be releasing the camera.
+    """
+    for _ in range(attempts):
+        cap = cv2.VideoCapture(index, cv2.CAP_DSHOW) if os.name == 'nt' else cv2.VideoCapture(index)
+        if cap.isOpened():
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+            cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+            return cap
+        cap.release()
+        time.sleep(0.2)
+    return None
+
+
 def camera_loop(on_sentence, key, reference='', on_frame=None):
     """Run the webcam until the toggle is switched off. Calls on_sentence(result, frames) per sentence.
 
@@ -152,8 +169,8 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
         st.info('Switch on the camera, sign a sentence, then lower your hands for a moment to finish it.')
         return
     frame_ph, status_ph = st.empty(), st.empty()
-    cap = cv2.VideoCapture(cam_index, cv2.CAP_DSHOW) if os.name == 'nt' else cv2.VideoCapture(cam_index)
-    if not cap.isOpened():
+    cap = open_camera(cam_index)
+    if cap is None:
         st.error(f'Could not open camera {cam_index}. Close other apps that use it, or try another index.')
         return
     end_s = sentence_end_s if recogniser == SIGN_BY_SIGN else pause_s
@@ -172,19 +189,22 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
             last = now
             t_ms = (now - t0) * 1000
             landmarks = extractor.process(frame, t_ms)
-            if on_frame is not None:
-                view = draw_landmarks(frame, landmarks) if show_overlay else frame
-                frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')
-                status_ph.caption(f'{on_frame(landmarks, t_ms)} · {fps:.0f} fps')
-                continue
-            sentence = segmenter.push(landmarks, t_ms)
-            if sentence is not None:
-                result = recognise(sentence)
-                if save_debug:
-                    save_sentence(sentence, result, reference, fps)
-                on_sentence(result, len(sentence))
             view = draw_landmarks(frame, landmarks) if show_overlay else frame
             frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')   # mirrored like a selfie view
+            try:   # one bad frame or result must not stop the camera
+                if on_frame is not None:
+                    status_ph.caption(f'{on_frame(landmarks, t_ms)} · {fps:.0f} fps')
+                    continue
+                sentence = segmenter.push(landmarks, t_ms)
+                if sentence is not None:
+                    status_ph.caption('recognising…')
+                    result = recognise(sentence)
+                    if save_debug:
+                        save_sentence(sentence, result, reference, fps)
+                    on_sentence(result, len(sentence))
+            except Exception as e:   # noqa: BLE001  (show the problem, keep the camera running)
+                status_ph.warning(f'Skipped one result after an error: {type(e).__name__}: {e}')
+                continue
             hint = (f'lower your hands briefly between signs, and for {end_s:.1f} s to finish'
                     if recogniser == SIGN_BY_SIGN else 'lower your hands to finish')
             state = f'✋ signing… {hint}' if segmenter.active else 'waiting for hands'

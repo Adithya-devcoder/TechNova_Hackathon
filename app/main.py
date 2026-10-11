@@ -14,15 +14,17 @@ from pathlib import Path
 import cv2
 import numpy as np
 import streamlit as st
+from streamlit import runtime as st_runtime
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from evaluation.live_log import LOG_PATH, append_result, load_results, summarize  # noqa: E402
+from models import native  # noqa: E402
 from models import pretrained_isolated  # noqa: E402
 from models import signbridge_model as sb  # noqa: E402
 from models.gloss_to_english import to_english  # noqa: E402
 from models.streaming import WordStream  # noqa: E402
-from preprocessing.landmarks import HolisticExtractor, draw_landmarks, video_to_landmarks  # noqa: E402
+from preprocessing.landmarks import draw_landmarks, shared_extractor, video_to_landmarks  # noqa: E402
 from preprocessing.segmenter import SentenceSegmenter, resample, split_signs  # noqa: E402
 
 DEMO_SENTENCES = json.loads((ROOT / 'data' / 'demo_sentences.json').read_text(encoding='utf-8'))
@@ -143,6 +145,22 @@ def save_sentence(sentence, result, reference, fps):
                         reference=reference, recogniser=recogniser, camera_fps=fps)
 
 
+def free_old_frames():
+    """Delete video frames that are no longer on screen.
+
+    Streamlit keeps every image shown during a script run until the run ends, and the camera loop never
+    ends, so without this the frames pile up in memory (~100 MB a minute) until the app freezes.
+    """
+    if st_runtime.exists():
+        st_runtime.get_instance().media_file_mgr.remove_orphaned_files()
+
+
+def show_frame(placeholder, frame, landmarks):
+    view = draw_landmarks(frame, landmarks) if show_overlay else frame
+    view = cv2.resize(cv2.flip(view, 1), (480, int(480 * view.shape[0] / view.shape[1])))   # mirrored, smaller
+    placeholder.image(view, channels='BGR', output_format='JPEG', width='stretch')
+
+
 def open_camera(index, attempts=10):
     """Open the webcam at 640x480 with a 1-frame buffer (fresh frames, less lag).
 
@@ -175,9 +193,12 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
         return
     end_s = sentence_end_s if recogniser == SIGN_BY_SIGN else pause_s
     segmenter = SentenceSegmenter(pause_s=end_s, target_fps=target_fps)
-    extractor = HolisticExtractor()
+    extractor = shared_extractor()   # one per process; never closed per session
     t0 = last = time.perf_counter()
-    fps = 0.0
+    fps = track_fps = 0.0
+    n_frames = 0
+    landmarks = np.full((543, 3), np.nan, np.float32)
+    tracking, last_track = None, t0   # (future, t_ms): the frame MediaPipe is working on in the background
     try:
         while True:
             ok, frame = cap.read()
@@ -188,19 +209,39 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
             fps = 0.9 * fps + 0.1 / max(now - last, 1e-3)
             last = now
             t_ms = (now - t0) * 1000
-            landmarks = extractor.process(frame, t_ms)
-            view = draw_landmarks(frame, landmarks) if show_overlay else frame
-            frame_ph.image(cv2.flip(view, 1), channels='BGR', width='stretch')   # mirrored like a selfie view
+            # The video never waits for tracking (~13 fps on a laptop CPU): show every camera frame, and
+            # track the newest frame in the background whenever MediaPipe is free.
+            fresh = None
+            if tracking is not None and tracking[0].done():
+                future, fresh_t = tracking
+                tracking = None
+                try:
+                    fresh = future.result()
+                except Exception as e:   # noqa: BLE001
+                    status_ph.warning(f'Tracking skipped a frame: {type(e).__name__}: {e}')
+                track_fps = 0.8 * track_fps + 0.2 / max(now - last_track, 1e-3)
+                last_track = now
+            if tracking is None:
+                tracking = (native.submit(extractor.process, frame, t_ms), t_ms)
+            if fresh is not None:
+                landmarks = fresh
+            show_frame(frame_ph, frame, landmarks)
+            n_frames += 1
+            if n_frames % 15 == 0:
+                free_old_frames()
+            if fresh is None:
+                continue
+            rates = f'video {fps:.0f} fps · tracking {track_fps:.0f} fps'
             try:   # one bad frame or result must not stop the camera
                 if on_frame is not None:
-                    status_ph.caption(f'{on_frame(landmarks, t_ms)} · {fps:.0f} fps')
+                    status_ph.caption(f'{on_frame(fresh, fresh_t)} · {rates}')
                     continue
-                sentence = segmenter.push(landmarks, t_ms)
+                sentence = segmenter.push(fresh, fresh_t)
                 if sentence is not None:
                     status_ph.caption('recognising…')
                     result = recognise(sentence)
                     if save_debug:
-                        save_sentence(sentence, result, reference, fps)
+                        save_sentence(sentence, result, reference, track_fps)
                     on_sentence(result, len(sentence))
             except Exception as e:   # noqa: BLE001  (show the problem, keep the camera running)
                 status_ph.warning(f'Skipped one result after an error: {type(e).__name__}: {e}')
@@ -208,10 +249,11 @@ def camera_loop(on_sentence, key, reference='', on_frame=None):
             hint = (f'lower your hands briefly between signs, and for {end_s:.1f} s to finish'
                     if recogniser == SIGN_BY_SIGN else 'lower your hands to finish')
             state = f'✋ signing… {hint}' if segmenter.active else 'waiting for hands'
-            status_ph.caption(f'{state} · {fps:.0f} fps')
+            status_ph.caption(f'{state} · {rates}')
     finally:
+        if tracking is not None:
+            tracking[0].result()   # let the last background frame finish before the next session
         cap.release()
-        extractor.close()
 
 
 # ---------------------------------------------------------------- live webcam

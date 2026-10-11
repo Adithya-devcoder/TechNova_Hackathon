@@ -15,6 +15,8 @@ import mediapipe as mp
 import numpy as np
 from mediapipe.tasks.python import BaseOptions, vision
 
+from models import native
+
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / 'models' / 'holistic_landmarker.task'
 MODEL_URL = ('https://storage.googleapis.com/mediapipe-models/holistic_landmarker/'
@@ -54,30 +56,39 @@ def has_hands(landmarks):
 class HolisticExtractor:
     """Stateful per-stream extractor (video mode tracks the person across frames).
 
-    Use one extractor per video or camera session, and pass increasing timestamps.
+    All MediaPipe calls run on the native worker thread (models/native.py). Timestamps may restart at 0
+    for a new camera session or video: they are shifted so MediaPipe always sees increasing times.
     """
 
     def __init__(self, model_path=MODEL_PATH, min_confidence=0.5):
+        self._landmarker = native.run(self._create, str(ensure_model(model_path)), min_confidence)
+        self._last_ts = -1
+        self._offset = 0
+
+    @staticmethod
+    def _create(model_path, min_confidence):
         options = vision.HolisticLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=str(ensure_model(model_path))),
+            base_options=BaseOptions(model_asset_path=model_path),
             running_mode=vision.RunningMode.VIDEO,
             min_pose_detection_confidence=min_confidence,
             min_hand_landmarks_confidence=min_confidence,
         )
-        self._landmarker = vision.HolisticLandmarker.create_from_options(options)
-        self._last_ts = -1
+        return vision.HolisticLandmarker.create_from_options(options)
 
     def process(self, frame_bgr, timestamp_ms):
         """One BGR frame -> [543, 3] landmarks."""
-        ts = max(int(timestamp_ms), self._last_ts + 1)   # MediaPipe requires strictly increasing timestamps
+        ts = int(timestamp_ms) + self._offset
+        if ts <= self._last_ts:   # a new stream started from 0: continue after the previous one
+            self._offset = self._last_ts + 33 - int(timestamp_ms)
+            ts = int(timestamp_ms) + self._offset
         self._last_ts = ts
         rgb = np.ascontiguousarray(cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB))
-        result = self._landmarker.detect_for_video(mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb), ts)
+        result = native.run(self._landmarker.detect_for_video, mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb), ts)
         return result_to_array(result)
 
     def close(self):
         if self._landmarker is not None:
-            self._landmarker.close()
+            native.run(self._landmarker.close)
             self._landmarker = None
 
     def __enter__(self):
@@ -85,6 +96,17 @@ class HolisticExtractor:
 
     def __exit__(self, *exc):
         self.close()
+
+
+_shared = None
+
+
+def shared_extractor():
+    """One extractor for the whole app process, reused by every camera session and video (never closed)."""
+    global _shared
+    if _shared is None:
+        _shared = HolisticExtractor()
+    return _shared
 
 
 def video_to_landmarks(path, progress=None):
@@ -95,17 +117,17 @@ def video_to_landmarks(path, progress=None):
     fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
     total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 0
     frames, times = [], []
+    extractor = shared_extractor()
     try:
-        with HolisticExtractor() as extractor:
-            while True:
-                ok, frame = cap.read()
-                if not ok:
-                    break
-                t = len(frames) * 1000.0 / fps
-                frames.append(extractor.process(frame, t))
-                times.append(t)
-                if progress and total:
-                    progress(min(len(frames) / total, 1.0))
+        while True:
+            ok, frame = cap.read()
+            if not ok:
+                break
+            t = len(frames) * 1000.0 / fps
+            frames.append(extractor.process(frame, t))
+            times.append(t)
+            if progress and total:
+                progress(min(len(frames) / total, 1.0))
     finally:
         cap.release()
     if not frames:

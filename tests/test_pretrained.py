@@ -119,3 +119,13 @@ def test_sliding_window_short_clip_is_one_sign():
     clip = np.full((20, 543, 3), np.nan, np.float32)
     clip[:, 522:543] = 0.8
     assert pi.predict_sliding(clip, FakeByPosition())['text'] == 'mom'
+
+
+@pytest.mark.skipif(not pi.available(), reason='Kaggle 1st-place files not in models/kaggle_1st/')
+def test_model_process_restarts_after_a_crash():
+    iso = pi.IsolatedSignModel()
+    before = iso.probabilities(clip_with_hands())
+    iso._model._proc.kill()                      # what a native crash in the model process looks like
+    iso._model._proc.wait()
+    assert np.allclose(iso.probabilities(clip_with_hands()), before)
+    assert iso._model.restarts == 1

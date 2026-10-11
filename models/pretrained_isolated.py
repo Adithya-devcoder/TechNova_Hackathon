@@ -11,13 +11,13 @@ Note: this model was trained on every ASL Signs signer, including our test signe
 scored on our Kaggle test split (leakage). Evaluate it only on live signing by new people.
 """
 import json
-import threading
 import time
 from pathlib import Path
 
 import numpy as np
 
 from models import signbridge_model as sb
+from models.tflite_server import RemoteModel
 
 FOLDER = Path(__file__).resolve().parent / 'kaggle_1st'
 MODEL_FILE, LABEL_FILE = 'model.tflite', 'sign_to_prediction_index_map.json'
@@ -30,27 +30,13 @@ def available(folder=FOLDER):
 class IsolatedSignModel:
     def __init__(self, folder=FOLDER):
         folder = Path(folder)
-        try:   # LiteRT is the small, supported TFLite runtime; full TensorFlow also works
-            from ai_edge_litert.interpreter import Interpreter
-        except ImportError:
-            from tensorflow.lite import Interpreter
-        self.interpreter = Interpreter(model_path=str(folder / MODEL_FILE))
-        signatures = self.interpreter.get_signature_list()
-        key = 'serving_default' if 'serving_default' in signatures else next(iter(signatures))
-        self.runner = self.interpreter.get_signature_runner(key)
-        self.input_name = signatures[key]['inputs'][0]
-        self.output_name = signatures[key]['outputs'][0]
-        # A TFLite interpreter crashes the whole process (segfault) if two threads run it at once, which
-        # happens in Streamlit when a rerun overlaps the previous camera loop. One call at a time.
-        self._lock = threading.Lock()
         index = json.loads((folder / LABEL_FILE).read_text())
         self.labels = [s for s, _ in sorted(index.items(), key=lambda kv: kv[1])]
+        self._model = RemoteModel(folder / MODEL_FILE)   # runs in its own process (see tflite_server.py)
 
     def probabilities(self, clip):
         """[T, 543, 3] landmarks of one sign (NaN = missing) -> probabilities over the 250 signs."""
-        with self._lock:
-            out = np.asarray(self.runner(**{self.input_name: np.asarray(clip, np.float32)})[self.output_name],
-                             np.float64).reshape(-1)
+        out = np.asarray(self._model(clip), np.float64).reshape(-1)
         if out.min() < 0 or abs(out.sum() - 1) > 1e-3:   # logits -> probabilities
             out = np.exp(out - out.max())
             out /= out.sum()
